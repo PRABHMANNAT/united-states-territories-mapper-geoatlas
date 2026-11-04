@@ -32,7 +32,8 @@ export default function RasterMap({ provider, region, onSelect, onUnavailable }:
     let map: Map;
     try {
       map = new Map({
-        container: element.current, center: [-97, 38], zoom: 3, maxZoom: (provider.maxZoom ?? 18) + 1, renderWorldCopies: true, scrollZoom: false,
+        container: element.current, center: [-97, 38], zoom: 3, minZoom: 1, maxZoom: (provider.maxZoom ?? 18) + 1,
+        renderWorldCopies: false, scrollZoom: true, cooperativeGestures: true, dragRotate: false, touchPitch: false, clickTolerance: 5,
         style: {
           version: 8,
           sources: { imagery: { type: "raster", tiles: [provider.tiles], tileSize: 256, maxzoom: provider.maxZoom ?? 18, attribution: mapAttribution(provider.attribution) } },
@@ -41,6 +42,7 @@ export default function RasterMap({ provider, region, onSelect, onUnavailable }:
       });
     } catch { unavailable(); return; }
     mapRef.current = map;
+    map.touchZoomRotate.disableRotation();
     const timeout = window.setTimeout(() => { if (!receivedTile) unavailable(); }, 15000);
     const resize = new ResizeObserver(() => map.resize());
     resize.observe(element.current);
@@ -89,7 +91,8 @@ export default function RasterMap({ provider, region, onSelect, onUnavailable }:
 
   return <div className="raster-panel" data-imagery-state={imageryLoaded ? "ready" : "loading"}>
     <div className="raster-map" aria-label="Interactive imagery map" ref={element}/>
-    <button className="imagery-overview quiet-button" onClick={() => mapRef.current?.fitBounds([[-125, 24], [-66, 50]], { padding: 45, duration: 0 })}>U.S. overview</button>
+    <button className="imagery-overview quiet-button" onClick={() => mapRef.current?.fitBounds([[-125, 24], [-66, 50]], { padding: 45, duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 250 })}>U.S. overview</button>
+    <p className="map-gesture-help">Drag to move · Ctrl/⌘ + scroll to zoom · Use two fingers to pan or pinch on touchscreens</p>
     <div className="raster-status" role="status">{warning ? "Some imagery or boundaries could not be loaded. Try another location or zoom level." : !imageryLoaded ? "Loading imagery…" : provider.description ?? "Provider imagery"}{coordinate && <span> · {coordinate}</span>}</div>
   </div>;
 }

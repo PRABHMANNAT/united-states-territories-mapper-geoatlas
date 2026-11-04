@@ -3,8 +3,9 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowDownToLine, ArrowRight, Crosshair, Expand, Globe2, Layers3, LocateFixed, Maximize, Minimize, Minus, Paintbrush, PanelRight, Plus, Scan, Search, X } from "lucide-react";
-import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
-import { AtlasSvg, overviewCamera, type Camera } from "./atlas-svg";
+import { useEffect, useId, useRef, useState } from "react";
+import { AtlasSvg } from "./atlas-svg";
+import { useMapNavigation } from "./use-map-navigation";
 import { Shape } from "./shape";
 import { RegionFlag } from "./region-flag";
 import { ShareButton } from "./share";
@@ -36,7 +37,6 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   const [selected, setSelected] = useState(initialId);
   const [hovered, setHovered] = useState<string | null>(null);
   const [layer, setLayer] = useState(initialLayer);
-  const [camera, setCamera] = useState<Camera>(overviewCamera);
   const [search, setSearch] = useState("");
   const [labels, setLabels] = useState(true);
   const [status, setStatus] = useState("");
@@ -51,15 +51,13 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   const expandButton = useRef<HTMLButtonElement>(null);
   const atlas = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
-  const stage = useRef<HTMLDivElement>(null);
-  const drag = useRef<{ startX: number; startY: number; camera: Camera; scale: number; moved: boolean } | null>(null);
-  const moved = useRef(false);
   const region = regions.find((item) => item.id === selected);
   const flag = region ? flags[region.id] : undefined;
   const lead = region ? leads[region.id] : undefined;
   const activeMetric = metricById[layer];
   const raster = layer === "terrain" || layer === "satellite" ? providers?.[layer] : null;
   const unavailable = (layer === "terrain" || layer === "satellite") && (!raster || rasterFailed);
+  const navigation = useMapNavigation(svg, { x: 0, y: 0, width: data.width, height: data.height }, { enabled: !comparingSize && !(raster && !rasterFailed) });
   const year = activeMetric ? yearsFor(observations, layer)[0] : undefined;
   const values = Object.fromEntries(observations.filter((item) => item.metric === layer && item.year === year).map((item) => [item.region, item.value]));
   const { fills, legend } = choropleth(values, layer, "light", palette);
@@ -105,50 +103,17 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
 
   function fit(id = selected) {
     const bounds = data.shapes[id]?.bounds;
-    if (!bounds) { setCamera(overviewCamera); return; }
+    if (!bounds) { navigation.reset(); return; }
     const [x0, y0, x1, y1] = bounds;
-    const k = Math.max(1.15, Math.min(6, data.width * 0.65 / Math.max(x1 - x0, 1), data.height * 0.65 / Math.max(y1 - y0, 1)));
-    setCamera({ x: data.width / 2 - (x0 + x1) * k / 2, y: data.height / 2 - (y0 + y1) * k / 2, k });
+    navigation.fit({ x: x0, y: y0, width: Math.max(1, x1 - x0), height: Math.max(1, y1 - y0) });
   }
 
   function select(id: string, zoom = false) {
-    if (moved.current) return;
     setSelected(id);
     if (!expanded) setDetails(true);
     setSearch("");
     if (zoom && data.shapes[id]) fit(id);
     updateUrl(id, layer);
-  }
-
-  function zoom(factor: number) {
-    setCamera((previous) => {
-      const k = Math.max(1, Math.min(8, previous.k * factor));
-      if (k === 1) return overviewCamera;
-      const ratio = k / previous.k;
-      return { k, x: data.width / 2 - (data.width / 2 - previous.x) * ratio, y: data.height / 2 - (data.height / 2 - previous.y) * ratio };
-    });
-  }
-
-  function pointerDown(event: PointerEvent<HTMLDivElement>) {
-    if (event.button !== 0 || camera.k === 1 || !svg.current) return;
-    moved.current = false;
-    const screenScale = svg.current.getScreenCTM()?.a;
-    drag.current = { startX: event.clientX, startY: event.clientY, camera, scale: screenScale ? 1 / screenScale : data.width / svg.current.getBoundingClientRect().width, moved: false };
-  }
-  function pointerMove(event: PointerEvent<HTMLDivElement>) {
-    if (!drag.current) return;
-    const start = drag.current;
-    const dx = event.clientX - start.startX;
-    const dy = event.clientY - start.startY;
-    if (!start.moved && Math.hypot(dx, dy) < 5) return;
-    start.moved = true;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setCamera({ ...start.camera, x: start.camera.x + dx * start.scale, y: start.camera.y + dy * start.scale });
-  }
-  function pointerEnd() {
-    moved.current = Boolean(drag.current?.moved);
-    drag.current = null;
-    window.setTimeout(() => { moved.current = false; }, 0);
   }
 
   async function saveImage() {
@@ -194,15 +159,16 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
       {comparingSize ? <StateSizeComparison regions={regions} observations={observations} initialId={selected}/> : <>
       {unavailable && <div className="map-notice" role="status">Imagery could not be loaded. The offline map is available below. <button className="text-button" onClick={() => setRasterFailed(false)}>Retry imagery</button></div>}
       <div className="map-scene">
-      {raster && !rasterFailed ? <RasterMap key={layer} provider={raster} region={region} onSelect={select} onUnavailable={() => setRasterFailed(true)}/> : <div className={`map-stage${camera.k > 1 ? " zoomed" : ""}`} ref={stage} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd}>
-        <AtlasSvg data={data} regions={regions} svgRef={svg} selection={selected ? [selected] : []} thematic={Boolean(activeMetric)} fills={mapFills} water={layer === "waterways"} labels={labels} camera={camera} onSelect={select} onHover={setHovered} showScale={camera.k === 1}/>
+      {raster && !rasterFailed ? <RasterMap key={layer} provider={raster} region={region} onSelect={select} onUnavailable={() => setRasterFailed(true)}/> : <div className="map-stage">
+        <AtlasSvg data={data} regions={regions} svgRef={svg} selection={selected ? [selected] : []} thematic={Boolean(activeMetric)} fills={mapFills} water={layer === "waterways"} labels={labels} onSelect={select} onHover={setHovered} showScale={navigation.zoom === 1}/>
         <div className="map-zoom" role="group" aria-label="Map controls" onPointerDown={(event) => event.stopPropagation()}>
-          <button aria-label="Zoom in" title="Zoom in" onClick={() => zoom(1.35)}><Plus size={17}/></button>
-          <button aria-label="Zoom out" title="Zoom out" onClick={() => zoom(1 / 1.35)}><Minus size={17}/></button>
-          <button aria-label="Reset map view" title="Reset map view" onClick={() => setCamera(overviewCamera)}><Maximize size={15}/></button>
+          <button aria-label="Zoom in" title="Zoom in" disabled={navigation.zoom >= 16} onClick={() => navigation.zoomBy(1.4)}><Plus size={17}/></button>
+          <button aria-label="Zoom out" title="Zoom out" disabled={navigation.zoom <= 1} onClick={() => navigation.zoomBy(1 / 1.4)}><Minus size={17}/></button>
+          <button aria-label="Reset map view" title="Reset map view" onClick={() => navigation.reset()}><Maximize size={15}/></button>
           <button aria-label="Fit selected region" title="Fit selected region" onClick={() => fit()} disabled={!data.shapes[selected]}><LocateFixed size={17}/></button>
           <Link className="map-customize" href={{ pathname: "/creator", query: selected ? { region: selected } : {} }} aria-label="Customize this map" title="Customize this map"><Paintbrush size={17}/></Link>
         </div>
+        <p className="map-gesture-help map-gesture-overlay">Drag to move · Click map, then scroll to zoom · Pinch to zoom</p>
         {focus && <div className="map-tooltip"><strong>{focus.name}</strong>{activeMetric && <span>{formatValue(layer, values[focus.id])}</span>}</div>}
       </div>}
     <aside id={detailsId} className="atlas-sidebar" aria-label="Region details" hidden={!showDetails}>
@@ -213,7 +179,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
         {query && <div className="region-matches">{matches.length ? matches.slice(0, 8).map((item) => <button key={item.id} onClick={() => select(item.id, !home)}><span>{item.name}</span><small>{item.id}</small></button>) : <p>No matching jurisdiction.</p>}</div>}
       </div>
       {region ? <article className="region-card" key={region.id}>
-        <div className="region-card-label"><span className="eyebrow"><span /> REGION PROFILE</span><div>{flag && <a href={flag.source} aria-label={`Flag attribution for ${region.name}`}><RegionFlag flag={flag} name={region.name} size={28}/></a>}<button className="icon-button" aria-label="Clear region selection" onClick={() => { setSelected(""); setCamera(overviewCamera); updateUrl("", layer); }}><X size={16}/></button></div></div>
+        <div className="region-card-label"><span className="eyebrow"><span /> REGION PROFILE</span><div>{flag && <a href={flag.source} aria-label={`Flag attribution for ${region.name}`}><RegionFlag flag={flag} name={region.name} size={28}/></a>}<button className="icon-button" aria-label="Clear region selection" onClick={() => { setSelected(""); navigation.reset(); updateUrl("", layer); }}><X size={16}/></button></div></div>
         <div className="region-title"><div><h2>{region.name}</h2><p>{regionTypeLabels[region.type]}{region.censusRegion ? ` · ${region.censusRegion}` : ""}</p></div><Shape path={data.silhouettes[region.id]} /></div>
         <dl className="region-stats"><div><dt>Capital</dt><dd>{region.capital ?? "—"}</dd></div>
           {["population", "land", "density", "gdp"].map((key) => {

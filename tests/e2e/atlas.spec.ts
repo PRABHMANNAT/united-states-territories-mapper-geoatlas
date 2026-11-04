@@ -62,6 +62,7 @@ test("expands the North America preview without resetting its zoom", async ({ pa
   const initialView = await map.getAttribute("viewBox");
   await page.getByRole("button", { name: "Zoom in", exact: true }).click();
   await expect(map).not.toHaveAttribute("viewBox", initialView!);
+  await expect(map).not.toHaveAttribute("data-navigating", "true");
   const zoomedView = await map.getAttribute("viewBox");
 
   await page.getByRole("button", { name: "Enter fullscreen preview" }).click();
@@ -357,6 +358,7 @@ test("compares Alaska and Texas at one scale and moves the overlay in fullscreen
   const initialScale = await outline.evaluate(readScale);
   expect(await reference.evaluate(readScale)).toBeCloseTo(initialScale, 5);
   await page.getByRole("button", { name: "Zoom comparison in" }).click();
+  await expect(page.getByRole("group", { name: "Same-scale state outlines" })).not.toHaveAttribute("data-navigating", "true");
   await expect.poll(async () => (await outline.evaluate(readScale)) / initialScale).toBeGreaterThan(1.3);
   expect(await reference.evaluate(readScale)).toBeCloseTo(await outline.evaluate(readScale), 5);
 

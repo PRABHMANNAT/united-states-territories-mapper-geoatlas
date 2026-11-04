@@ -119,6 +119,21 @@ After starting the app, try the [U.S. + Alaska + Alberta + Yukon map](http://loc
 
 Choose **Compare states** for statistics or **Compare sizes** for draggable outlines in the top navbar. On phones, open the navigation menu first. Press **Ctrl/Cmd + K** to find a place or tool. The [U.S. creator](http://localhost:3000/creator?scope=us) supports legends, undo and redo, saved projects, and JSON or CSV export.
 
+### Move around the maps
+
+The continental atlas, both creators, the detailed U.S. vector map, and size comparison share drag, zoom, and reset controls.
+
+| Input | Action |
+| --- | --- |
+| **Drag the map** | Pan the view. Dragging does not select or paint a place. In size comparison, drag the background to move both states or the blue outline to move only that state. |
+| **Click the map, then scroll** | Zoom around the pointer. Unfocused maps leave ordinary page scrolling available; Ctrl/Cmd + scroll also zooms directly. |
+| **Pinch with two fingers** | Zoom and move the map on a touchscreen. |
+| **+ / − buttons** | Smoothly zoom in or out within the supported range. |
+| **Arrow keys, + / −, Home or 0** | With the map focused, pan, zoom, or reset the view. |
+| **Reset / fullscreen** | Restore the initial framing, or expand the atlas while keeping its current view. Escape exits fullscreen. |
+
+On satellite and terrain maps, use **Ctrl/Cmd + scroll** or two-finger gestures, with the native zoom controls and **U.S. overview** reset. Vector maps respect reduced-motion preferences. Continental creator exports use the visible map view; U.S. creator exports include the whole designed map.
+
 ## Run locally
 
 Use **Node.js 24** and **pnpm 11**. Clone the repository and run the commands below.
