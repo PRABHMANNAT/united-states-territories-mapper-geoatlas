@@ -1,0 +1,274 @@
+{
+  "id": "IA",
+  "title": "Iowa",
+  "url": "https://en.wikipedia.org/wiki/Iowa",
+  "revision": 1383707463,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1383707463",
+  "revisionDate": "2026-11-04T08:09:05Z",
+  "wikidata": "Q1546",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Iowa (  EYE-ə-wə) is a landlocked state in the Upper Midwest region of the United States. It borders the Mississippi River to the east and the Missouri River and Big Sioux River to the west; Wisconsin to the northeast, Illinois to the east and southeast, Missouri to the south, Nebraska to the west, South Dakota to the northwest, and Minnesota to the north.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Prehistory",
+      "anchor": "Prehistory",
+      "level": 2
+    },
+    {
+      "name": "Early colonization and trade, 1673–1808",
+      "anchor": "Early_colonization_and_trade,_1673–1808",
+      "level": 2
+    },
+    {
+      "name": "War of 1812 and unstable U.S. control",
+      "anchor": "War_of_1812_and_unstable_U.S._control",
+      "level": 2
+    },
+    {
+      "name": "Indian removal, 1814–1832",
+      "anchor": "Indian_removal,_1814–1832",
+      "level": 2
+    },
+    {
+      "name": "U.S. settlement and statehood, 1832–1860",
+      "anchor": "U.S._settlement_and_statehood,_1832–1860",
+      "level": 2
+    },
+    {
+      "name": "Civil War, 1861–1865",
+      "anchor": "Civil_War,_1861–1865",
+      "level": 2
+    },
+    {
+      "name": "Agricultural expansion, 1865–1930",
+      "anchor": "Agricultural_expansion,_1865–1930",
+      "level": 2
+    },
+    {
+      "name": "Depression, World War II and manufacturing, 1930–1985",
+      "anchor": "Depression,_World_War_II_and_manufacturing,_1930–1985",
+      "level": 2
+    },
+    {
+      "name": "Reemergence as a mixed economy, 1985–present",
+      "anchor": "Reemergence_as_a_mixed_economy,_1985–present",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Boundaries",
+      "anchor": "Boundaries",
+      "level": 2
+    },
+    {
+      "name": "Geology and terrain",
+      "anchor": "Geology_and_terrain",
+      "level": 2
+    },
+    {
+      "name": "Ecology and environment",
+      "anchor": "Ecology_and_environment",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Settlements",
+      "anchor": "Settlements",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Population",
+      "anchor": "Population",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Language",
+      "anchor": "Language",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Attractions",
+      "anchor": "Attractions",
+      "level": 2
+    },
+    {
+      "name": "Arts",
+      "anchor": "Arts",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Manufacturing",
+      "anchor": "Manufacturing",
+      "level": 2
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Health insurance",
+      "anchor": "Health_insurance",
+      "level": 2
+    },
+    {
+      "name": "Other sectors",
+      "anchor": "Other_sectors",
+      "level": 2
+    },
+    {
+      "name": "Taxation",
+      "anchor": "Taxation",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Primary and secondary schools",
+      "anchor": "Primary_and_secondary_schools",
+      "level": 2
+    },
+    {
+      "name": "Colleges and universities",
+      "anchor": "Colleges_and_universities",
+      "level": 2
+    },
+    {
+      "name": "Health",
+      "anchor": "Health",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Interstate highways",
+      "anchor": "Interstate_highways",
+      "level": 2
+    },
+    {
+      "name": "Airports with scheduled flights",
+      "anchor": "Airports_with_scheduled_flights",
+      "level": 2
+    },
+    {
+      "name": "Railroads",
+      "anchor": "Railroads",
+      "level": 2
+    },
+    {
+      "name": "Public Transit",
+      "anchor": "Public_Transit",
+      "level": 2
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "State",
+      "anchor": "State",
+      "level": 2
+    },
+    {
+      "name": "National",
+      "anchor": "National",
+      "level": 2
+    },
+    {
+      "name": "Political parties",
+      "anchor": "Political_parties",
+      "level": 2
+    },
+    {
+      "name": "Voter trends",
+      "anchor": "Voter_trends",
+      "level": 2
+    },
+    {
+      "name": "Presidential caucus",
+      "anchor": "Presidential_caucus",
+      "level": 2
+    },
+    {
+      "name": "Civil rights",
+      "anchor": "Civil_rights",
+      "level": 2
+    },
+    {
+      "name": "Sister jurisdictions",
+      "anchor": "Sister_jurisdictions",
+      "level": 1
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
