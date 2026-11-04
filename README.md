@@ -19,7 +19,9 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The app ships with versioned observations and Wikipedia profile excerpts. The core atlas, rankings, and exports work without API keys or a database. Optional satellite and topographic imagery use a configured tile provider.
+Open [http://localhost:3000](http://localhost:3000). The app ships with versioned observations and Wikipedia profile excerpts. The core atlas, rankings, and exports work without API keys or a database. Satellite/aerial and terrain views connect to [USGS The National Map](https://www.usgs.gov/faqs/what-are-base-map-services-or-urls-used-national-map) by default, without an API key. Imagery requires an internet connection; dates and resolution vary by location and it is not live imagery. Optional provider overrides are documented in `.env.example`.
+
+The black-and-white interface includes Slate, Sage, and Sand map palettes. Use **Fullscreen** to expand the atlas, **Hide details** for an unobstructed map, and **Escape** to return. Palette shades distinguish Census regions on political maps and fixed statistical bins on thematic maps; territories use a neutral fill. Image exports retain the selected palette.
 
 ## Explore
 

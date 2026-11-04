@@ -1,4 +1,4 @@
-export type RasterProvider = { tiles: string; attribution: string };
+export type RasterProvider = { tiles: string; attribution: string; maxZoom?: number; description?: string };
 
 export function rasterProvider(tiles?: string, attribution?: string): RasterProvider | null {
   if (!tiles || !attribution?.trim() || !["{z}", "{x}", "{y}"].every((part) => tiles.includes(part))) return null;

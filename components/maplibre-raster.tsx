@@ -1,12 +1,14 @@
 "use client";
 
-import { Map, NavigationControl, ScaleControl, type MapLayerMouseEvent } from "maplibre-gl";
+import { Map, NavigationControl, ScaleControl, setWorkerUrl, type MapLayerMouseEvent } from "maplibre-gl";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { mapAttribution, type RasterProvider } from "@/lib/raster";
 import type { Region } from "@/lib/types";
 import "maplibre-gl/dist/maplibre-gl.css";
+
+setWorkerUrl(new URL("maplibre-gl/dist/maplibre-gl-worker.mjs", import.meta.url).toString());
 
 export default function RasterMap({ provider, region, onSelect, onUnavailable }: {
   provider: RasterProvider; region?: Region; onSelect: (id: string) => void; onUnavailable: () => void;
@@ -16,6 +18,7 @@ export default function RasterMap({ provider, region, onSelect, onUnavailable }:
   const [coordinate, setCoordinate] = useState("");
   const [warning, setWarning] = useState(false);
   const [ready, setReady] = useState(false);
+  const [imageryLoaded, setImageryLoaded] = useState(false);
   const select = useEffectEvent((event: MapLayerMouseEvent) => {
     const id = event.features?.[0]?.properties.id;
     if (typeof id === "string") onSelect(id);
@@ -25,21 +28,32 @@ export default function RasterMap({ provider, region, onSelect, onUnavailable }:
   useEffect(() => {
     if (!element.current) return;
     const controller = new AbortController();
+    let receivedTile = false;
     let map: Map;
     try {
       map = new Map({
-        container: element.current, center: [-97, 38], zoom: 2.75, renderWorldCopies: true, scrollZoom: false,
+        container: element.current, center: [-97, 38], zoom: 3, maxZoom: (provider.maxZoom ?? 18) + 1, renderWorldCopies: true, scrollZoom: false,
         style: {
           version: 8,
-          sources: { imagery: { type: "raster", tiles: [provider.tiles], tileSize: 256, attribution: mapAttribution(provider.attribution) } },
+          sources: { imagery: { type: "raster", tiles: [provider.tiles], tileSize: 256, maxzoom: provider.maxZoom ?? 18, attribution: mapAttribution(provider.attribution) } },
           layers: [{ id: "imagery", type: "raster", source: "imagery" }],
         },
       });
     } catch { unavailable(); return; }
     mapRef.current = map;
-    map.addControl(new NavigationControl({ showCompass: true }), "top-right");
+    const timeout = window.setTimeout(() => { if (!receivedTile) unavailable(); }, 15000);
+    const resize = new ResizeObserver(() => map.resize());
+    resize.observe(element.current);
+    map.addControl(new NavigationControl({ showCompass: true }), "top-left");
     map.addControl(new ScaleControl({ unit: "metric" }));
     map.on("error", () => setWarning(true));
+    map.on("sourcedata", (event) => {
+      if (event.sourceId === "imagery" && event.tile?.state === "loaded") {
+        receivedTile = true;
+        setImageryLoaded(true);
+        window.clearTimeout(timeout);
+      }
+    });
     map.on("mousemove", (event) => setCoordinate(`${event.lngLat.lat.toFixed(3)}°, ${event.lngLat.lng.toFixed(3)}°`));
     map.on("load", async () => {
       try {
@@ -47,15 +61,17 @@ export default function RasterMap({ provider, region, onSelect, onUnavailable }:
         if (!response.ok) throw new Error("Boundary data unavailable");
         const topology = await response.json() as Topology<{ regions: GeometryCollection }>;
         map.addSource("regions", { type: "geojson", data: feature(topology, topology.objects.regions) });
-        map.addLayer({ id: "regions-hit", type: "fill", source: "regions", paint: { "fill-color": "#eab876", "fill-opacity": 0.12 } });
-        map.addLayer({ id: "regions-outline", type: "line", source: "regions", paint: { "line-color": "#fff6dd", "line-width": 1.4 } });
-        map.addLayer({ id: "active-outline", type: "line", source: "regions", filter: ["==", ["get", "id"], ""], paint: { "line-color": "#ffb765", "line-width": 3 } });
+        map.addLayer({ id: "regions-hit", type: "fill", source: "regions", paint: { "fill-color": "#ffffff", "fill-opacity": 0.01 } });
+        map.addLayer({ id: "regions-outline", type: "line", source: "regions", paint: { "line-color": "#ffffff", "line-opacity": 0.65, "line-width": 1 } });
+        map.addLayer({ id: "active-outline", type: "line", source: "regions", filter: ["==", ["get", "id"], ""], paint: { "line-color": "#ffffff", "line-width": 3 } });
         map.on("click", "regions-hit", select);
         setReady(true);
       } catch { if (!controller.signal.aborted) setWarning(true); }
     });
     return () => {
       controller.abort();
+      window.clearTimeout(timeout);
+      resize.disconnect();
       map.remove();
       mapRef.current = null;
     };
@@ -71,8 +87,9 @@ export default function RasterMap({ provider, region, onSelect, onUnavailable }:
     });
   }, [ready, region]);
 
-  return <div className="raster-panel">
+  return <div className="raster-panel" data-imagery-state={imageryLoaded ? "ready" : "loading"}>
     <div className="raster-map" aria-label="Interactive imagery map" ref={element}/>
-    <div className="raster-status" role="status">{warning ? "Some imagery or boundary tiles could not be loaded." : coordinate || "MapLibre · Provider imagery"}</div>
+    <button className="imagery-overview quiet-button" onClick={() => mapRef.current?.fitBounds([[-125, 24], [-66, 50]], { padding: 45, duration: 0 })}>U.S. overview</button>
+    <div className="raster-status" role="status">{warning ? "Some imagery or boundaries could not be loaded. Try another location or zoom level." : !imageryLoaded ? "Loading imagery…" : provider.description ?? "Provider imagery"}{coordinate && <span> · {coordinate}</span>}</div>
   </div>;
 }

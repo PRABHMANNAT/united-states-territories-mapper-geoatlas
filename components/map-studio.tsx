@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ArrowDownToLine, ArrowRight, Crosshair, Globe2, Layers3, LocateFixed, Maximize, Minus, Plus, Search, X } from "lucide-react";
-import { useRef, useState, type PointerEvent } from "react";
+import { ArrowDownToLine, ArrowRight, Crosshair, Expand, Globe2, Layers3, LocateFixed, Maximize, Minimize, Minus, PanelRight, Plus, Search, X } from "lucide-react";
+import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
 import { AtlasSvg, overviewCamera, type Camera } from "./atlas-svg";
 import { Shape } from "./shape";
 import { RegionFlag } from "./region-flag";
 import { ShareButton } from "./share";
-import { choropleth, layerOptions } from "@/lib/layers";
+import { choropleth, layerOptions, mapPalettes, politicalFills, type MapPalette } from "@/lib/layers";
 import { metricById } from "@/lib/metrics";
 import { formatValue, latest, ranked, yearsFor } from "@/lib/statistics";
 import { exportSvg } from "@/lib/downloads";
@@ -37,6 +37,12 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   const [labels, setLabels] = useState(true);
   const [status, setStatus] = useState("");
   const [rasterFailed, setRasterFailed] = useState(false);
+  const [palette, setPalette] = useState<MapPalette>("slate");
+  const [expanded, setExpanded] = useState(false);
+  const [details, setDetails] = useState(true);
+  const detailsId = useId();
+  const expandButton = useRef<HTMLButtonElement>(null);
+  const atlas = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const drag = useRef<{ startX: number; startY: number; camera: Camera; scale: number; moved: boolean } | null>(null);
@@ -49,10 +55,35 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   const unavailable = (layer === "terrain" || layer === "satellite") && (!raster || rasterFailed);
   const year = activeMetric ? yearsFor(observations, layer)[0] : undefined;
   const values = Object.fromEntries(observations.filter((item) => item.metric === layer && item.year === year).map((item) => [item.region, item.value]));
-  const { fills, legend } = choropleth(values, layer);
+  const { fills, legend } = choropleth(values, layer, "light", palette);
+  const mapFills = activeMetric ? fills : politicalFills(regions, palette, selected);
   const query = search.trim().toLowerCase();
   const matches = query ? regions.filter((item) => [item.name, item.id, item.capital ?? ""].some((key) => key.toLowerCase().includes(query))) : [];
   const focus = hovered ? regions.find((item) => item.id === hovered) : undefined;
+
+  useEffect(() => {
+    if (!expanded) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function escape(event: KeyboardEvent) {
+      if (event.key === "Escape") { setExpanded(false); expandButton.current?.focus(); }
+      if (event.key === "Tab") {
+        const items = [...(atlas.current?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input, select, [tabindex="0"]') ?? [])].filter((item) => item.getClientRects().length > 0);
+        const first = items[0];
+        const last = items.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
+    }
+    window.addEventListener("keydown", escape);
+    return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", escape); };
+  }, [expanded]);
+
+  function changeLayer(next: string) {
+    setLayer(next);
+    setRasterFailed(false);
+    updateUrl(selected, next);
+  }
 
   function updateUrl(id: string, newLayer: string) {
     if (home) return;
@@ -75,6 +106,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   function select(id: string, zoom = false) {
     if (moved.current) return;
     setSelected(id);
+    setDetails(true);
     setSearch("");
     if (zoom && data.shapes[id]) fit(id);
     updateUrl(id, layer);
@@ -118,24 +150,28 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
     const palette = ["--map-paper", "--map-grid", "--map-land", "--map-edge", "--map-ink", "--map-muted", "--map-selected", "--map-inset"];
     clone.setAttribute("style", palette.map((key) => `${key}:${css.getPropertyValue(key)}`).join(";"));
     const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
-    style.textContent = ".map-background{fill:var(--map-paper)}.map-grid-line{stroke:var(--map-grid)}.inset-frame{fill:var(--map-inset);stroke:var(--map-grid)}.inset-hit-area{fill:none}.region-path{stroke:var(--map-edge);stroke-width:.8}.region-path:not([fill]){fill:var(--map-land)}.missing .region-path{fill:#cbd3d5}.selected .region-path:not([fill]){fill:var(--map-selected)}.selected .region-path{stroke:#985f34;stroke-width:1.3}.region-label,.map-compass text{fill:var(--map-ink);font:700 9px sans-serif;text-anchor:middle;dominant-baseline:central}.label-leader,.map-scale path{fill:none;stroke:var(--map-muted);stroke-width:.7}.inset-title,.map-ocean,.map-scale text{fill:var(--map-muted);font:700 9px monospace;letter-spacing:1px}.water-lake{fill:#9ec9d8}.water-river,.map-compass path,.map-compass circle{fill:none;stroke:#5593a8}";
+    style.textContent = ".map-background{fill:var(--map-paper)}.map-grid-line{stroke:var(--map-grid)}.inset-frame{fill:var(--map-inset);stroke:var(--map-grid)}.inset-hit-area{fill:none}.region-path{stroke:var(--map-edge);stroke-width:.8}.region-path:not([fill]){fill:var(--map-land)}.missing .region-path{fill:#cbd3d5}.selected .region-path:not([fill]){fill:var(--map-selected)}.selected .region-path{stroke:var(--map-ink);stroke-width:1.3}.region-label,.map-compass text{fill:var(--map-ink);font:700 9px sans-serif;text-anchor:middle;dominant-baseline:central}.label-leader,.map-scale path{fill:none;stroke:var(--map-muted);stroke-width:.7}.inset-title,.map-ocean,.map-scale text{fill:var(--map-muted);font:700 9px monospace;letter-spacing:1px}.water-lake{fill:#9ec9d8}.water-river,.map-compass path,.map-compass circle{fill:none;stroke:#5593a8}";
     clone.prepend(style);
     try { await exportSvg(new XMLSerializer().serializeToString(clone), "stateatlas-map", "png", data.width, data.height); setStatus("PNG downloaded"); }
     catch { setStatus("PNG export could not be created"); }
   }
 
-  return <div className="atlas-workspace">
+  return <div ref={atlas} role={expanded ? "dialog" : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? "Fullscreen map" : undefined} className={`atlas-workspace${expanded ? " atlas-expanded" : ""}${details ? "" : " details-hidden"}`}>
     <section className="atlas-card" aria-label="Interactive atlas">
       <div className="map-toolbar">
         <div className="map-tag"><Globe2 size={17} /><span><strong>United States</strong><small>NATIONAL ATLAS</small></span></div>
-        <label className="select-control"><Layers3 size={16} /><span className="sr-only">Map layer</span><select aria-label="Map layer" value={layer} onChange={(event) => { setLayer(event.target.value); setRasterFailed(false); updateUrl(selected, event.target.value); }}>
-          {layerOptions.map((option) => <option key={option.id} value={option.id}>{option.id === "satellite" && providers?.satellite ? "Satellite imagery" : option.id === "terrain" && providers?.terrain ? "Topographic map" : option.name}</option>)}
-        </select></label>
+        <div className="map-modes" role="group" aria-label="Map style">{[{id:"political",title:"Map"},{id:"satellite",title:"Satellite"},{id:"terrain",title:"Terrain"}].map((mode) => <button key={mode.id} aria-pressed={mode.id === "political" ? !["satellite", "terrain"].includes(layer) : layer === mode.id} onClick={() => changeLayer(mode.id)}>{mode.title}</button>)}</div>
+        <div className="map-toolbar-actions">
+          <label className="select-control"><Layers3 size={15}/><span className="sr-only">Map layer</span><select aria-label="Map layer" value={layer} onChange={(event) => changeLayer(event.target.value)}>{layerOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}</select></label>
+          {!raster && <div className="palette-picker" role="group" aria-label="Map color palette">{(Object.keys(mapPalettes) as MapPalette[]).map((key) => <button key={key} className="palette-swatch" aria-label={`${mapPalettes[key].name} palette`} title={mapPalettes[key].name} aria-pressed={palette === key} onClick={() => setPalette(key)}><span style={{background:mapPalettes[key].selected}}/></button>)}</div>}
+          <button className="icon-button" aria-label={details ? "Hide region details" : "Show region details"} title={details ? "Hide details" : "Show details"} aria-expanded={details} aria-controls={detailsId} onClick={() => setDetails(!details)}><PanelRight size={17}/></button>
+          <button ref={expandButton} className="icon-button" aria-label={expanded ? "Exit fullscreen" : "Enter fullscreen"} title={expanded ? "Exit fullscreen (Esc)" : "Fullscreen"} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? <Minimize size={17}/> : <Expand size={17}/>}</button>
+        </div>
       </div>
-      {unavailable && <p className="map-notice" role="status">{rasterFailed ? "Imagery is unavailable in this browser. Political boundaries are shown below." : layer === "terrain" ? "Topographic imagery requires a configured tile provider. Political boundaries are shown below." : "Satellite imagery requires a licensed tile provider. Political boundaries are shown below."}</p>}
+      {unavailable && <div className="map-notice" role="status">Imagery could not be loaded. The offline map is available below. <button className="text-button" onClick={() => setRasterFailed(false)}>Retry imagery</button></div>}
       <div className="map-scene">
       {raster && !rasterFailed ? <RasterMap key={layer} provider={raster} region={region} onSelect={select} onUnavailable={() => setRasterFailed(true)}/> : <div className={`map-stage${camera.k > 1 ? " zoomed" : ""}`} ref={stage} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd}>
-        <AtlasSvg data={data} regions={regions} svgRef={svg} selection={selected ? [selected] : []} thematic={Boolean(activeMetric)} fills={fills} water={layer === "waterways"} labels={labels} camera={camera} onSelect={select} onHover={setHovered} showScale={camera.k === 1}/>
+        <AtlasSvg data={data} regions={regions} svgRef={svg} selection={selected ? [selected] : []} thematic={Boolean(activeMetric)} fills={mapFills} water={layer === "waterways"} labels={labels} camera={camera} onSelect={select} onHover={setHovered} showScale={camera.k === 1}/>
         <div className="map-zoom" onPointerDown={(event) => event.stopPropagation()}>
           <button aria-label="Zoom in" title="Zoom in" onClick={() => zoom(1.35)}><Plus size={17}/></button>
           <button aria-label="Zoom out" title="Zoom out" onClick={() => zoom(1 / 1.35)}><Minus size={17}/></button>
@@ -144,7 +180,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
         </div>
         {focus && <div className="map-tooltip"><strong>{focus.name}</strong>{activeMetric && <span>{formatValue(layer, values[focus.id])}</span>}</div>}
       </div>}
-    <aside className="atlas-sidebar" aria-label="Region details">
+    <aside id={detailsId} className="atlas-sidebar" aria-label="Region details" hidden={!details}>
       <div className="region-picker"><label><Search size={16} /><input aria-label="Find a state or territory" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Find a jurisdiction…" onKeyDown={(event) => {
         if (event.key === "Enter" && matches[0]) select(matches[0].id, !home);
         if (event.key === "Escape") setSearch("");

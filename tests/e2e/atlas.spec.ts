@@ -124,14 +124,56 @@ test("captures the home layout with no horizontal overflow", async ({ page }, te
   await page.screenshot({ path: testInfo.outputPath(`home-${testInfo.project.name}.png`), fullPage: true });
 });
 
-test("reports missing satellite setup, exports the offline map, and persists dark mode", async ({ page }) => {
+test("falls back when imagery is offline, exports the map, and persists dark mode", async ({ page }) => {
+  await page.route("https://basemap.nationalmap.gov/**", (route) => route.abort());
   await page.goto("/map?region=PR");
   await page.getByRole("combobox", { name: "Map layer" }).selectOption("satellite");
-  await expect(page.getByText("Satellite imagery requires a licensed tile provider.")).toBeVisible();
+  await expect(page.getByText("Imagery could not be loaded.", { exact: false })).toBeVisible({ timeout: 25000 });
   const imageDownload = page.waitForEvent("download");
   await page.getByRole("button", { name: "PNG", exact: true }).click();
   expect((await imageDownload).suggestedFilename()).toBe("stateatlas-map.png");
   await page.getByRole("button", { name: "Toggle light or dark theme" }).click();
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+});
+
+test("loads satellite and terrain with bundled worker and public provider defaults", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
+  await page.route("https://basemap.nationalmap.gov/**/tile/**", (route) => route.fulfill({
+    path: "tests/fixtures/usgs-imagery.jpg", contentType: "image/jpeg", headers: { "Access-Control-Allow-Origin": "*" },
+  }));
+  await page.goto("/");
+  await page.getByRole("button", { name: "Satellite", exact: true }).click();
+  await expect(page.locator(".raster-panel")).toHaveAttribute("data-imagery-state", "ready", { timeout: 20000 });
+  await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+  await expect(page.locator(".raster-status")).toContainText("not live");
+  await expect(page.locator(".maplibregl-ctrl-attrib")).toContainText("USGS");
+  await page.getByRole("button", { name: "Terrain", exact: true }).click();
+  await expect(page.locator(".raster-panel")).toHaveAttribute("data-imagery-state", "ready", { timeout: 20000 });
+  await expect(page.locator(".raster-status")).toContainText("Topography");
+  expect(errors).toEqual([]);
+});
+
+test("changes map palettes and opens a fullscreen map with keyboard exit", async ({ page }) => {
+  await page.goto("/");
+  const texas = page.getByRole("button", { name: "Texas", exact: true }).locator("path.region-path");
+  const initial = await texas.getAttribute("fill");
+  await page.getByRole("button", { name: "Sage palette", exact: true }).click();
+  await expect(texas).not.toHaveAttribute("fill", initial!);
+  await expect(page.getByRole("button", { name: "Sage palette", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Hide region details", exact: true }).click();
+  await expect(page.getByRole("complementary", { name: "Region details" })).toBeHidden();
+  await page.getByRole("button", { name: "Enter fullscreen", exact: true }).click();
+  const fullscreen = page.getByRole("dialog", { name: "Fullscreen map", exact: true });
+  await expect(fullscreen).toBeVisible();
+  const bounds = await fullscreen.boundingBox();
+  expect(bounds!.height).toBe(page.viewportSize()!.height);
+  expect(bounds!.width).toBeGreaterThanOrEqual(page.viewportSize()!.width - 20);
+  await page.getByRole("button", { name: "Exit fullscreen", exact: true }).press("Escape");
+  await expect(fullscreen).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Enter fullscreen", exact: true })).toBeFocused();
+  await page.getByRole("button", { name: "Show region details", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "California", exact: true })).toBeVisible();
 });
