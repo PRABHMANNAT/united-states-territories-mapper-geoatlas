@@ -24,7 +24,7 @@ export function AtlasSvg({
     viewBox={`0 0 ${data.width} ${data.height}`} role={onSelect ? "group" : "img"} aria-label="Map of U.S. states and territories">
     <defs>
       <pattern id={`${id}-grid`} width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" className="map-grid-line" fill="none" strokeWidth="0.6" /></pattern>
-      <clipPath id={`${id}-land`}><path d={Object.values(data.shapes).filter((shape) => shape.panel === "conus").map((shape) => shape.path).join("")}/></clipPath>
+      {water && <clipPath id={`${id}-land`}><path d={Object.values(data.shapes).filter((shape) => shape.panel === "conus").map((shape) => shape.path).join("")}/></clipPath>}
     </defs>
     <rect width={data.width} height={data.height} className="map-background"/>
     <rect width={data.width} height={data.height} fill={`url(#${id}-grid)`} />
