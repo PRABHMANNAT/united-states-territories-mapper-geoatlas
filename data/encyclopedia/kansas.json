@@ -1,0 +1,319 @@
+{
+  "id": "KS",
+  "title": "Kansas",
+  "url": "https://en.wikipedia.org/wiki/Kansas",
+  "revision": 1382553161,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1382553161",
+  "revisionDate": "2026-10-29T06:10:28Z",
+  "wikidata": "Q1558",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Kansas (  KAN-zəss) is a landlocked state in the Great Plains region of the United States. It borders Nebraska to the north, Colorado to the west, Oklahoma to the south, and Missouri to the east.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Bleeding Kansas and the Civil War",
+      "anchor": "Bleeding_Kansas_and_the_Civil_War",
+      "level": 2
+    },
+    {
+      "name": "Settlement and the Wild West",
+      "anchor": "Settlement_and_the_Wild_West",
+      "level": 2
+    },
+    {
+      "name": "20th century",
+      "anchor": "20th_century",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Geology",
+      "anchor": "Geology",
+      "level": 2
+    },
+    {
+      "name": "Topography",
+      "anchor": "Topography",
+      "level": 2
+    },
+    {
+      "name": "Rivers",
+      "anchor": "Rivers",
+      "level": 2
+    },
+    {
+      "name": "Lakes and reservoirs",
+      "anchor": "Lakes_and_reservoirs",
+      "level": 2
+    },
+    {
+      "name": "National parks and historic sites",
+      "anchor": "National_parks_and_historic_sites",
+      "level": 2
+    },
+    {
+      "name": "Flora and fauna",
+      "anchor": "Flora_and_fauna",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Settlement",
+      "anchor": "Settlement",
+      "level": 1
+    },
+    {
+      "name": "Birth data",
+      "anchor": "Birth_data",
+      "level": 2
+    },
+    {
+      "name": "Life expectancy",
+      "anchor": "Life_expectancy",
+      "level": 2
+    },
+    {
+      "name": "Regions",
+      "anchor": "Regions",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Population",
+      "anchor": "Population",
+      "level": 2
+    },
+    {
+      "name": "Race and ethnicity",
+      "anchor": "Race_and_ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Native Americans",
+      "anchor": "Native_Americans",
+      "level": 2
+    },
+    {
+      "name": "Language",
+      "anchor": "Language",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Largest immigrant groups",
+      "anchor": "Largest_immigrant_groups",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Energy",
+      "anchor": "Energy",
+      "level": 2
+    },
+    {
+      "name": "Taxes",
+      "anchor": "Taxes",
+      "level": 2
+    },
+    {
+      "name": "Health care",
+      "anchor": "Health_care",
+      "level": 2
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Highways",
+      "anchor": "Highways",
+      "level": 2
+    },
+    {
+      "name": "Aviation",
+      "anchor": "Aviation",
+      "level": 2
+    },
+    {
+      "name": "Rail",
+      "anchor": "Rail",
+      "level": 2
+    },
+    {
+      "name": "Transit",
+      "anchor": "Transit",
+      "level": 2
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "State and local politics",
+      "anchor": "State_and_local_politics",
+      "level": 2
+    },
+    {
+      "name": "Political culture",
+      "anchor": "Political_culture",
+      "level": 2
+    },
+    {
+      "name": "19th-century state politics",
+      "anchor": "19th-century_state_politics",
+      "level": 2
+    },
+    {
+      "name": "20th-century state politics",
+      "anchor": "20th-century_state_politics",
+      "level": 2
+    },
+    {
+      "name": "21st-century state politics",
+      "anchor": "21st-century_state_politics",
+      "level": 2
+    },
+    {
+      "name": "National politics",
+      "anchor": "National_politics",
+      "level": 2
+    },
+    {
+      "name": "State laws",
+      "anchor": "State_laws",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Music",
+      "anchor": "Music",
+      "level": 2
+    },
+    {
+      "name": "Literature",
+      "anchor": "Literature",
+      "level": 2
+    },
+    {
+      "name": "Art",
+      "anchor": "Art",
+      "level": 2
+    },
+    {
+      "name": "Museums",
+      "anchor": "Museums",
+      "level": 2
+    },
+    {
+      "name": "Film theaters",
+      "anchor": "Film_theaters",
+      "level": 2
+    },
+    {
+      "name": "Popular culture",
+      "anchor": "Popular_culture",
+      "level": 2
+    },
+    {
+      "name": "Television stations",
+      "anchor": "Television_stations",
+      "level": 2
+    },
+    {
+      "name": "Radio stations",
+      "anchor": "Radio_stations",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 1
+    },
+    {
+      "name": "Professional",
+      "anchor": "Professional",
+      "level": 2
+    },
+    {
+      "name": "College",
+      "anchor": "College",
+      "level": 2
+    },
+    {
+      "name": "High school",
+      "anchor": "High_school",
+      "level": 2
+    },
+    {
+      "name": "Rivalry with Missouri",
+      "anchor": "Rivalry_with_Missouri",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Bibliography",
+      "anchor": "Bibliography",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
