@@ -4,6 +4,7 @@ import { geoArea, geoAzimuthalEqualArea, geoPath } from "d3-geo";
 import type { Feature, MultiPolygon, Polygon } from "geojson";
 import { Minus, Move, Plus, RotateCcw } from "lucide-react";
 import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
+import { useMapNavigation } from "./use-map-navigation";
 import { formatValue, latest } from "@/lib/statistics";
 import type { Observation, Region } from "@/lib/types";
 
@@ -73,10 +74,10 @@ function ComparisonCanvas({ overlay, base }: { overlay: Region; base: Region }) 
   const [outlines, setOutlines] = useState<[Outline, Outline]>();
   const [error, setError] = useState(false);
   const [attempt, setAttempt] = useState(0);
-  const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState<Point>({ x: 0, y: 0 });
   const [viewport, setViewport] = useState({ width: 840, height: 440 });
   const canvas = useRef<SVGSVGElement>(null);
+  const navigation = useMapNavigation(canvas, { x: 0, y: 0, ...viewport }, { minZoom: 0.5, maxZoom: 8, dragExclude: ".size-drag", preserveOnResize: true });
   const drag = useRef<{ pointerId: number; start: Point; origin: Point } | null>(null);
   const gridId = useId();
 
@@ -105,7 +106,7 @@ function ComparisonCanvas({ overlay, base }: { overlay: Region; base: Region }) 
     width * 0.8 / Math.max(...outlines.map((shape) => shape.width)),
     height * 0.76 / Math.max(...outlines.map((shape) => shape.height)),
   ) : 1;
-  const scale = fit * zoom;
+  const scale = fit;
 
   function pointerPosition(event: PointerEvent<SVGGElement>) {
     const matrix = canvas.current?.getScreenCTM();
@@ -133,12 +134,12 @@ function ComparisonCanvas({ overlay, base }: { overlay: Region; base: Region }) 
 
   function reset() {
     setOffset({ x: 0, y: 0 });
-    setZoom(1);
+    navigation.reset();
   }
 
   return <>
     <div className="size-canvas">
-      <svg ref={canvas} viewBox={`0 0 ${width} ${height}`} role="group" aria-label="Same-scale state outlines">
+      <svg ref={canvas} viewBox={`0 0 ${width} ${height}`} tabIndex={0} role="group" aria-label="Same-scale state outlines">
         <defs><pattern id={gridId} width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#dedfe3"/></pattern></defs>
         <rect width={width} height={height} fill={`url(#${gridId})`}/>
         {outlines && <>
@@ -152,7 +153,8 @@ function ComparisonCanvas({ overlay, base }: { overlay: Region; base: Region }) 
               const direction = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[event.key];
               if (!direction) return;
               event.preventDefault();
-              setOffset((point) => ({ x: point.x + direction[0] * 12 / scale, y: point.y + direction[1] * 12 / scale }));
+              const pixelsPerUnit = scale * (canvas.current?.getScreenCTM()?.a ?? 1);
+              setOffset((point) => ({ x: point.x + direction[0] * 12 / pixelsPerUnit, y: point.y + direction[1] * 12 / pixelsPerUnit }));
             }}>
             <path className="size-overlay-outline" d={outlines[0].path} transform={`scale(${scale}) translate(${-outlines[0].x} ${-outlines[0].y})`} vectorEffect="non-scaling-stroke"/>
             <circle className="size-drag-handle" r="12"/>
@@ -161,14 +163,14 @@ function ComparisonCanvas({ overlay, base }: { overlay: Region; base: Region }) 
         </>}
       </svg>
       {outlines ? <div className="size-zoom" role="group" aria-label="Size comparison zoom">
-        <button className="icon-button" aria-label="Zoom comparison in" onClick={() => setZoom((value) => Math.min(8, value * 1.35))} disabled={zoom >= 8}><Plus size={17}/></button>
-        <button className="icon-button" aria-label="Zoom comparison out" onClick={() => setZoom((value) => Math.max(0.5, value / 1.35))} disabled={zoom <= 0.5}><Minus size={17}/></button>
+        <button className="icon-button" aria-label="Zoom comparison in" title="Zoom in (+)" onClick={() => navigation.zoomBy(1.4)} disabled={navigation.zoom >= 8}><Plus size={17}/></button>
+        <button className="icon-button" aria-label="Zoom comparison out" title="Zoom out (−)" onClick={() => navigation.zoomBy(1 / 1.4)} disabled={navigation.zoom <= 0.5}><Minus size={17}/></button>
         <button className="icon-button" aria-label="Reset comparison view" onClick={reset}><RotateCcw size={16}/></button>
       </div> : <div className="size-load" role="status">{error ? <>
         <p>Could not load the state outlines.</p>
         <button className="quiet-button" onClick={() => { setError(false); setAttempt((value) => value + 1); }}>Try again</button>
       </> : "Loading state outlines…"}</div>}
     </div>
-    <p className="size-comparison-caption">Drag the blue outline or move it with the arrow keys. Both outlines use the same scale and preserve area. The land area figures exclude water.</p>
+    <p className="size-comparison-caption">Drag the blue outline or move it with the arrow keys. Drag the background to pan both states; click it, then scroll or pinch to zoom. Both outlines use the same scale and preserve area. The land area figures exclude water.</p>
   </>;
 }

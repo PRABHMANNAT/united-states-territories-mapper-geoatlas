@@ -7,6 +7,7 @@ import { exportSvg } from "@/lib/downloads";
 import { atlasAdminLayers, atlasBounds, atlasById, atlasCountries, atlasLink, atlasPlaces, divisionLayerKey, type AdminLevel, type AtlasOutlines } from "@/lib/north-america";
 
 import { useAtlasAdminLayers } from "./use-atlas-admin-layers";
+import { useMapNavigation } from "./use-map-navigation";
 import { paintPalette } from "@/lib/map-project";
 const countryIds = atlasCountries.map((place) => place.id);
 const number = new Intl.NumberFormat("en");
@@ -23,7 +24,6 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
   const [outlines, setOutlines] = useState<AtlasOutlines>();
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
-  const [zoom, setZoom] = useState(1);
   const [fullscreen, setFullscreen] = useState(false);
   const [color, setColor] = useState(paintPalette[8]);
   const [fills, setFills] = useState<Record<string, string>>({});
@@ -72,14 +72,9 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
   const shownSources = [...new Set(visible.flatMap((id) => divisionLayerKey(id) ?? []))];
   const layerLoading = Boolean(currentLayer && !layers[currentKey] && !errors.includes(currentKey));
   const requestedErrors = errors.filter((key) => requested.split(",").includes(key));
-  const view = bounds && {
-    x: bounds.x + bounds.width * (1 - 1 / zoom) / 2,
-    y: bounds.y + bounds.height * (1 - 1 / zoom) / 2,
-    width: bounds.width / zoom,
-    height: bounds.height / zoom,
-  };
-  const viewBox = view ? `${view.x} ${view.y} ${view.width} ${view.height}` : undefined;
-  const labelSize = Math.max(view?.width ?? 1, (view?.height ?? 1) * 1.25) / 80;
+  const navigation = useMapNavigation(svg, bounds);
+  const viewBox = bounds ? `${bounds.x} ${bounds.y} ${bounds.width} ${bounds.height}` : undefined;
+  const labelSize = Math.max(bounds?.width ?? 1, (bounds?.height ?? 1) * 1.25) / 80 / navigation.zoom;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -129,7 +124,7 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
     if (!placeFor(id)) return;
     setScope((items) => items.includes(id) ? items : [...items, id]);
     setActive(id);
-    setZoom(1);
+    navigation.reset();
   }
 
   function paintPlace(id: string, nextColor?: string) {
@@ -154,6 +149,7 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
   }
 
   async function save(format: "svg" | "png") {
+    const view = navigation.getView();
     if (!svg.current || !view || !readyToExport) return;
     const clone = svg.current.cloneNode(true) as SVGSVGElement;
     clone.removeAttribute("class");
@@ -220,9 +216,9 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
         </div>
       </div>
       <div className="continent-canvas">
-        {outlines && view && <svg ref={svg} xmlns="http://www.w3.org/2000/svg" viewBox={viewBox} role="group" aria-label="North America boundary map" className="continent-map">
+        {outlines && bounds && <svg ref={svg} xmlns="http://www.w3.org/2000/svg" viewBox={viewBox} role="group" aria-label="North America boundary map" aria-describedby="continent-gesture-help" tabIndex={0} className="continent-map">
           <title>{editing ? title || "Untitled map" : "North America"}</title>
-          <rect x={view.x} y={view.y} width={view.width} height={view.height} fill={background}/>
+          <rect x={bounds.x - bounds.width} y={bounds.y - bounds.height} width={bounds.width * 3} height={bounds.height * 3} fill={background}/>
           {visible.map((id) => {
             const shape = combinedOutlines[id];
             const place = placeFor(id);
@@ -252,17 +248,19 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
           <button className="quiet-button" onClick={() => { setFailed(false); setAttempt(attempt + 1); }}>Try again</button>
         </> : "Loading North American boundaries…"}</div>}
         <div className="continent-zoom" role="group" aria-label="Atlas view controls">
-          <button className="icon-button" aria-label="Zoom in" disabled={!outlines || zoom >= 8} onClick={() => setZoom(Math.min(8, zoom * 1.4))}><Plus size={17}/></button>
-          <button className="icon-button" aria-label="Zoom out" disabled={!outlines || zoom <= 1} onClick={() => setZoom(Math.max(1, zoom / 1.4))}><Minus size={17}/></button>
-          <button className="icon-button" aria-label="Reset zoom" disabled={!outlines} onClick={() => setZoom(1)}><RotateCcw size={15}/></button>
+          <button className="icon-button" aria-label="Zoom in" title="Zoom in (+)" disabled={!outlines || navigation.zoom >= 16} onClick={() => navigation.zoomBy(1.4)}><Plus size={17}/></button>
+          <button className="icon-button" aria-label="Zoom out" title="Zoom out (−)" disabled={!outlines || navigation.zoom <= 1} onClick={() => navigation.zoomBy(1 / 1.4)}><Minus size={17}/></button>
+          <button className="icon-button" aria-label="Reset zoom" title="Reset map view (0)" disabled={!outlines} onClick={() => navigation.reset()}><RotateCcw size={15}/></button>
           <button ref={fullscreenButton} className="icon-button continent-fullscreen-button"
             aria-label={fullscreen ? "Exit fullscreen preview" : "Enter fullscreen preview"}
             title={fullscreen ? "Exit fullscreen preview (Esc)" : "Fullscreen preview"}
             onClick={() => setFullscreen(!fullscreen)}>
             {fullscreen ? <Minimize size={17}/> : <Expand size={17}/>}
           </button>
+          <output className="map-zoom-level" aria-label="Map zoom">{Math.round(navigation.zoom * 100)}%</output>
         </div>
       </div>
+      <p className="map-gesture-help" id="continent-gesture-help">Drag to move · Click the map, then scroll to zoom · Pinch on touchscreens · Arrow keys to pan, + / − to zoom, 0 to reset</p>
       <div className="continent-foot">
         <span>{shownSources.length ? "Natural Earth and geoBoundaries" : "Made with Natural Earth"}</span>
         <label><input type="checkbox" checked={labels} onChange={(event) => setLabels(event.target.checked)}/> Map labels</label>
@@ -288,7 +286,7 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
           {profile && <Link className="quiet-button continent-selection-primary" href={`/places/${profile.id}`}>
             {profile.kind === "country" ? "Browse subdivisions" : "Open profile"} <ArrowUpRight size={14}/>
           </Link>}
-          <button className="quiet-button" onClick={() => { setScope([selected.id]); setZoom(1); }}><LocateFixed size={14}/> Focus map</button>
+          <button className="quiet-button" onClick={() => { setScope([selected.id]); navigation.reset(); }}><LocateFixed size={14}/> Focus map</button>
         </div>
       </section>}
 
@@ -299,7 +297,7 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
           {atlasCountries.map((place) => <option key={place.id} value={place.id}>{place.name}</option>)}
         </select></label>
         <div className="button-row">
-          <button className="quiet-button" onClick={() => { setScope([country]); setActive(country); setZoom(1); }}>View only</button>
+          <button className="quiet-button" onClick={() => { setScope([country]); setActive(country); navigation.reset(); }}>View only</button>
           <button className="primary-button" onClick={() => include(country)} disabled={scope.includes(country)}>Add country</button>
         </div>
         <label>Boundary level<select value={level} onChange={(event) => {
@@ -311,7 +309,7 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
           if (next > 1 && !scope.length) {
             setScope([country]);
             setActive(country);
-            setZoom(1);
+            navigation.reset();
           }
         }}>
           <option value={1}>1st level · states and provinces</option>
@@ -340,9 +338,9 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
             const next = scope.filter((item) => item !== id);
             setScope(next);
             if (active === id) setActive(next[0] ?? country);
-            setZoom(1);
+            navigation.reset();
           }} aria-label={`Remove ${placeFor(id)?.name ?? id}`}>{placeFor(id)?.name ?? id} <X size={13}/></button>)}</div>
-          <button className="text-button" onClick={() => { setScope([]); setActive(country); setZoom(1); }}>Show all North America</button>
+          <button className="text-button" onClick={() => { setScope([]); setActive(country); navigation.reset(); }}>Show all North America</button>
         </div>}
       </section>
 

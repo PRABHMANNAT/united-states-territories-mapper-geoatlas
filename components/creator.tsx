@@ -1,8 +1,9 @@
 "use client";
 
-import { Download, Eraser, MousePointer2, Paintbrush, Redo2, RotateCcw, Save, Undo2 } from "lucide-react";
-import { useState, type CSSProperties } from "react";
+import { Download, Eraser, Minus, MousePointer2, Paintbrush, Plus, Redo2, RotateCcw, Save, Undo2 } from "lucide-react";
+import { useRef, useState, type CSSProperties } from "react";
 import { AtlasSvg } from "./atlas-svg";
+import { useMapNavigation } from "./use-map-navigation";
 import { ShareButton } from "./share";
 import { download, downloadCsv, exportSvg } from "@/lib/downloads";
 import { choropleth } from "@/lib/layers";
@@ -28,6 +29,8 @@ export function Creator({ initial, initialRegion, data, regions, population, inv
   const [labelRegion, setLabelRegion] = useState(initialRegion ?? "CA");
   const [status, setStatus] = useState(invalid ? "That shared project could not be loaded." : "");
   const project = history.active;
+  const svg = useRef<SVGSVGElement>(null);
+  const navigation = useMapNavigation(svg, { x: 0, y: 0, width: data.width, height: data.height });
   const palette = projectPalette(project);
   const fills = Object.fromEntries(Object.entries(project.assignments).map(([id, group]) => [id, project.groups[group].color]));
 
@@ -104,7 +107,15 @@ export function Creator({ initial, initialRegion, data, regions, population, inv
       <div className={`creator-map${project.boundaries ? "" : " no-boundaries"}`} style={{
         "--map-paper": palette.paper, "--map-land": palette.land, "--map-edge": palette.edge, "--map-ink": palette.ink,
         "--map-muted": palette.muted, "--map-inset": palette.paper, "--map-grid": palette.edge + "38",
-      } as CSSProperties}><AtlasSvg data={data} regions={regions} fills={fills} selection={tool === "select" ? selection : []} labels={project.labels} customLabels={project.labelsByRegion} onSelect={useMapTool}/></div>
+      } as CSSProperties}><AtlasSvg svgRef={svg} data={data} regions={regions} fills={fills} selection={tool === "select" ? selection : []} labels={project.labels} customLabels={project.labelsByRegion} onSelect={useMapTool}/>
+        <div className="continent-zoom" role="group" aria-label="Creator view controls">
+          <button className="icon-button" aria-label="Zoom in" title="Zoom in (+)" disabled={navigation.zoom >= 16} onClick={() => navigation.zoomBy(1.4)}><Plus size={17}/></button>
+          <button className="icon-button" aria-label="Zoom out" title="Zoom out (−)" disabled={navigation.zoom <= 1} onClick={() => navigation.zoomBy(1 / 1.4)}><Minus size={17}/></button>
+          <button className="icon-button" aria-label="Reset map view" title="Reset map view (0)" onClick={navigation.reset}><RotateCcw size={16}/></button>
+          <output className="map-zoom-level" aria-label="Map zoom">{Math.round(navigation.zoom * 100)}%</output>
+        </div>
+      </div>
+      <p className="map-gesture-help">Drag to move without painting · Click the map, then scroll to zoom · Pinch to zoom · Exports include the whole map</p>
       <div className="editor-legend creator-swatches" role="group" aria-label="Map color groups">{project.groups.map((item, i) => <button key={i} type="button" className="quiet-button" aria-pressed={i === activeGroup} onClick={() => setActiveGroup(i)}><i style={{ backgroundColor: item.color }}/> {item.name || `Group ${i + 1}`}</button>)}</div>
       <div className="button-row"><button className="quiet-button" onClick={() => exportImage("svg")}><Download size={15}/> SVG</button><button className="quiet-button" onClick={() => exportImage("png")}><Download size={15}/> PNG</button>
         <button className="quiet-button" onClick={() => download(new Blob([JSON.stringify(project, null, 2)], { type: "application/json" }), "stateatlas-map.json")}>JSON</button>

@@ -787,6 +787,19 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 .continent-zoom .icon-button { width: 34px; height: 34px; color: #fff; }
 .continent-zoom .icon-button:hover { background: #303030; }
 .continent-zoom .icon-button:focus-visible { outline-color: #fff; outline-offset: -2px; }
+.navigable-map { touch-action: none; cursor: grab; user-select: none; outline-offset: -3px; }
+.navigable-map[data-dragging], .navigable-map[data-dragging] [role="button"] { cursor: grabbing; }
+.navigable-map:focus-visible { outline: 2px solid #171717; }
+.creator-map { position: relative; overflow: hidden; }
+.map-zoom-level { display: grid; place-items: center; min-width: 49px; padding-inline: 7px; color: #fff; font-size: 11px; font-variant-numeric: tabular-nums; border-left: 1px solid #444; }
+.map-gesture-help { margin: 0; padding: 9px 16px; font-size: 11px; line-height: 1.5; color: var(--muted); background: var(--surface); }
+.map-gesture-overlay { position: absolute; bottom: 9px; left: 12px; max-width: calc(100% - 290px); padding: 5px 10px; border: 1px solid var(--line); border-radius: 12px; pointer-events: none; }
+@media (pointer: coarse) {
+  .continent-zoom .icon-button, .size-zoom .icon-button { width: 42px; height: 42px; }
+}
+@media (max-width: 700px) {
+  .map-gesture-overlay { max-width: calc(100% - 24px); font-size: 10px; }
+}
 .continent-foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 10px 16px; font-size: 11px; color: var(--muted); }
 .continent-foot label, .continent-check { display: flex; align-items: center; gap: 6px; }
 .continent-status { padding: 0 16px 10px; font-size: 12px; }
