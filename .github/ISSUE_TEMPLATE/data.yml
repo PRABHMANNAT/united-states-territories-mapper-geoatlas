@@ -1,0 +1,16 @@
+name: Data discrepancy
+description: Report a source, value, geography, or reference year mismatch.
+labels: [data]
+body:
+  - type: textarea
+    attributes:
+      label: Observation in StateAtlas
+      description: Include the region, metric, reference year and displayed value.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Primary source
+      description: Link the official table or map and explain the discrepancy.
+    validations:
+      required: true
