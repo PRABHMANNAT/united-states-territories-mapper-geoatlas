@@ -4,13 +4,16 @@ import { countries, findRegion, mapData, observations, regions } from "@/lib/dat
 
 export const metadata = { title: "Compare jurisdictions" };
 
-export default async function ComparePage({ searchParams }: { searchParams: Promise<{ regions?: string }> }) {
+export default async function ComparePage({ searchParams }: { searchParams: Promise<{ regions?: string; countryMetric?: string; target?: string }> }) {
   const query = await searchParams;
   const ids = [...new Set((typeof query.regions === "string" ? query.regions : "").split(",").flatMap((id) => {
     const region = findRegion(id);
     return region ? [region.id] : [];
   }))].slice(0, 4);
+  const selected = ids.length >= 2 ? ids : ["CA", "TX"];
+  const target = selected.find((id) => id === query.target) ?? selected[0];
+  const countryMetric = query.countryMetric === "land" || query.countryMetric === "population" ? query.countryMetric : "gdp";
   return <div className="shell inner-page"><PageHeading label="03 / COMPARATIVE GEOGRAPHY" title="Compare places">Put up to four jurisdictions side by side or find economies of a similar size using World Bank indicators.</PageHeading>
-    <Compare key={ids.join(",")} regions={regions} silhouettes={mapData.silhouettes} observations={observations.filter((row) => row.year >= 2020)} countries={countries} initial={ids.length >= 2 ? ids : ["CA", "TX"]}/>
+    <Compare key={`${selected.join(",")}:${target}:${countryMetric}`} regions={regions} silhouettes={mapData.silhouettes} observations={observations.filter((row) => row.year >= 2020)} countries={countries} initial={selected} initialTarget={target} initialCountryMetric={countryMetric}/>
   </div>;
 }

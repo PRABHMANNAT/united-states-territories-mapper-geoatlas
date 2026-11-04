@@ -12,12 +12,12 @@ import type { Country, Observation, Region } from "@/lib/types";
 
 const compareMetrics = ["population", "population-growth", "area", "land", "density", "gdp", "gdp-per-capita", "income", "median-age", "poverty", "homeownership"];
 
-export function Compare({ initial, regions, silhouettes, observations, countries }: {
-  initial: string[]; regions: Region[]; silhouettes: Record<string, string>; observations: Observation[]; countries: Country[];
+export function Compare({ initial, initialTarget, initialCountryMetric, regions, silhouettes, observations, countries }: {
+  initial: string[]; initialTarget: string; initialCountryMetric: string; regions: Region[]; silhouettes: Record<string, string>; observations: Observation[]; countries: Country[];
 }) {
   const [ids, setIds] = useState(initial);
-  const [countryMetric, setCountryMetric] = useState("gdp");
-  const [target, setTarget] = useState(initial[0]);
+  const [countryMetric, setCountryMetric] = useState(initialCountryMetric);
+  const [target, setTarget] = useState(initialTarget);
   const selected = ids.map((id) => regions.find((region) => region.id === id)!);
   const rows = compareMetrics.map((metric) => {
     const sameSeries = series(observations, metric).filter((row) => row.source !== "islandCensus");
@@ -30,12 +30,19 @@ export function Compare({ initial, regions, silhouettes, observations, countries
     series(observations, countryMetric, target).find((row) => row.source !== "islandCensus");
   const matches = countryObs ? countryMatches(countries, countryObs).slice(0, 6) : [];
 
-  function update(next: string[]) {
-    setIds(next);
-    if (!next.includes(target)) setTarget(next[0]);
+  function syncURL(next: string[], focus: string, indicator: string) {
     const url = new URL(window.location.href);
     url.searchParams.set("regions", next.join(","));
+    url.searchParams.set("target", focus);
+    url.searchParams.set("countryMetric", indicator);
     window.history.replaceState(null, "", url);
+  }
+
+  function update(next: string[]) {
+    const focus = next.includes(target) ? target : next[0];
+    setIds(next);
+    setTarget(focus);
+    syncURL(next, focus, countryMetric);
   }
 
   return <>
@@ -62,8 +69,8 @@ export function Compare({ initial, regions, silhouettes, observations, countries
     </section>
     <section className="panel tool-panel secondary-panel">
       <div className="tool-summary"><div><p className="eyebrow"><span /> WORLD BANK INDICATORS</p><h2>Find a country match</h2></div><Globe2 size={30}/></div>
-      <div className="controls"><label>Jurisdiction<select value={target} onChange={(event) => setTarget(event.target.value)}>{selected.map((region) => <option key={region.id} value={region.id}>{region.name}</option>)}</select></label>
-        <label>Comparable metric<select value={countryMetric} onChange={(event) => setCountryMetric(event.target.value)}>{["gdp", "population", "land"].map((id) => <option value={id} key={id}>{metricById[id].name}</option>)}</select></label></div>
+      <div className="controls"><label>Jurisdiction<select value={target} onChange={(event) => { setTarget(event.target.value); syncURL(ids, event.target.value, countryMetric); }}>{selected.map((region) => <option key={region.id} value={region.id}>{region.name}</option>)}</select></label>
+        <label>Comparable metric<select value={countryMetric} onChange={(event) => { setCountryMetric(event.target.value); syncURL(ids, target, event.target.value); }}>{["gdp", "population", "land"].map((id) => <option value={id} key={id}>{metricById[id].name}</option>)}</select></label></div>
       {countryObs ? <><p className="metric-description"><strong>{regions.find((region) => region.id === target)?.name} · {countryObs.year} · {formatValue(countryMetric, countryObs.value)}</strong></p>
         <div className="table-scroll"><table><thead><tr><th scope="col">World Bank economy</th><th scope="col">Value</th><th scope="col">Year</th><th scope="col">Relative to jurisdiction</th></tr></thead>
           <tbody>{matches.map(({ country, observation }) => <tr key={country.id}><th scope="row">{country.name}</th><td className="mono">{formatValue(countryMetric, observation.value)}</td><td>{observation.year}{observation.year !== countryObs.year && <small className="cell-detail">Different year</small>}</td><td>{(observation.value / countryObs.value).toFixed(2)}×</td></tr>)}</tbody>
