@@ -18,6 +18,7 @@ export function Creator({ initial, data, regions, population, invalid }: {
   const [history, setHistory] = useState<History>({ before: [], active: initial, after: [] });
   const [selection, setSelection] = useState<string[]>([]);
   const [activeGroup, setActiveGroup] = useState(0);
+  const [labelRegion, setLabelRegion] = useState("CA");
   const [status, setStatus] = useState(invalid ? "That shared project could not be loaded." : "");
   const project = history.active;
   const palette = projectThemes[project.theme];
@@ -77,7 +78,7 @@ export function Creator({ initial, data, regions, population, invalid }: {
       <div className={`creator-map${project.boundaries ? "" : " no-boundaries"}`} style={{
         "--map-paper": palette.paper, "--map-land": palette.land, "--map-edge": palette.edge, "--map-ink": palette.ink,
         "--map-muted": palette.muted, "--map-inset": palette.paper, "--map-grid": palette.edge + "38",
-      } as CSSProperties}><AtlasSvg data={data} regions={regions} fills={fills} selection={selection} labels={project.labels} onSelect={toggle}/></div>
+      } as CSSProperties}><AtlasSvg data={data} regions={regions} fills={fills} selection={selection} labels={project.labels} customLabels={project.labelsByRegion} onSelect={toggle}/></div>
       <div className="editor-legend">{project.groups.map((item, i) => <span key={i}><i style={{ backgroundColor: item.color }}/> {item.name || `Group ${i + 1}`}</span>)}</div>
       <div className="button-row"><button className="quiet-button" onClick={() => exportImage("svg")}><Download size={15}/> SVG</button><button className="quiet-button" onClick={() => exportImage("png")}><Download size={15}/> PNG</button>
         <button className="quiet-button" onClick={() => download(new Blob([JSON.stringify(project, null, 2)], { type: "application/json" }), "stateatlas-map.json")}>JSON</button>
@@ -98,6 +99,13 @@ export function Creator({ initial, data, regions, population, invalid }: {
       <div className="button-row"><button className="primary-button" disabled={!selection.length} onClick={() => paint()}><Paintbrush size={15}/> Apply group</button><button className="quiet-button" disabled={!selection.length} onClick={() => paint(true)}>Erase fill</button></div>
       <label>Toggle a jurisdiction<select value="" onChange={(event) => toggle(event.target.value)}><option value="" disabled>Choose from all 65</option>{regions.map((region) => <option key={region.id} value={region.id}>{selection.includes(region.id) ? "✓ " : ""}{region.name}</option>)}</select></label>
       <div className="selected-regions">{selection.map((id) => <button key={id} className="quiet-button" onClick={() => toggle(id)} aria-label={`Deselect ${regions.find((region) => region.id === id)?.name}`}>{id} ×</button>)}</div>
+      <label>Custom label jurisdiction<select value={labelRegion} onChange={(event) => setLabelRegion(event.target.value)}>{regions.map((region) => <option key={region.id} value={region.id}>{region.name}</option>)}</select></label>
+      <label>Custom label<input maxLength={24} value={project.labelsByRegion[labelRegion] ?? ""} placeholder={labelRegion} onChange={(event) => {
+        const labelsByRegion = { ...project.labelsByRegion };
+        if (event.target.value) labelsByRegion[labelRegion] = event.target.value;
+        else delete labelsByRegion[labelRegion];
+        edit({ ...project, labelsByRegion });
+      }}/></label>
       <button className="quiet-button" onClick={preset}>Apply 2025 population preset</button>
       <div className="button-row"><button className="quiet-button" onClick={() => {
         try { localStorage.setItem(saveKey, JSON.stringify(project)); setStatus("Map saved in this browser"); }
@@ -109,6 +117,18 @@ export function Creator({ initial, data, regions, population, invalid }: {
           else setStatus("No saved map in this browser");
         } catch { setStatus("Browser storage is unavailable"); }
       }}>Load saved</button></div>
+      <label>Import map JSON<input type="file" accept=".json,application/json" onChange={async (event) => {
+        const file = event.target.files?.[0];
+        event.target.value = "";
+        if (!file) return;
+        try {
+          const parsed = file.size <= 12_000 ? parseProject(await file.text()) : null;
+          if (!parsed) { setStatus("This file is not a StateAtlas map project"); return; }
+          edit(parsed);
+          setSelection([]);
+          setStatus("Map project imported");
+        } catch { setStatus("The selected file could not be read"); }
+      }}/></label>
     </section>
   </div>;
 }
