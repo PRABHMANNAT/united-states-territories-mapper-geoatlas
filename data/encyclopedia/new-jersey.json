@@ -1,0 +1,329 @@
+{
+  "id": "NJ",
+  "title": "New Jersey",
+  "url": "https://en.wikipedia.org/wiki/New_Jersey",
+  "revision": 1382908315,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1382908315",
+  "revisionDate": "2026-10-30T23:20:46Z",
+  "wikidata": "Q1408",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "New Jersey is a state located in both the Mid-Atlantic and Northeastern regions of the United States. Located at the geographic hub of the heavily urbanized Northeast megalopolis, it is bordered to the northwest, north, and northeast by New York State; on its east, southeast, and south by the Atlantic Ocean; on its west by the Delaware River and Pennsylvania; and on its southwest by Delaware Bay and Delaware.",
+  "sections": [
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Prehistoric era",
+      "anchor": "Prehistoric_era",
+      "level": 2
+    },
+    {
+      "name": "Colonial era",
+      "anchor": "Colonial_era",
+      "level": 2
+    },
+    {
+      "name": "Revolutionary War era",
+      "anchor": "Revolutionary_War_era",
+      "level": 2
+    },
+    {
+      "name": "19th century",
+      "anchor": "19th_century",
+      "level": 2
+    },
+    {
+      "name": "20th century",
+      "anchor": "20th_century",
+      "level": 2
+    },
+    {
+      "name": "21st century",
+      "anchor": "21st_century",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Prominent geographic features",
+      "anchor": "Prominent_geographic_features",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Administrative divisions",
+      "anchor": "Administrative_divisions",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Population",
+      "anchor": "Population",
+      "level": 2
+    },
+    {
+      "name": "Race and ethnicity",
+      "anchor": "Race_and_ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Languages",
+      "anchor": "Languages",
+      "level": 2
+    },
+    {
+      "name": "Sexual orientation and gender identity",
+      "anchor": "Sexual_orientation_and_gender_identity",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Immigration",
+      "anchor": "Immigration",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Educational standards",
+      "anchor": "Educational_standards",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Affluence",
+      "anchor": "Affluence",
+      "level": 2
+    },
+    {
+      "name": "Fiscal policy",
+      "anchor": "Fiscal_policy",
+      "level": 2
+    },
+    {
+      "name": "Federal taxation disparity",
+      "anchor": "Federal_taxation_disparity",
+      "level": 2
+    },
+    {
+      "name": "Industries",
+      "anchor": "Industries",
+      "level": 2
+    },
+    {
+      "name": "Environment",
+      "anchor": "Environment",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Roadways",
+      "anchor": "Roadways",
+      "level": 2
+    },
+    {
+      "name": "Airports",
+      "anchor": "Airports",
+      "level": 2
+    },
+    {
+      "name": "Rail and bus",
+      "anchor": "Rail_and_bus",
+      "level": 2
+    },
+    {
+      "name": "Ferries",
+      "anchor": "Ferries",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "General",
+      "anchor": "General",
+      "level": 2
+    },
+    {
+      "name": "Cuisine",
+      "anchor": "Cuisine",
+      "level": 2
+    },
+    {
+      "name": "Music",
+      "anchor": "Music",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 1
+    },
+    {
+      "name": "Professional sports",
+      "anchor": "Professional_sports",
+      "level": 2
+    },
+    {
+      "name": "Major league sports",
+      "anchor": "Major_league_sports",
+      "level": 2
+    },
+    {
+      "name": "Minor league sports",
+      "anchor": "Minor_league_sports",
+      "level": 2
+    },
+    {
+      "name": "College sports",
+      "anchor": "College_sports",
+      "level": 2
+    },
+    {
+      "name": "High school",
+      "anchor": "High_school",
+      "level": 2
+    },
+    {
+      "name": "Stadiums and arenas",
+      "anchor": "Stadiums_and_arenas",
+      "level": 1
+    },
+    {
+      "name": "Other notable sports venues",
+      "anchor": "Other_notable_sports_venues",
+      "level": 2
+    },
+    {
+      "name": "Government and politics",
+      "anchor": "Government_and_politics",
+      "level": 1
+    },
+    {
+      "name": "Executive",
+      "anchor": "Executive",
+      "level": 2
+    },
+    {
+      "name": "Legislative",
+      "anchor": "Legislative",
+      "level": 2
+    },
+    {
+      "name": "Judicial",
+      "anchor": "Judicial",
+      "level": 2
+    },
+    {
+      "name": "Counties",
+      "anchor": "Counties_2",
+      "level": 2
+    },
+    {
+      "name": "Municipalities",
+      "anchor": "Municipalities_2",
+      "level": 2
+    },
+    {
+      "name": "Politics",
+      "anchor": "Politics",
+      "level": 2
+    },
+    {
+      "name": "Points of interest",
+      "anchor": "Points_of_interest",
+      "level": 1
+    },
+    {
+      "name": "Boardwalks",
+      "anchor": "Boardwalks",
+      "level": 2
+    },
+    {
+      "name": "Museums",
+      "anchor": "Museums",
+      "level": 2
+    },
+    {
+      "name": "National Park Service areas",
+      "anchor": "National_Park_Service_areas",
+      "level": 2
+    },
+    {
+      "name": "Entertainment and concert venues",
+      "anchor": "Entertainment_and_concert_venues",
+      "level": 2
+    },
+    {
+      "name": "Theme parks",
+      "anchor": "Theme_parks",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government",
+      "level": 2
+    },
+    {
+      "name": "U.S. government",
+      "anchor": "U.S._government",
+      "level": 2
+    },
+    {
+      "name": "Other",
+      "anchor": "Other",
+      "level": 2
+    }
+  ]
+}
