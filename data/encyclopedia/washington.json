@@ -1,0 +1,279 @@
+{
+  "id": "WA",
+  "title": "Washington (state)",
+  "url": "https://en.wikipedia.org/wiki/Washington_(state)",
+  "revision": 1383395058,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1383395058",
+  "revisionDate": "2026-11-02T13:24:10Z",
+  "wikidata": "Q1223",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Washington is a state in the Pacific Northwest region of the United States. It is commonly referred to as Washington state to distinguish it from the national capital; both are named after George Washington, a U.S. Founding Father and the first U.S. president.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Early history",
+      "anchor": "Early_history",
+      "level": 2
+    },
+    {
+      "name": "European exploration",
+      "anchor": "European_exploration",
+      "level": 2
+    },
+    {
+      "name": "European settlement",
+      "anchor": "European_settlement",
+      "level": 2
+    },
+    {
+      "name": "Statehood",
+      "anchor": "Statehood",
+      "level": 2
+    },
+    {
+      "name": "Post-statehood",
+      "anchor": "Post-statehood",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Western Washington",
+      "anchor": "Western_Washington",
+      "level": 2
+    },
+    {
+      "name": "Eastern Washington",
+      "anchor": "Eastern_Washington",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Flora and fauna",
+      "anchor": "Flora_and_fauna",
+      "level": 2
+    },
+    {
+      "name": "Administrative divisions",
+      "anchor": "Administrative_divisions",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Population",
+      "anchor": "Population",
+      "level": 2
+    },
+    {
+      "name": "Areas of concentration",
+      "anchor": "Areas_of_concentration",
+      "level": 2
+    },
+    {
+      "name": "Languages",
+      "anchor": "Languages",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Taxes",
+      "anchor": "Taxes",
+      "level": 2
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Wine",
+      "anchor": "Wine",
+      "level": 2
+    },
+    {
+      "name": "Military",
+      "anchor": "Military",
+      "level": 2
+    },
+    {
+      "name": "Internet access",
+      "anchor": "Internet_access",
+      "level": 2
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Environment",
+      "anchor": "Environment",
+      "level": 1
+    },
+    {
+      "name": "Utilities",
+      "anchor": "Utilities",
+      "level": 1
+    },
+    {
+      "name": "Government and politics",
+      "anchor": "Government_and_politics",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government",
+      "level": 2
+    },
+    {
+      "name": "Federal representation",
+      "anchor": "Federal_representation",
+      "level": 2
+    },
+    {
+      "name": "Politics",
+      "anchor": "Politics",
+      "level": 2
+    },
+    {
+      "name": "Notable legislation",
+      "anchor": "Notable_legislation",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Elementary and secondary education",
+      "anchor": "Elementary_and_secondary_education",
+      "level": 2
+    },
+    {
+      "name": "Higher education",
+      "anchor": "Higher_education",
+      "level": 2
+    },
+    {
+      "name": "Media",
+      "anchor": "Media",
+      "level": 1
+    },
+    {
+      "name": "Health care",
+      "anchor": "Health_care",
+      "level": 1
+    },
+    {
+      "name": "Insurance",
+      "anchor": "Insurance",
+      "level": 2
+    },
+    {
+      "name": "Facilities",
+      "anchor": "Facilities",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 2
+    },
+    {
+      "name": "Symbols, honors, and names",
+      "anchor": "Symbols,_honors,_and_names",
+      "level": 1
+    },
+    {
+      "name": "Unofficial state nickname",
+      "anchor": "Unofficial_state_nickname",
+      "level": 2
+    },
+    {
+      "name": "State symbols",
+      "anchor": "State_symbols",
+      "level": 2
+    },
+    {
+      "name": "Sister states – friendship agreements",
+      "anchor": "Sister_states_–_friendship_agreements",
+      "level": 1
+    },
+    {
+      "name": "Sister states",
+      "anchor": "Sister_states",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Further reading",
+      "anchor": "Further_reading",
+      "level": 1
+    },
+    {
+      "name": "Older studies",
+      "anchor": "Older_studies",
+      "level": 2
+    },
+    {
+      "name": "Primary sources",
+      "anchor": "Primary_sources",
+      "level": 2
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
