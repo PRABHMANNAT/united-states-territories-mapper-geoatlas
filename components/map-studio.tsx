@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ArrowDownToLine, ArrowRight, Crosshair, Expand, Globe2, Layers3, LocateFixed, Maximize, Minimize, Minus, Paintbrush, PanelRight, Plus, Search, X } from "lucide-react";
+import { ArrowDownToLine, ArrowRight, Crosshair, Expand, Globe2, Layers3, LocateFixed, Maximize, Minimize, Minus, Paintbrush, PanelRight, Plus, Scan, Search, X } from "lucide-react";
 import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
 import { AtlasSvg, overviewCamera, type Camera } from "./atlas-svg";
 import { Shape } from "./shape";
@@ -28,6 +28,10 @@ const RasterMap = dynamic(() => import("./maplibre-raster"), {
   loading: () => <p className="map-notice" role="status">Loading imagery map…</p>,
 });
 
+const StateSizeComparison = dynamic(() => import("./state-size-comparison"), {
+  loading: () => <p className="map-notice" role="status">Loading size comparison…</p>,
+});
+
 export function MapStudio({ regions, data, observations, sources, initialId, initialLayer, home = false, providers, flags, leads }: Props) {
   const [selected, setSelected] = useState(initialId);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -40,6 +44,9 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   const [palette, setPalette] = useState<MapPalette>("slate");
   const [expanded, setExpanded] = useState(false);
   const [details, setDetails] = useState(true);
+  const [fullscreenDetails, setFullscreenDetails] = useState(false);
+  const [comparingSize, setComparingSize] = useState(false);
+  const showDetails = expanded ? fullscreenDetails : details;
   const detailsId = useId();
   const expandButton = useRef<HTMLButtonElement>(null);
   const atlas = useRef<HTMLDivElement>(null);
@@ -80,6 +87,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   }, [expanded]);
 
   function changeLayer(next: string) {
+    setComparingSize(false);
     setLayer(next);
     setRasterFailed(false);
     updateUrl(selected, next);
@@ -106,7 +114,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   function select(id: string, zoom = false) {
     if (moved.current) return;
     setSelected(id);
-    setDetails(true);
+    if (!expanded) setDetails(true);
     setSearch("");
     if (zoom && data.shapes[id]) fit(id);
     updateUrl(id, layer);
@@ -156,18 +164,34 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
     catch { setStatus("PNG export could not be created"); }
   }
 
-  return <div ref={atlas} role={expanded ? "dialog" : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? "Fullscreen map" : undefined} className={`atlas-workspace${expanded ? " atlas-expanded" : ""}${details ? "" : " details-hidden"}`}>
+  return <div ref={atlas} role={expanded ? "dialog" : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? "Fullscreen map" : undefined} className={`atlas-workspace${expanded ? " atlas-expanded" : ""}${showDetails ? "" : " details-hidden"}${comparingSize ? " atlas-size-mode" : ""}`}>
     <section className="atlas-card" aria-label="Interactive atlas">
       <div className="map-toolbar">
         <div className="map-tag"><Globe2 size={17} /><span><strong>United States</strong><small>NATIONAL ATLAS</small></span></div>
-        <div className="map-modes" role="group" aria-label="Map style">{[{id:"political",title:"Map"},{id:"satellite",title:"Satellite"},{id:"terrain",title:"Terrain"}].map((mode) => <button key={mode.id} aria-pressed={mode.id === "political" ? !["satellite", "terrain"].includes(layer) : layer === mode.id} onClick={() => changeLayer(mode.id)}>{mode.title}</button>)}</div>
+        <div className="map-modes" role="group" aria-label="Map style">
+          {[{ id: "political", title: "Map" }, { id: "satellite", title: "Satellite" }, { id: "terrain", title: "Terrain" }].map((mode) =>
+            <button key={mode.id} aria-pressed={!comparingSize && (mode.id === "political" ? !["satellite", "terrain"].includes(layer) : layer === mode.id)} onClick={() => changeLayer(mode.id)}>{mode.title}</button>
+          )}
+          <button className="size-mode-button" aria-pressed={comparingSize} onClick={() => setComparingSize(!comparingSize)}>
+            <Scan size={14} aria-hidden="true"/> Compare size
+          </button>
+        </div>
         <div className="map-toolbar-actions">
-          <label className="select-control"><Layers3 size={15}/><span className="sr-only">Map layer</span><select aria-label="Map layer" value={layer} onChange={(event) => changeLayer(event.target.value)}>{layerOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}</select></label>
-          {!raster && <div className="palette-picker" role="group" aria-label="Map color palette">{(Object.keys(mapPalettes) as MapPalette[]).map((key) => <button key={key} className="palette-swatch" aria-label={`${mapPalettes[key].name} palette`} title={mapPalettes[key].name} aria-pressed={palette === key} onClick={() => setPalette(key)}><span style={{background:mapPalettes[key].selected}}/></button>)}</div>}
-          <button className="icon-button" aria-label={details ? "Hide region details" : "Show region details"} title={details ? "Hide details" : "Show details"} aria-expanded={details} aria-controls={detailsId} onClick={() => setDetails(!details)}><PanelRight size={17}/></button>
-          <button ref={expandButton} className="icon-button" aria-label={expanded ? "Exit fullscreen" : "Enter fullscreen"} title={expanded ? "Exit fullscreen (Esc)" : "Fullscreen"} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? <Minimize size={17}/> : <Expand size={17}/>}</button>
+          {!comparingSize && <>
+            <label className="select-control"><Layers3 size={15}/><span className="sr-only">Map layer</span><select aria-label="Map layer" value={layer} onChange={(event) => changeLayer(event.target.value)}>{layerOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}</select></label>
+            {!raster && <div className="palette-picker" role="group" aria-label="Map color palette">{(Object.keys(mapPalettes) as MapPalette[]).map((key) => <button key={key} className="palette-swatch" aria-label={`${mapPalettes[key].name} palette`} title={mapPalettes[key].name} aria-pressed={palette === key} onClick={() => setPalette(key)}><span style={{background:mapPalettes[key].selected}}/></button>)}</div>}
+            <button className="icon-button" aria-label={showDetails ? "Hide region details" : "Show region details"} title={showDetails ? "Hide details" : "Show details"} aria-expanded={showDetails} aria-controls={detailsId} onClick={() => {
+              if (expanded) setFullscreenDetails(!fullscreenDetails);
+              else setDetails(!details);
+            }}><PanelRight size={17}/></button>
+          </>}
+          <button ref={expandButton} className="icon-button atlas-expand-button" aria-label={expanded ? "Exit fullscreen" : "Enter fullscreen"} title={expanded ? "Exit fullscreen (Esc)" : "Fullscreen"} aria-pressed={expanded} onClick={() => {
+            if (!expanded) setFullscreenDetails(false);
+            setExpanded(!expanded);
+          }}>{expanded ? <><Minimize size={17}/><span>Exit fullscreen</span></> : <Expand size={17}/>}</button>
         </div>
       </div>
+      {comparingSize ? <StateSizeComparison regions={regions} observations={observations} initialId={selected}/> : <>
       {unavailable && <div className="map-notice" role="status">Imagery could not be loaded. The offline map is available below. <button className="text-button" onClick={() => setRasterFailed(false)}>Retry imagery</button></div>}
       <div className="map-scene">
       {raster && !rasterFailed ? <RasterMap key={layer} provider={raster} region={region} onSelect={select} onUnavailable={() => setRasterFailed(true)}/> : <div className={`map-stage${camera.k > 1 ? " zoomed" : ""}`} ref={stage} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd}>
@@ -181,7 +205,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
         </div>
         {focus && <div className="map-tooltip"><strong>{focus.name}</strong>{activeMetric && <span>{formatValue(layer, values[focus.id])}</span>}</div>}
       </div>}
-    <aside id={detailsId} className="atlas-sidebar" aria-label="Region details" hidden={!details}>
+    <aside id={detailsId} className="atlas-sidebar" aria-label="Region details" hidden={!showDetails}>
       <div className="region-picker"><label><Search size={16} /><input aria-label="Find a state or territory" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Find a jurisdiction…" onKeyDown={(event) => {
         if (event.key === "Enter" && matches[0]) select(matches[0].id, !home);
         if (event.key === "Escape") setSearch("");
@@ -216,6 +240,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
       {layer === "waterways" && <div className="map-legend"><strong>Major continental rivers and lakes</strong><a href={sources.earth?.url}>Natural Earth · 1:50m</a></div>}
       <div className="map-caption"><span><Crosshair size={14} /> {region ? coordinates(region) : raster && !rasterFailed ? "Web Mercator" : "Albers equal-area · separate inset scales"}</span>
         {(!raster || rasterFailed) && <div><button className="text-button" aria-pressed={labels} onClick={() => setLabels((value) => !value)}>{labels ? "Hide labels" : "Show labels"}</button><button className="text-button" onClick={saveImage}><ArrowDownToLine size={14}/> PNG</button></div>}</div>
+      </>}
       <span className="sr-only" role="status">{status}</span>
     </section>
 

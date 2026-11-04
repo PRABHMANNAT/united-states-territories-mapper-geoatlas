@@ -6,7 +6,7 @@ import { AtlasSvg } from "./atlas-svg";
 import { ShareButton } from "./share";
 import { download, downloadCsv, exportSvg } from "@/lib/downloads";
 import { choropleth } from "@/lib/layers";
-import { defaultProject, parseProject, projectSVG, projectPalette, type MapProject } from "@/lib/map-project";
+import { defaultProject, paintPalette, parseProject, projectSVG, projectPalette, type MapProject } from "@/lib/map-project";
 import type { MapData, Observation, Region } from "@/lib/types";
 
 const saveKey = "stateatlas-saved-map-v1";
@@ -113,7 +113,7 @@ export function Creator({ initial, initialRegion, data, regions, population, inv
     </section>
     <section className="panel tool-panel creator-controls"><div className="tool-summary"><h2>Map settings</h2></div>
       <label>Map title<input maxLength={100} value={project.title} onChange={(event) => edit({ ...project, title: event.target.value })}/></label>
-      <label>Theme<select value={project.theme} onChange={(event) => edit({ ...project, theme: event.target.value as MapProject["theme"], background: undefined })}><option value="paper">Field paper</option><option value="midnight">Midnight</option></select></label>
+      <label>Theme<select value={project.theme} onChange={(event) => edit({ ...project, theme: event.target.value as MapProject["theme"], background: undefined })}><option value="mono">Black and white</option><option value="paper">Field paper</option><option value="midnight">Midnight</option></select></label>
       <label className="creator-background">Map background<input type="color" value={palette.paper} onChange={(event) => edit({ ...project, background: event.target.value })}/></label>
       <label className="checkbox-label"><input type="checkbox" checked={project.labels} onChange={(event) => edit({ ...project, labels: event.target.checked })}/> Abbreviation labels</label>
       <label className="checkbox-label"><input type="checkbox" checked={project.boundaries} onChange={(event) => edit({ ...project, boundaries: event.target.checked })}/> Boundary strokes</label>
@@ -122,6 +122,11 @@ export function Creator({ initial, initialRegion, data, regions, population, inv
         <label>Legend group<select value={activeGroup} onChange={(event) => setActiveGroup(+event.target.value)}>{project.groups.map((item, i) => <option value={i} key={i}>{item.name || `Group ${i + 1}`}</option>)}</select></label>
         <label>Group name<input maxLength={40} value={project.groups[activeGroup].name} onChange={(event) => updateGroup({ name: event.target.value })}/></label>
         <label>Color<input type="color" value={project.groups[activeGroup].color} onChange={(event) => updateGroup({ color: event.target.value })}/></label>
+      </div>
+      <div className="continent-swatches" role="group" aria-label="Paint palette">
+        {paintPalette.map((color) => <button key={color} type="button" aria-label={`Select color ${color}`}
+          aria-pressed={project.groups[activeGroup].color === color} style={{ backgroundColor: color }}
+          onClick={() => updateGroup({ color })}/>)}
       </div>
       <div className="button-row"><button className="primary-button" disabled={!selection.length} onClick={() => paint(selection)}><Paintbrush size={15}/> Apply group</button><button className="quiet-button" disabled={!selection.length} onClick={() => paint(selection, true)}>Erase fill</button></div>
       <label>Toggle a jurisdiction<select value="" onChange={(event) => toggle(event.target.value)}><option value="" disabled>Choose from all 65</option>{regions.map((region) => <option key={region.id} value={region.id}>{selection.includes(region.id) ? "✓ " : ""}{region.name}</option>)}</select></label>

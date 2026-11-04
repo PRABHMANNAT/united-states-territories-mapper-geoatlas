@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, Database, Github, GraduationCap, History, House, Layers3, Linkedin, Map, Menu, Search, Star, Columns2, X } from "lucide-react";
+import { ArrowRight, BarChart3, BookOpen, Database, Github, GraduationCap, History, House, Layers3, Linkedin, Map, Menu, Search, Star, Columns2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { atlasById, atlasPlaces } from "@/lib/north-america";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
 
 export const nav = [
-  { href: "/", title: "Overview", icon: House },
-  { href: "/map", title: "Atlas", icon: Map },
+  { href: "/", title: "Atlas", icon: House },
+  { href: "/places", title: "Places", icon: BookOpen },
+  { href: "/us", title: "U.S. atlas", icon: Map },
   { href: "/rankings", title: "Rankings", icon: BarChart3 },
   { href: "/compare", title: "Compare", icon: Columns2 },
   { href: "/creator", title: "Map creator", icon: Layers3 },
@@ -27,11 +29,12 @@ const socialLinks = [
 ];
 
 export function Brand() {
-  return <Link href="/" className="brand" aria-label="StateAtlas home"><span className="brand-icon"><svg viewBox="0 0 24 16" width="24" height="16" aria-hidden="true">
-    <rect x="1" y="1" width="22" height="14" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M11 1v8H1m10-4h12m-12 4h12M1 12h22" fill="none" stroke="currentColor" strokeWidth="1.3"/>
-    <path d="M4 3.5h.01m4 0h.01M4 6.5h.01m4 0h.01" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-  </svg></span><span>State<span>Atlas</span><small>AN AMERICAN ATLAS</small></span></Link>;
+  return <Link href="/" className="brand" aria-label="NorthAtlas home">
+    <span className="brand-icon"><svg viewBox="0 0 40 40" width="24" height="24" aria-hidden="true">
+      <path fill="currentColor" d="m6 11 5-4 6 1 4-3 4 2-1 5 5 1 4-4 4 1-3 5-5 4-3 5-3 1-3-3-4-1-2-5-4-1-2 2-3-2Zm16 14 4 1 1 3 4 1 3 4-2 2-3-3-4-1-2-4Zm9-1 5 1 2 2-4 1-3-2Z"/>
+    </svg></span>
+    <span>North<span>Atlas</span><small>NORTH AMERICAN ATLAS</small></span>
+  </Link>;
 }
 
 type Result = { name: string; detail: string; href: string; keys?: string };
@@ -92,6 +95,12 @@ export function Navigation({ regions }: { regions: Region[] }) {
     { name: "Rivers and lakes", detail: "Map layer", href: "/map?layer=waterways" },
     ...metrics.map((item) => ({ name: item.name, detail: "Ranking", href: `/rankings?metric=${item.id}` })),
     ...regions.map((region) => ({ name: region.name, detail: region.capital ?? "Island", href: `/regions/${region.slug}`, keys: `${region.id} ${region.capital ?? ""}` })),
+    ...atlasPlaces.map((place) => ({
+      name: place.name,
+      detail: place.parent ? atlasById.get(place.parent)?.name ?? place.type : place.type,
+      href: `/places/${place.id}`,
+      keys: `${place.id} ${place.code ?? ""}`,
+    })),
   ];
   const comparison = query.match(/^compare\s+(.+)\s+(?:and|vs\.?|with)\s+(.+)$/i);
   if (comparison) {
@@ -127,8 +136,8 @@ export function Navigation({ regions }: { regions: Region[] }) {
     </div></header>
     <dialog ref={dialog} className="command-dialog" aria-labelledby="command-title" onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       <div className="command-inner">
-        <h2 className="sr-only" id="command-title">Search StateAtlas</h2>
-        <div className="command-field"><Search size={21} /><input ref={input} placeholder="Search states, capitals, statistics…" value={query} aria-label="Search StateAtlas" onChange={(event) => { setQuery(event.target.value); setIndex(0); }} onKeyDown={(event) => {
+        <h2 className="sr-only" id="command-title">Search NorthAtlas</h2>
+        <div className="command-field"><Search size={21} /><input ref={input} placeholder="Search countries, subdivisions, and tools…" value={query} aria-label="Search NorthAtlas" onChange={(event) => { setQuery(event.target.value); setIndex(0); }} onKeyDown={(event) => {
           if (event.key === "ArrowDown" || event.key === "ArrowUp") {
             event.preventDefault();
             setIndex((active) => Math.max(0, Math.min(matches.length - 1, active + (event.key === "ArrowDown" ? 1 : -1))));
@@ -144,5 +153,5 @@ export function Navigation({ regions }: { regions: Region[] }) {
 }
 
 export function Footer() {
-  return <footer className="site-footer"><div className="shell footer-inner"><Brand /><p>An open, source-linked atlas of the United States.</p><nav aria-label="More atlas tools"><Link href="/quiz">Quiz</Link><Link href="/data">Data &amp; API</Link><a href={github}>GitHub</a></nav></div></footer>;
+  return <footer className="site-footer"><div className="shell footer-inner"><Brand /><p>An open atlas of North America.</p><nav aria-label="More atlas tools"><Link href="/quiz">Quiz</Link><Link href="/data">Data &amp; API</Link><a href={github}>GitHub</a></nav></div></footer>;
 }

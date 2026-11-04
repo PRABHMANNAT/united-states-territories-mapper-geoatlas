@@ -1,10 +1,59 @@
 import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
+test("combines North American countries and subdivisions, then paints and exports the map", async ({ page }, testInfo) => {
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "North America, explored." })).toBeVisible();
+  const country = page.getByLabel("Country or territory");
+  const subdivision = page.getByRole("combobox", { name: "Subdivision", exact: true });
+  await country.selectOption("can");
+  await page.getByRole("button", { name: "View only" }).click();
+  await expect(page.getByRole("button", { name: "Canada", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Mexico", exact: true })).toHaveCount(0);
+  await country.selectOption("usa");
+  await page.getByRole("button", { name: "Add country" }).click();
+  await expect(page.getByRole("button", { name: "United States of America", exact: true })).toBeVisible();
+  await subdivision.selectOption("usa-ak");
+  await page.getByRole("button", { name: "Add subdivision" }).click();
+  await country.selectOption("can");
+  await subdivision.selectOption("can-ab");
+  await page.getByRole("button", { name: "Add subdivision" }).click();
+  await subdivision.selectOption("can-yt");
+  await page.getByRole("button", { name: "Add subdivision" }).click();
+  await page.getByRole("button", { name: "Remove Canada" }).click();
+
+  await page.getByRole("link", { name: "Customize map" }).click();
+  await expect(page).toHaveURL(/places=usa,usa-ak,can-ab,can-yt/);
+  const alberta = page.getByRole("button", { name: "Alberta", exact: true });
+  await alberta.focus();
+  await alberta.press("Enter");
+  await page.getByLabel("Custom paint color").fill("#b41b73");
+  await page.getByRole("button", { name: "Color Alberta" }).click();
+  await expect(alberta.locator("path")).toHaveAttribute("fill", "#b41b73");
+  await expect(page.getByRole("button", { name: "Yukon", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Alaska", exact: true })).toBeVisible();
+  await page.getByLabel("Map title").fill("My cross-border map");
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "SVG", exact: true }).click();
+  const file = await readFile(await (await download).path(), "utf8");
+  expect(file).toContain("#b41b73");
+  expect(file).toContain("My cross-border map");
+  const image = page.waitForEvent("download");
+  await page.getByRole("button", { name: "PNG", exact: true }).click();
+  expect((await image).suggestedFilename()).toBe("north-america-atlas.png");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath("north-america-creator.png") });
+  await page.getByRole("link", { name: "Open profile" }).click();
+  await expect(page).toHaveURL(/\/places\/can-ab$/);
+  await expect(page.getByRole("heading", { name: "Alberta", exact: true, level: 1 })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Outline of Alberta" })).toBeVisible();
+  await expect(page.locator("#overview")).toContainText("Province");
+});
+
 test("opens the atlas, chooses an island and navigates to its profile", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("/us");
   await expect(page.getByRole("heading", { name: "The United States, explored." })).toBeVisible();
   await page.getByRole("link", { name: "Explore the atlas" }).click();
   await expect(page.getByRole("heading", { name: "Interactive atlas", exact: true })).toBeVisible();
@@ -40,7 +89,7 @@ test("changes a ranking, downloads CSV, and compares two places", async ({ page 
 });
 
 test("edits a map, undoes a change and exports a vector image", async ({ page }) => {
-  await page.goto("/creator");
+  await page.goto("/creator?scope=us");
   await page.getByRole("textbox", { name: "Map title" }).fill("My field map");
   await page.getByRole("combobox", { name: "Toggle a jurisdiction" }).selectOption("CA");
   await page.getByRole("button", { name: "Apply group" }).click();
@@ -57,7 +106,7 @@ test("edits a map, undoes a change and exports a vector image", async ({ page })
 });
 
 test("opens the selected atlas region in the creator and exports custom colors", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/us");
   await page.getByRole("combobox", { name: "Jump to a jurisdiction" }).selectOption("TX");
   await page.getByRole("link", { name: "Customize this map" }).click();
   await expect(page).toHaveURL(/\/creator\?region=TX$/);
@@ -92,8 +141,8 @@ test("supports command search, timeline playback and JSON API", async ({ page, r
   await expect(page.getByRole("slider", { name: "Reference year" })).toHaveAttribute("aria-valuetext", "2021");
   await page.getByRole("button", { name: "Pause", exact: true }).click();
   await page.getByRole("button", { name: "Search the atlas" }).click();
-  await page.getByRole("textbox", { name: "Search StateAtlas" }).fill("Puerto Rico");
-  await page.getByRole("textbox", { name: "Search StateAtlas" }).press("Enter");
+  await page.getByRole("textbox", { name: "Search NorthAtlas" }).fill("Puerto Rico");
+  await page.getByRole("textbox", { name: "Search NorthAtlas" }).press("Enter");
   await expect(page.getByRole("heading", { name: "Puerto Rico", exact: true })).toBeVisible();
   const response = await request.get("/api/v1/rankings?metric=gdp&limit=2");
   expect(response.ok()).toBe(true);
@@ -138,7 +187,7 @@ test("navigates the workspace and explores timeline observations without inventi
 });
 
 test("captures the home layout with no horizontal overflow", async ({ page }, testInfo) => {
-  await page.goto("/");
+  await page.goto("/us");
   await expect(page.getByRole("heading", { name: "The United States, explored." })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
   const atlas = await page.locator(".atlas-card").boundingBox();
@@ -176,7 +225,7 @@ test("loads satellite and terrain with bundled worker and public provider defaul
   await page.route("https://basemap.nationalmap.gov/**/tile/**", (route) => route.fulfill({
     path: "tests/fixtures/usgs-imagery.jpg", contentType: "image/jpeg", headers: { "Access-Control-Allow-Origin": "*" },
   }));
-  await page.goto("/");
+  await page.goto("/us");
   await page.getByRole("button", { name: "Satellite", exact: true }).click();
   await expect(page.locator(".raster-panel")).toHaveAttribute("data-imagery-state", "ready", { timeout: 20000 });
   await expect(page.locator(".maplibregl-canvas")).toBeVisible();
@@ -189,7 +238,7 @@ test("loads satellite and terrain with bundled worker and public provider defaul
 });
 
 test("changes map palettes and opens a fullscreen map with keyboard exit", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/us");
   const texas = page.getByRole("button", { name: "Texas", exact: true }).locator("path.region-path");
   const initial = await texas.getAttribute("fill");
   await page.getByRole("button", { name: "Sage palette", exact: true }).click();
@@ -208,6 +257,51 @@ test("changes map palettes and opens a fullscreen map with keyboard exit", async
   await expect(page.getByRole("button", { name: "Enter fullscreen", exact: true })).toBeFocused();
   await page.getByRole("button", { name: "Show region details", exact: true }).click();
   await expect(page.getByRole("heading", { name: "California", exact: true })).toBeVisible();
+});
+
+test("compares Alaska and Texas at one scale and moves the overlay in fullscreen", async ({ page }, testInfo) => {
+  await page.goto("/us");
+  await page.getByRole("combobox", { name: "Jump to a jurisdiction" }).selectOption("AK");
+  await page.getByRole("button", { name: "Compare size", exact: true }).click();
+  await expect(page.getByLabel("Move this state")).toHaveValue("AK");
+  await expect(page.getByLabel("Compare against")).toHaveValue("TX");
+  await expect(page.locator(".size-comparison-ratio")).toContainText("2.19×");
+  await page.getByRole("button", { name: "Enter fullscreen" }).click();
+
+  const overlay = page.getByRole("group", { name: /^Move Alaska/ });
+  const outline = overlay.locator(".size-overlay-outline");
+  const reference = page.locator(".size-base-outline");
+  await expect(overlay).toBeVisible();
+  const overlayWidth = (await outline.boundingBox())!.width;
+  const referenceWidth = (await reference.boundingBox())!.width;
+  expect(overlayWidth).toBeGreaterThan(referenceWidth * 2);
+  const readScale = (path: SVGGraphicsElement) => path.getScreenCTM()!.a;
+  const initialScale = await outline.evaluate(readScale);
+  expect(await reference.evaluate(readScale)).toBeCloseTo(initialScale, 5);
+  await page.getByRole("button", { name: "Zoom comparison in" }).click();
+  await expect.poll(async () => (await outline.evaluate(readScale)) / initialScale).toBeGreaterThan(1.3);
+  expect(await reference.evaluate(readScale)).toBeCloseTo(await outline.evaluate(readScale), 5);
+
+  const origin = await overlay.getAttribute("transform");
+  const referencePosition = await reference.boundingBox();
+  const handle = (await overlay.locator("circle").boundingBox())!;
+  await page.mouse.move(handle.x + handle.width / 2, handle.y + handle.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(handle.x + handle.width / 2 + 50, handle.y + handle.height / 2 + 30, { steps: 4 });
+  await page.mouse.up();
+  await expect(overlay).not.toHaveAttribute("transform", origin!);
+  expect(await reference.boundingBox()).toEqual(referencePosition);
+  const dragged = await overlay.getAttribute("transform");
+  await overlay.press("ArrowLeft");
+  await expect(overlay).not.toHaveAttribute("transform", dragged!);
+
+  await page.getByRole("button", { name: "Reset comparison view" }).click();
+  await page.screenshot({ path: testInfo.outputPath("state-size-comparison.png") });
+  await page.getByLabel("Compare against").selectOption("HI");
+  await expect(page.getByLabel("Compare against")).toHaveValue("HI");
+  await expect(page.locator(".size-base-outline")).toBeVisible();
+  await page.getByRole("button", { name: "Exit fullscreen" }).press("Escape");
+  await expect(page.getByRole("dialog", { name: "Fullscreen map" })).toHaveCount(0);
 });
 
 test("reads sourced region chapters and demographic charts", async ({ page }, testInfo) => {

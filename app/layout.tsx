@@ -6,9 +6,9 @@ import "./workspace.css";
 
 export const metadata: Metadata = {
   metadataBase: process.env.STATEATLAS_URL ? new URL(process.env.STATEATLAS_URL) : undefined,
-  title: { default: "StateAtlas · The American Atlas", template: "%s · StateAtlas" },
-  description: "Explore every state. Compare every statistic. Understand America.",
-  openGraph: { title: "StateAtlas", description: "An open atlas of U.S. states, territories, and outlying islands.", images: process.env.STATEATLAS_URL ? ["/social.png"] : undefined },
+  title: { default: "NorthAtlas · North American Atlas", template: "%s · NorthAtlas" },
+  description: "Explore North American countries and subdivisions and build your own maps.",
+  openGraph: { title: "NorthAtlas", description: "An open atlas of North American countries, territories, and subdivisions.", images: process.env.STATEATLAS_URL ? ["/social.png"] : undefined },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -1,4 +1,11 @@
-# StateAtlas
+# NorthAtlas
+
+NorthAtlas maps North America’s 23 sovereign countries, 22 additional territories and map units, and 434 first-level subdivisions from Natural Earth 1:10m. The [place directory](/places) connects each entry to a sourced profile. Boundary coverage follows the published dataset and is not an official statement on borders or current administrative divisions.
+
+Open the homepage to explore the continent, or use the map creator to combine any countries and subdivisions, choose preset or custom colors, and export PNG or SVG. The detailed U.S. atlas lives at `/us` and `/map`. Existing U.S. creator links and saved project files still work at `/creator?scope=us`.
+
+Refresh continental boundaries with `node scripts/north-america.mjs` and encyclopedia introductions with `node scripts/north-america-articles.mjs`. Sources and attribution are included on each profile.
+
 
 **Explore every state. Compare every statistic. Understand America.**
 
