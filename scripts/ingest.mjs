@@ -40,6 +40,7 @@ await Promise.all([
   json("data/snapshot/countries.json", world),
   json("data/snapshot/manifest.json", snapshot),
   json("public/datasets/regions.topojson", geo.topology),
+  json("public/datasets/regions.json", Object.values(regions)),
   json("public/datasets/manifest.json", snapshot),
   json("public/datasets/observations.json", observations),
   json("public/datasets/countries.json", world),
