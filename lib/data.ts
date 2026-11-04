@@ -15,3 +15,13 @@ export { manifest };
 export function findRegion(query: string) {
   return regions.find((region) => region.slug === query.toLowerCase() || region.id === query.toUpperCase());
 }
+
+export function mapObservations() {
+  const seen = new Set<string>();
+  return observations.filter((row) => {
+    const key = `${row.region}:${row.metric}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}

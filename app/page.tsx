@@ -2,8 +2,10 @@ import Link from "next/link";
 import { ArrowDownRight, ArrowRight, BarChart3, Compass, Database, Globe2, Map, Shuffle, Swords } from "lucide-react";
 import { MapStudio } from "@/components/map-studio";
 import { RandomRegion } from "@/components/random-region";
-import { mapData, observations, regions, sources } from "@/lib/data";
+import { mapData, mapObservations, observations, regions, sources } from "@/lib/data";
+import { articleLeads } from "@/lib/encyclopedia-data";
 import { formatValue, latest } from "@/lib/statistics";
+import { flagCatalog } from "@/lib/flag-data";
 
 const features = [
   { title: "See how states rank", text: "Sort jurisdictions by population, geography, economic output and more.", href: "/rankings", icon: BarChart3, no: "01" },
@@ -11,7 +13,8 @@ const features = [
   { title: "Make your own map", text: "Color regions, build a legend and export your map to use anywhere.", href: "/creator", icon: Map, no: "03" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [flags, leads] = await Promise.all([flagCatalog(), articleLeads(regions)]);
   const alaska = latest(observations, "AK", "land");
   const california = latest(observations, "CA", "population");
   return <div className="shell home">
@@ -29,7 +32,7 @@ export default function Home() {
       </div>
     </section>
     <div className="section-rule"><span>01 / EXPLORE THE MAP</span><ArrowDownRight size={17}/></div>
-    <MapStudio regions={regions} observations={observations.filter((row) => row.year >= 2025 || row.source === "islandCensus")} data={mapData} sources={sources} initialId="CA" initialLayer="political" home />
+    <MapStudio regions={regions} observations={mapObservations()} data={mapData} sources={sources} flags={flags} leads={leads} initialId="CA" initialLayer="political" home />
     <div className="atlas-facts">
       <Link href="/rankings?metric=land"><Map size={20}/><div><small>LARGEST STATE BY LAND · {alaska?.year}</small><strong>Alaska <span>{formatValue("land", alaska?.value, "metric", true)}</span></strong></div><ArrowRight size={16}/></Link>
       <Link href="/rankings?metric=population"><Globe2 size={20}/><div><small>MOST POPULOUS STATE · {california?.year}</small><strong>California <span>{formatValue("population", california?.value, "metric", true)}</span></strong></div><ArrowRight size={16}/></Link>

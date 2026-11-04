@@ -26,6 +26,15 @@ export async function readArticle(region: Region): Promise<Article | null> {
   }
 }
 
+export async function articleLeads(regions: Region[]) {
+  const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
+  return Object.fromEntries((await Promise.all(regions.map(readArticle))).flatMap((article) => {
+    if (!article) return [];
+    const excerpt = segmenter.segment(article.extract)[Symbol.iterator]().next().value?.segment.trim() ?? "";
+    return excerpt.length > 0 && excerpt.length <= 270 ? [[article.id, { text: excerpt, url: article.revisionUrl }]] : [];
+  }));
+}
+
 export function wikipediaArticleURL(title: string) {
   return `https://en.wikipedia.org/wiki/${encodeURIComponent(title.replaceAll(" ", "_"))}`;
 }
