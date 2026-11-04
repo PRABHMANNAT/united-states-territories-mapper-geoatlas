@@ -1,53 +1,78 @@
-# NorthAtlas
+<p align="center">
+  <img src="app/icon.svg" alt="NorthAtlas map mark" width="64" height="64">
+</p>
 
-NorthAtlas maps North America’s 23 sovereign countries, 22 additional territories and map units, and 434 first-level subdivisions from Natural Earth 1:10m. The [place directory](/places) links to country subdivision directories and sourced profiles for first-level subdivisions and territories. Boundary coverage follows the published dataset and is not an official statement on borders or current administrative divisions.
+<h1 align="center">NorthAtlas</h1>
 
-Open the homepage to explore the continent, or use the map creator to combine any countries and subdivisions, choose preset or custom colors, and export PNG or SVG. The detailed U.S. atlas lives at `/us` and `/map`. Existing U.S. creator links and saved project files still work at `/creator?scope=us`.
+<p align="center"><strong>An interactive atlas and map maker for North America.</strong></p>
 
-Select **Fullscreen preview** beside the zoom controls on the North America map or in Map Creator to fill the browser window. Your current zoom, selected places, and colors stay in place. Use the same control or press **Esc** to return to the normal layout.
+<p align="center">
+  <a href="https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/PRABHMANNAT/united-states-territories-mapper-geoatlas?style=flat-square"></a>
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-171717?style=flat-square"></a>
+  <a href="#run-locally"><img alt="Runs locally without API keys" src="https://img.shields.io/badge/setup-no%20API%20keys-171717?style=flat-square"></a>
+</p>
 
-The Boundary level selector also loads available second- and third-level outlines from geoBoundaries. These local divisions can be selected, painted, and exported. Information pages are provided for first-level subdivisions and territories. Country pages list their subdivisions. Each local boundary layer includes its source, license, and vintage. Run `node scripts/north-america-admin.mjs` to refresh local outlines.
+<p align="center"><a href="#make-your-first-map">Make a map</a> · <a href="#run-locally">Run locally</a> · <a href="#maps-and-data">Explore the data</a></p>
 
-Refresh continental boundaries with `node scripts/north-america.mjs` and encyclopedia introductions with `node scripts/north-america-articles.mjs`. Sources and attribution are included on each profile.
+What does Alaska look like over Texas at the same scale? What would a map of the United States, Alberta, and Yukon look like? NorthAtlas lets you explore both ideas in a browser, then export the map you make.
 
+![NorthAtlas showing the North American map and boundary controls](docs/screenshots/northatlas-overview.png)
 
-**Explore every state. Compare every statistic. Understand America.**
+## Make your first map
 
-StateAtlas is an interactive atlas and statistical field guide for the 50 states, Washington, D.C., five inhabited territories, and nine U.S. Minor Outlying Islands.
+1. Open **Map Creator** and add a country, territory, or subdivision. You can mix whole countries with individual regions.
+2. Pick a swatch or enter a custom color, then click a place to paint it. Click again with the same color to clear its fill.
+3. Set a title and background, toggle labels, and download a **PNG** or **SVG**. Use the expand button beside the zoom controls for a fullscreen preview. Press **Esc** to return to the editor.
 
-![StateAtlas homepage with the interactive map and California profile](docs/screenshots/atlas-desktop.png)
+After starting the app, try the [U.S. + Alaska + Alberta + Yukon map](http://localhost:3000/creator?places=usa,usa-ak,can-ab,can-yt).
 
-[Mobile screenshot](docs/screenshots/atlas-mobile.png) · [Timeline workspace](docs/screenshots/timeline-desktop.png) · [Social preview artwork](public/social.png)
+![A custom NorthAtlas map with different colors for the United States, Alaska, Alberta, and Yukon](docs/screenshots/northatlas-creator.png)
 
-Use the slim floating navigation to move between tools, or search places and metrics with **Ctrl/Cmd K**. The full-width atlas keeps search and region details inside the map panel, with a compact heading and shortcut row. On smaller screens, the menu beside the wordmark opens all destinations and region details sit below the map within the same panel. A single black-and-white interface uses rounded controls and consistent contrast, independent of system appearance. Map palettes remain available for geographic data.
+## Explore the atlas
+
+| Open | What you can do |
+| --- | --- |
+| `/` | View the continent, focus on one place, combine places, or show finer boundaries. |
+| `/places` | Browse countries and their subdivision directories, or read sourced profiles for territories and first-level subdivisions. |
+| `/creator` | Build a custom North American map and export it as PNG or SVG. |
+| `/map` | Explore the detailed U.S. atlas with satellite and terrain imagery, statistical layers, waterways, and draggable state outlines for same-scale comparisons. |
+| `/rankings` and `/compare` | Rank U.S. jurisdictions by metric and year, compare them side by side, or find similar economies in World Bank data. |
+| `/timeline` and `/quiz` | Explore changes in population and GDP or practice geography. |
+| `/data` | Find downloadable datasets, metric definitions, and API examples. |
+
+Press **Ctrl/Cmd + K** to find a place or tool. The [U.S. creator](http://localhost:3000/creator?scope=us) supports legends, undo and redo, saved projects, and JSON or CSV export.
 
 ## Run locally
 
-Install Node.js 24 and pnpm 11. From the repository root, run:
+Use **Node.js 24** and **pnpm 11**. Clone the repository and run the commands below. The full NorthAtlas workspace is currently on the feature branch while [PR #9](https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas/pull/9) is under review.
 
 ```sh
+git clone --branch feat/refined-atlas-experience https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas.git
+cd united-states-territories-mapper-geoatlas
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The app ships with versioned observations and Wikipedia profile excerpts. The core atlas, rankings, and exports work without API keys or a database. Satellite/aerial and terrain views connect to [USGS The National Map](https://www.usgs.gov/faqs/what-are-base-map-services-or-urls-used-national-map) by default, without an API key. Imagery requires an internet connection; dates and resolution vary by location and it is not live imagery. Optional provider overrides are documented in `.env.example`.
+Open [localhost:3000](http://localhost:3000). The bundled maps, profiles, statistics, and export tools work without a database or API keys. Satellite and terrain imagery need an internet connection and use USGS by default. [USGS The National Map](https://www.usgs.gov/faqs/what-are-base-map-services-or-urls-used-national-map)
 
-The black-and-white interface includes Slate, Sage, and Sand map palettes. Use **Fullscreen** to expand the atlas, **Hide details** for an unobstructed map, and **Escape** to return. Palette shades distinguish Census regions on political maps and fixed statistical bins on thematic maps; territories use a neutral fill. Image exports retain the selected palette.
+## Maps and data
 
-## Explore
-
-| Route | What you can do |
+| Coverage | Source |
 | --- | --- |
-| `/map` | Pan and zoom, select a jurisdiction, switch statistical layers, trace major waterways, and download a PNG. |
-| `/regions/california` | Open source-linked region profiles with metrics, an encyclopedia excerpt, and GeoJSON. |
-| `/rankings` | Rank 18 metrics by reference year and jurisdiction scope. Switch between table, bar, and map views. |
-| `/compare` | Compare two to four jurisdictions and find World Bank economies with similar population, land area, or nominal GDP. |
-| `/creator` | Color regions in groups, design a legend, undo edits, save locally, and export SVG, PNG, JSON, or CSV. |
-| `/timeline` | Play annual population and GDP series, jump or step between years, and inspect each place’s trend with fixed map thresholds and explicit missing-data states. |
-| `/quiz` | Practice silhouettes, locations, capitals, population, and land area. |
-| `/data` | Read the API examples, review methodology, and download observations and boundaries. |
+| 23 sovereign countries, 22 territories and other map units, and 434 first-level subdivisions | [Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/) |
+| Second-level boundaries for 17 countries and territories, and third-level boundaries for eight | [geoBoundaries](https://www.geoboundaries.org/api.html) |
+| Detailed U.S. boundaries, population, and economic observations | [U.S. Census Bureau](https://www.census.gov/), [BEA](https://www.bea.gov/), and the [dataset guide](docs/datasets.md) |
+| Encyclopedia context and images | Revision links and individual image credits on the relevant profiles |
 
-## Develop
+Local boundary coverage varies by place and year. The atlas lists the source, vintage, and license for each available layer. Country pages act as directories, while deeper subdivisions are available for mapping. The U.S. statistical tools identify missing observations.
+
+The software is [MIT licensed](LICENSE). Data and images have separate reuse terms. [Data licensing and attribution](DATA_LICENSES.md) · [Local boundary layer sources](data/north-america/admin-layers.json) · [Public API](docs/api.md)
+
+NorthAtlas uses Next.js and TypeScript, D3 for vector maps, and MapLibre for U.S. imagery. [Architecture](docs/architecture.md)
+
+## Contribute
+
+Found a missing boundary, mislabeled place, or confusing control? [Open an issue](https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas/issues/new) with the place, dataset, or steps to reproduce it. See the [contribution guide](CONTRIBUTING.md) and [data refresh workflow](docs/datasets.md).
 
 ```sh
 pnpm lint
@@ -58,14 +83,6 @@ pnpm exec playwright install chromium
 pnpm test:e2e
 ```
 
-Run `pnpm data:build` to reconstruct snapshots from the source cache. See the [data workflow](docs/datasets.md) before refreshing inputs.
+To refresh continental data, run `node scripts/north-america.mjs` for countries and first-level outlines, `node scripts/north-america-admin.mjs` for local boundaries, and `node scripts/north-america-articles.mjs` for encyclopedia introductions.
 
-- [Architecture](docs/architecture.md)
-- [Public API](docs/api.md)
-- [Data licensing and attribution](DATA_LICENSES.md)
-- [Roadmap](docs/roadmap.md)
-- [Contributing](CONTRIBUTING.md)
-
-The software uses the [MIT License](LICENSE). Each dataset has separate reuse terms.
-
-Region profiles include revision-linked Wikipedia chapter excerpts (CC BY-SA 4.0), Wikimedia images with individual credits, and charts drawn from the bundled Census/BEA observations. Encyclopedia context may use different reference years from statistical cards. Run `python scripts/enrich-profiles.py` to update chapter excerpts at the pinned article revisions, then `python scripts/profile-images.py` for credited free images. Images load from Wikimedia and require connectivity; text and statistical charts are bundled. Indicator shares have different denominators and are not a demographic composition. Missing observations are never interpolated.
+Made with love by [Prabhmannat Singh](https://github.com/PRABHMANNAT). If NorthAtlas helps you make a map or discover something new, [give it a star on GitHub](https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas).
