@@ -563,3 +563,8 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 .reference-groups p + p { margin-top: 8px; }
 .reference-groups a { text-decoration: underline; overflow-wrap: anywhere; }
 .reference-groups .article-topics { margin-top: 6px; }
+
+.region-profile :is(.chapter-reading p, .encyclopedia blockquote, .reference-groups p, .share-indicator p) {
+  text-align: justify;
+  hyphens: auto;
+}
