@@ -521,7 +521,7 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 
 /* Region field guides: readable chapters and source-linked visual evidence. */
 .region-profile .profile-hero { padding: 28px 0; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
-.region-profile .profile-hero .silhouette { width: 150px; height: 120px; color: #b8b8b8; }
+.region-profile .profile-hero .silhouette { width: 150px; height: 120px; color: #000; }
 .region-profile .profile-nav { top: 86px; padding: 22px; }
 .region-profile .profile-nav nav a { padding: 9px 12px; border-radius: 12px; }
 .region-profile .profile-nav nav a:hover { background: var(--surface-alt); }
