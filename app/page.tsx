@@ -23,6 +23,7 @@ export default async function Home() {
       <div className="hero-actions"><Link href="/map" className="quiet-button"><Compass size={15}/> Explore the atlas <ArrowRight size={15}/></Link><RandomRegion slugs={regions.filter((region) => region.type === "state").map((region) => region.slug)}><Shuffle size={15}/><span>Surprise me</span></RandomRegion></div>
     </section>
     <MapStudio regions={regions} observations={mapObservations()} data={mapData} sources={sources} flags={flags} leads={leads} providers={getRasterProviders()} initialId="CA" initialLayer="political" home />
-    <nav className="home-shortcuts" aria-label="Explore more atlas tools"><span>Explore more</span>{shortcuts.map(({ title, href, icon: Icon }) => <Link href={href} key={href}><Icon size={15}/>{title}<ArrowRight size={12}/></Link>)}</nav>
+    <nav className="home-shortcuts" aria-label="Explore more atlas tools"><span className="home-shortcuts-title">Explore more</span>
+      <div className="home-shortcut-links">{shortcuts.map(({ title, href, icon: Icon }) => <Link href={href} key={href} className={href === "/creator" ? "shortcut-primary" : undefined}><Icon size={16} aria-hidden="true"/><span>{title}</span><ArrowRight size={13} aria-hidden="true"/></Link>)}</div></nav>
   </div>;
 }

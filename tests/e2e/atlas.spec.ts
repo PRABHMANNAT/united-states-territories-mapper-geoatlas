@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
 test("opens the atlas, chooses an island and navigates to its profile", async ({ page }) => {
@@ -53,6 +54,34 @@ test("edits a map, undoes a change and exports a vector image", async ({ page })
   const imageDownload = page.waitForEvent("download");
   await page.getByRole("button", { name: "PNG", exact: true }).click();
   expect((await imageDownload).suggestedFilename()).toBe("stateatlas-custom.png");
+});
+
+test("opens the selected atlas region in the creator and exports custom colors", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("combobox", { name: "Jump to a jurisdiction" }).selectOption("TX");
+  await page.getByRole("link", { name: "Customize this map" }).click();
+  await expect(page).toHaveURL(/\/creator\?region=TX$/);
+
+  const texas = page.getByRole("button", { name: "Texas", exact: true });
+  const shape = texas.locator(".region-path");
+  await expect(texas).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Group 2", exact: true }).click();
+  await page.getByRole("button", { name: "Paint", exact: true }).click();
+  await shape.click();
+  await expect(shape).toHaveAttribute("fill", "#65a08e");
+  await page.getByRole("button", { name: "Erase", exact: true }).click();
+  await shape.click();
+  await expect(shape).not.toHaveAttribute("fill", "#65a08e");
+  await page.getByRole("button", { name: "Undo", exact: true }).click();
+  await expect(shape).toHaveAttribute("fill", "#65a08e");
+
+  await page.getByLabel("Map background").fill("#000000");
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "SVG", exact: true }).click();
+  const file = await readFile(await (await download).path(), "utf8");
+  expect(file).toContain('<rect width="100%" height="100%" fill="#000000"/>');
+  expect(file).toContain('<g fill="#ffffff" font-family="sans-serif">');
+  expect(file).toContain(`<path d="${await shape.getAttribute("d")}" fill="#65a08e"/>`);
 });
 
 test("supports command search, timeline playback and JSON API", async ({ page, request }) => {

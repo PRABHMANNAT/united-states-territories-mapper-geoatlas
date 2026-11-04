@@ -1,27 +1,34 @@
 "use client";
 
-import { Download, Paintbrush, Redo2, RotateCcw, Save, Undo2 } from "lucide-react";
+import { Download, Eraser, MousePointer2, Paintbrush, Redo2, RotateCcw, Save, Undo2 } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 import { AtlasSvg } from "./atlas-svg";
 import { ShareButton } from "./share";
 import { download, downloadCsv, exportSvg } from "@/lib/downloads";
 import { choropleth } from "@/lib/layers";
-import { defaultProject, parseProject, projectSVG, projectThemes, type MapProject } from "@/lib/map-project";
+import { defaultProject, parseProject, projectSVG, projectPalette, type MapProject } from "@/lib/map-project";
 import type { MapData, Observation, Region } from "@/lib/types";
 
 const saveKey = "stateatlas-saved-map-v1";
+const tools = [
+  { id: "select", label: "Select", icon: MousePointer2, hint: "Select regions, then apply a color group to them together." },
+  { id: "paint", label: "Paint", icon: Paintbrush, hint: "Choose a color group and click a region to color it." },
+  { id: "erase", label: "Erase", icon: Eraser, hint: "Click a region to remove its custom color." },
+] as const;
+
 type History = { before: MapProject[]; active: MapProject; after: MapProject[] };
 
-export function Creator({ initial, data, regions, population, invalid }: {
-  initial: MapProject; data: MapData; regions: Region[]; population: Observation[]; invalid: boolean;
+export function Creator({ initial, initialRegion, data, regions, population, invalid }: {
+  initial: MapProject; initialRegion?: string; data: MapData; regions: Region[]; population: Observation[]; invalid: boolean;
 }) {
   const [history, setHistory] = useState<History>({ before: [], active: initial, after: [] });
-  const [selection, setSelection] = useState<string[]>([]);
+  const [selection, setSelection] = useState<string[]>(initialRegion ? [initialRegion] : []);
+  const [tool, setTool] = useState<(typeof tools)[number]["id"]>("select");
   const [activeGroup, setActiveGroup] = useState(0);
-  const [labelRegion, setLabelRegion] = useState("CA");
+  const [labelRegion, setLabelRegion] = useState(initialRegion ?? "CA");
   const [status, setStatus] = useState(invalid ? "That shared project could not be loaded." : "");
   const project = history.active;
-  const palette = projectThemes[project.theme];
+  const palette = projectPalette(project);
   const fills = Object.fromEntries(Object.entries(project.assignments).map(([id, group]) => [id, project.groups[group].color]));
 
   function edit(next: MapProject) {
@@ -40,13 +47,24 @@ export function Creator({ initial, data, regions, population, invalid }: {
     setSelection((items) => items.includes(id) ? items.filter((item) => item !== id) : [...items, id]);
   }
 
-  function paint(erase = false) {
+  function paint(ids: string[], erase = false) {
     const assignments = { ...project.assignments };
-    selection.forEach((id) => {
-      if (erase) delete assignments[id];
-      else assignments[id] = activeGroup;
-    });
-    edit({ ...project, assignments });
+    let changed = false;
+    for (const id of ids) {
+      if (erase && Object.hasOwn(assignments, id)) {
+        delete assignments[id];
+        changed = true;
+      } else if (!erase && assignments[id] !== activeGroup) {
+        assignments[id] = activeGroup;
+        changed = true;
+      }
+    }
+    if (changed) edit({ ...project, assignments });
+  }
+
+  function useMapTool(id: string) {
+    if (tool === "select") toggle(id);
+    else paint([id], tool === "erase");
   }
 
   function preset() {
@@ -75,11 +93,19 @@ export function Creator({ initial, data, regions, population, invalid }: {
 
   return <div className="creator-grid">
     <section className="panel tool-panel creator-preview"><div className="tool-summary"><div><p className="eyebrow"><span/> MAP PREVIEW</p><h2>{project.title || "Untitled atlas"}</h2></div><span className="muted">{selection.length} selected</span></div>
+      <div className="creator-tools">
+        <div className="creator-tool-modes" role="group" aria-label="Map editing tool">
+          {tools.map(({ id, label, icon: Icon }) => <button type="button" key={id} aria-pressed={tool === id} onClick={() => setTool(id)}>
+            <Icon size={15} aria-hidden="true"/> {label}
+          </button>)}
+        </div>
+        <p>{tools.find((item) => item.id === tool)?.hint}</p>
+      </div>
       <div className={`creator-map${project.boundaries ? "" : " no-boundaries"}`} style={{
         "--map-paper": palette.paper, "--map-land": palette.land, "--map-edge": palette.edge, "--map-ink": palette.ink,
         "--map-muted": palette.muted, "--map-inset": palette.paper, "--map-grid": palette.edge + "38",
-      } as CSSProperties}><AtlasSvg data={data} regions={regions} fills={fills} selection={selection} labels={project.labels} customLabels={project.labelsByRegion} onSelect={toggle}/></div>
-      <div className="editor-legend">{project.groups.map((item, i) => <span key={i}><i style={{ backgroundColor: item.color }}/> {item.name || `Group ${i + 1}`}</span>)}</div>
+      } as CSSProperties}><AtlasSvg data={data} regions={regions} fills={fills} selection={tool === "select" ? selection : []} labels={project.labels} customLabels={project.labelsByRegion} onSelect={useMapTool}/></div>
+      <div className="editor-legend creator-swatches" role="group" aria-label="Map color groups">{project.groups.map((item, i) => <button key={i} type="button" className="quiet-button" aria-pressed={i === activeGroup} onClick={() => setActiveGroup(i)}><i style={{ backgroundColor: item.color }}/> {item.name || `Group ${i + 1}`}</button>)}</div>
       <div className="button-row"><button className="quiet-button" onClick={() => exportImage("svg")}><Download size={15}/> SVG</button><button className="quiet-button" onClick={() => exportImage("png")}><Download size={15}/> PNG</button>
         <button className="quiet-button" onClick={() => download(new Blob([JSON.stringify(project, null, 2)], { type: "application/json" }), "stateatlas-map.json")}>JSON</button>
         <button className="quiet-button" onClick={() => downloadCsv([["id", "jurisdiction", "group", "color"], ...regions.filter((region) => fills[region.id]).map((region) => [region.id, region.name, project.assignments[region.id] + 1, fills[region.id]])], "stateatlas-map-regions.csv")}>CSV</button><ShareButton url={share}/></div>
@@ -87,7 +113,8 @@ export function Creator({ initial, data, regions, population, invalid }: {
     </section>
     <section className="panel tool-panel creator-controls"><div className="tool-summary"><h2>Map settings</h2></div>
       <label>Map title<input maxLength={100} value={project.title} onChange={(event) => edit({ ...project, title: event.target.value })}/></label>
-      <label>Theme<select value={project.theme} onChange={(event) => edit({ ...project, theme: event.target.value as MapProject["theme"] })}><option value="paper">Field paper</option><option value="midnight">Midnight</option></select></label>
+      <label>Theme<select value={project.theme} onChange={(event) => edit({ ...project, theme: event.target.value as MapProject["theme"], background: undefined })}><option value="paper">Field paper</option><option value="midnight">Midnight</option></select></label>
+      <label className="creator-background">Map background<input type="color" value={palette.paper} onChange={(event) => edit({ ...project, background: event.target.value })}/></label>
       <label className="checkbox-label"><input type="checkbox" checked={project.labels} onChange={(event) => edit({ ...project, labels: event.target.checked })}/> Abbreviation labels</label>
       <label className="checkbox-label"><input type="checkbox" checked={project.boundaries} onChange={(event) => edit({ ...project, boundaries: event.target.checked })}/> Boundary strokes</label>
       <div className="button-row"><button className="quiet-button" onClick={undo} disabled={!history.before.length} aria-label="Undo"><Undo2 size={16}/></button><button className="quiet-button" onClick={redo} disabled={!history.after.length} aria-label="Redo"><Redo2 size={16}/></button><button className="quiet-button" onClick={() => { edit(defaultProject); setSelection([]); }}><RotateCcw size={14}/> Reset</button></div>
@@ -96,7 +123,7 @@ export function Creator({ initial, data, regions, population, invalid }: {
         <label>Group name<input maxLength={40} value={project.groups[activeGroup].name} onChange={(event) => updateGroup({ name: event.target.value })}/></label>
         <label>Color<input type="color" value={project.groups[activeGroup].color} onChange={(event) => updateGroup({ color: event.target.value })}/></label>
       </div>
-      <div className="button-row"><button className="primary-button" disabled={!selection.length} onClick={() => paint()}><Paintbrush size={15}/> Apply group</button><button className="quiet-button" disabled={!selection.length} onClick={() => paint(true)}>Erase fill</button></div>
+      <div className="button-row"><button className="primary-button" disabled={!selection.length} onClick={() => paint(selection)}><Paintbrush size={15}/> Apply group</button><button className="quiet-button" disabled={!selection.length} onClick={() => paint(selection, true)}>Erase fill</button></div>
       <label>Toggle a jurisdiction<select value="" onChange={(event) => toggle(event.target.value)}><option value="" disabled>Choose from all 65</option>{regions.map((region) => <option key={region.id} value={region.id}>{selection.includes(region.id) ? "✓ " : ""}{region.name}</option>)}</select></label>
       <div className="selected-regions">{selection.map((id) => <button key={id} className="quiet-button" onClick={() => toggle(id)} aria-label={`Deselect ${regions.find((region) => region.id === id)?.name}`}>{id} ×</button>)}</div>
       <label>Custom label jurisdiction<select value={labelRegion} onChange={(event) => setLabelRegion(event.target.value)}>{regions.map((region) => <option key={region.id} value={region.id}>{region.name}</option>)}</select></label>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ArrowDownToLine, ArrowRight, Crosshair, Expand, Globe2, Layers3, LocateFixed, Maximize, Minimize, Minus, PanelRight, Plus, Search, X } from "lucide-react";
+import { ArrowDownToLine, ArrowRight, Crosshair, Expand, Globe2, Layers3, LocateFixed, Maximize, Minimize, Minus, Paintbrush, PanelRight, Plus, Search, X } from "lucide-react";
 import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
 import { AtlasSvg, overviewCamera, type Camera } from "./atlas-svg";
 import { Shape } from "./shape";
@@ -146,11 +146,11 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   async function saveImage() {
     if (!svg.current) return;
     const clone = svg.current.cloneNode(true) as SVGSVGElement;
-    const css = getComputedStyle(document.documentElement);
-    const palette = ["--map-paper", "--map-grid", "--map-land", "--map-edge", "--map-ink", "--map-muted", "--map-selected", "--map-inset"];
+    const css = getComputedStyle(svg.current);
+    const palette = ["--map-paper", "--map-grid", "--map-land", "--map-edge", "--map-ink", "--map-muted", "--map-selected", "--map-inset", "--map-inset-ink"];
     clone.setAttribute("style", palette.map((key) => `${key}:${css.getPropertyValue(key)}`).join(";"));
     const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
-    style.textContent = ".map-background{fill:var(--map-paper)}.map-grid-line{stroke:var(--map-grid)}.inset-frame{fill:var(--map-inset);stroke:var(--map-grid)}.inset-hit-area{fill:none}.region-path{stroke:var(--map-edge);stroke-width:.8}.region-path:not([fill]){fill:var(--map-land)}.missing .region-path{fill:#cbd3d5}.selected .region-path:not([fill]){fill:var(--map-selected)}.selected .region-path{stroke:var(--map-ink);stroke-width:1.3}.region-label,.map-compass text{fill:var(--map-ink);font:700 9px sans-serif;text-anchor:middle;dominant-baseline:central}.label-leader,.map-scale path{fill:none;stroke:var(--map-muted);stroke-width:.7}.inset-title,.map-ocean,.map-scale text{fill:var(--map-muted);font:700 9px monospace;letter-spacing:1px}.water-lake{fill:#9ec9d8}.water-river,.map-compass path,.map-compass circle{fill:none;stroke:#5593a8}";
+    style.textContent = ".map-background{fill:var(--map-paper)}.map-grid-line{stroke:var(--map-grid)}.inset-frame{fill:var(--map-inset);stroke:var(--map-inset)}.inset-hit-area{fill:none}.region-path{stroke:var(--map-edge);stroke-width:.8}.region-path:not([fill]){fill:var(--map-land)}.missing .region-path{fill:#cbd3d5}.selected .region-path:not([fill]){fill:var(--map-selected)}.selected .region-path{stroke:var(--map-ink);stroke-width:1.3}.region-label,.map-compass text{fill:var(--map-ink);font:700 9px sans-serif;text-anchor:middle;dominant-baseline:central}.label-leader,.map-scale path{fill:none;stroke:var(--map-muted);stroke-width:.7}.inset-title,.map-ocean,.map-scale text{fill:var(--map-muted);font:700 9px monospace;letter-spacing:1px}.inset-title,.inset-region .region-label{fill:var(--map-inset-ink)}.inset-region .region-label{stroke:var(--map-inset);stroke-width:1.8;paint-order:stroke}.selected.inset-region .region-path{stroke:var(--map-inset-ink)}.water-lake{fill:#9ec9d8}.water-river,.map-compass path,.map-compass circle{fill:none;stroke:#5593a8}";
     clone.prepend(style);
     try { await exportSvg(new XMLSerializer().serializeToString(clone), "stateatlas-map", "png", data.width, data.height); setStatus("PNG downloaded"); }
     catch { setStatus("PNG export could not be created"); }
@@ -172,11 +172,12 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
       <div className="map-scene">
       {raster && !rasterFailed ? <RasterMap key={layer} provider={raster} region={region} onSelect={select} onUnavailable={() => setRasterFailed(true)}/> : <div className={`map-stage${camera.k > 1 ? " zoomed" : ""}`} ref={stage} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd}>
         <AtlasSvg data={data} regions={regions} svgRef={svg} selection={selected ? [selected] : []} thematic={Boolean(activeMetric)} fills={mapFills} water={layer === "waterways"} labels={labels} camera={camera} onSelect={select} onHover={setHovered} showScale={camera.k === 1}/>
-        <div className="map-zoom" onPointerDown={(event) => event.stopPropagation()}>
+        <div className="map-zoom" role="group" aria-label="Map controls" onPointerDown={(event) => event.stopPropagation()}>
           <button aria-label="Zoom in" title="Zoom in" onClick={() => zoom(1.35)}><Plus size={17}/></button>
           <button aria-label="Zoom out" title="Zoom out" onClick={() => zoom(1 / 1.35)}><Minus size={17}/></button>
           <button aria-label="Reset map view" title="Reset map view" onClick={() => setCamera(overviewCamera)}><Maximize size={15}/></button>
           <button aria-label="Fit selected region" title="Fit selected region" onClick={() => fit()} disabled={!data.shapes[selected]}><LocateFixed size={17}/></button>
+          <Link className="map-customize" href={{ pathname: "/creator", query: selected ? { region: selected } : {} }} aria-label="Customize this map" title="Customize this map"><Paintbrush size={17}/></Link>
         </div>
         {focus && <div className="map-tooltip"><strong>{focus.name}</strong>{activeMetric && <span>{formatValue(layer, values[focus.id])}</span>}</div>}
       </div>}

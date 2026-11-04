@@ -8,6 +8,7 @@ const schema = z.object({
   version: z.literal(1),
   title: z.string().max(100),
   theme: z.enum(["paper", "midnight"]),
+  background: color.optional(),
   labels: z.boolean(),
   boundaries: z.boolean(),
   groups: z.array(group).length(5),
@@ -39,12 +40,25 @@ export const projectThemes = {
   midnight: { paper: "#172934", land: "#45616a", edge: "#91a9aa", ink: "#eff9f5", muted: "#b5c8c8" },
 };
 
+export function projectPalette(project: MapProject) {
+  const theme = projectThemes[project.theme];
+  const paper = project.background;
+  if (!paper) return theme;
+  const [red, green, blue] = [1, 3, 5].map((offset) => {
+    const channel = parseInt(paper.slice(offset, offset + 2), 16) / 255;
+    return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+  });
+  const luminance = red * 0.2126 + green * 0.7152 + blue * 0.0722;
+  const ink = luminance > 0.179 ? "#000000" : "#ffffff";
+  return { ...theme, paper, ink, muted: ink };
+}
+
 const escapeXML = (text: string) => text.replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;",
 })[character]!);
 
 export function projectSVG(project: MapProject, data: MapData, regions: Region[]) {
-  const theme = projectThemes[project.theme];
+  const theme = projectPalette(project);
   const filledIslands = regions.filter((region) => region.type === "island" && Object.hasOwn(project.assignments, region.id));
   const width = data.width;
   const height = data.height + (filledIslands.length ? 156 : 105);

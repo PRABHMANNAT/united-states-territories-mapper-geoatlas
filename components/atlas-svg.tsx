@@ -48,7 +48,7 @@ export function AtlasSvg({
         const [dx, dy] = labelAdjustments[region.id] ?? [0, 0];
         const callout = Boolean(dx || dy);
         return <g key={region.id} role={onSelect ? "button" : undefined} aria-pressed={onSelect ? active : undefined}
-          aria-label={region.name} className={`map-region${active ? " selected" : ""}${thematic && !fills?.[region.id] ? " missing" : ""}`}
+          aria-label={region.name} className={`map-region${shape.panel !== "conus" ? " inset-region" : ""}${active ? " selected" : ""}${thematic && !fills?.[region.id] ? " missing" : ""}`}
           onPointerEnter={() => onHover?.(region.id)} onPointerLeave={() => onHover?.(null)} onClick={() => onSelect?.(region.id)}>
           <title>{region.name}</title>
           {shape.hitBox && onSelect && <rect x={shape.hitBox[0]} y={shape.hitBox[1]} width={shape.hitBox[2]} height={shape.hitBox[3]} className="inset-hit-area" />}
