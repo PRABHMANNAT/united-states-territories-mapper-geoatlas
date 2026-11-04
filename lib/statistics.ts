@@ -12,8 +12,22 @@ export function series(observations: Observation[], metric: string, id?: string)
   return observations.filter((row) => row.metric === metric && (!id || row.region === id));
 }
 
-export function yearsFor(observations: Observation[], metric: string) {
-  return [...new Set(series(observations, metric).filter((row) => row.source !== "islandCensus").map((row) => row.year))].sort((a, b) => b - a);
+export function yearsFor(observations: Observation[], metric: string, regionIds?: Set<string>) {
+  return [...new Set(series(observations, metric).filter((row) => row.source !== "islandCensus" && (!regionIds || regionIds.has(row.region))).map((row) => row.year))].sort((a, b) => b - a);
+}
+
+export function rankingYears(regions: Region[], observations: Observation[], metric: string, scope: string) {
+  const ids = new Set(regions.filter((region) => scopes[scope]?.types.includes(region.type)).map((region) => region.id));
+  return yearsFor(observations, metric, ids);
+}
+
+export function defaultRankingYear(regions: Region[], observations: Observation[], metric: string, scope: string) {
+  const allowed = new Set(regions.filter((region) => scopes[scope]?.types.includes(region.type)).map((region) => region.id));
+  const coverage = new Map<number, number>();
+  for (const row of observations) {
+    if (row.metric === metric && row.source !== "islandCensus" && allowed.has(row.region)) coverage.set(row.year, (coverage.get(row.year) ?? 0) + 1);
+  }
+  return [...coverage].sort(([a, aCount], [b, bCount]) => bCount - aCount || b - a)[0]?.[0] ?? yearsFor(observations, metric)[0];
 }
 
 export function latest(observations: Observation[], id: string, metric: string) {
@@ -69,7 +83,8 @@ export function formatValue(metric: string, value?: number, units: Units = "metr
 }
 
 export function countryMatches(countries: Country[], observation: Observation) {
-  return countries.filter((country) => country.id !== "USA").flatMap((country) => {
+  const ownEconomy: Record<string, string> = { AS: "ASM", GU: "GUM", MP: "MNP", PR: "PRI", VI: "VIR" };
+  return countries.filter((country) => country.id !== "USA" && country.id !== ownEconomy[observation.region]).flatMap((country) => {
     const sameMetric = country.observations.filter((item) => item.metric === observation.metric);
     const best = [...sameMetric].sort((a, b) =>
       Math.abs(a.year - observation.year) - Math.abs(b.year - observation.year) || b.year - a.year,
