@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, Database, GraduationCap, History, House, Layers3, Map, Menu, Search, Columns2, X } from "lucide-react";
+import { ArrowRight, BarChart3, Database, Github, GraduationCap, History, House, Layers3, Linkedin, Map, Menu, Search, Star, Columns2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
@@ -19,6 +19,12 @@ export const nav = [
 ];
 
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
+
+const socialLinks = [
+  { href: `${github}/stargazers`, label: "See stars on GitHub", text: "GitHub stars", icon: Star },
+  { href: "https://www.linkedin.com/in/prabhmannat", label: "Follow on LinkedIn", text: "LinkedIn", icon: Linkedin },
+  { href: "https://github.com/PRABHMANNAT", label: "Follow on GitHub", text: "Follow on GitHub", icon: Github },
+];
 
 export function Brand() {
   return <Link href="/" className="brand" aria-label="StateAtlas home"><span className="brand-icon"><svg viewBox="0 0 24 16" width="24" height="16" aria-hidden="true">
@@ -109,6 +115,13 @@ export function Navigation({ regions }: { regions: Region[] }) {
         {nav.map(({ href, title, icon: Icon }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}><Icon size={18} strokeWidth={1.7}/><span>{title}</span></Link>)}
       </nav>
       <div className="header-tools">
+        <div className="header-social" role="group" aria-label="Project and creator links">
+          {socialLinks.map(({ href, label, text, icon: Icon }) =>
+            <a key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+              <Icon size={15} aria-hidden="true"/><span>{text}</span>
+            </a>
+          )}
+        </div>
         <button className="icon-button header-search" onClick={open} aria-label="Search the atlas" title="Search places & tools (Ctrl/Cmd K)"><Search size={18}/></button>
       </div>
     </div></header>
