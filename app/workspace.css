@@ -522,9 +522,15 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 /* Region field guides: readable chapters and source-linked visual evidence. */
 .region-profile .profile-hero { padding: 28px 0; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
 .region-profile .profile-hero .silhouette { width: 150px; height: 120px; color: #000; }
-.region-profile .profile-nav { top: 86px; padding: 22px; }
+.region-profile .profile-nav { top: 86px; padding: 22px; background: #000; border-color: #000; color: #fff; }
 .region-profile .profile-nav nav a { padding: 9px 12px; border-radius: 12px; }
-.region-profile .profile-nav nav a:hover { background: var(--surface-alt); }
+.region-profile .profile-nav :is(.eyebrow, a) { color: #fff; }
+.region-profile .profile-nav .eyebrow > span { background: #fff; }
+.region-profile .profile-nav nav a:hover { background: #272727; }
+.region-profile .profile-nav nav a:focus-visible { outline-color: #fff; }
+@media (min-width: 701px) {
+  .region-profile .profile-nav { max-height: calc(100dvh - 106px); overflow: auto; }
+}
 .region-profile .profile-content { gap: 24px; }
 .region-profile .tool-panel { padding: clamp(22px, 3vw, 40px); scroll-margin-top: 90px; }
 .region-profile .tool-summary h2 { font-size: 28px; letter-spacing: -.9px; }
