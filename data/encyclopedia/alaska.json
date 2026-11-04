@@ -1,0 +1,284 @@
+{
+  "id": "AK",
+  "title": "Alaska",
+  "url": "https://en.wikipedia.org/wiki/Alaska",
+  "revision": 1382197708,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1382197708",
+  "revisionDate": "2026-10-27T06:30:52Z",
+  "wikidata": "Q797",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Alaska ( , ə-LASS-kə) is a U.S. state located in the northwestern regions of North America. Part of the Western United States region, it is one of the two non-contiguous U.S. states, alongside Hawaii.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Pre-colonization",
+      "anchor": "Pre-colonization",
+      "level": 2
+    },
+    {
+      "name": "Colonization",
+      "anchor": "Colonization",
+      "level": 2
+    },
+    {
+      "name": "U.S. territorial incorporation",
+      "anchor": "U.S._territorial_incorporation",
+      "level": 2
+    },
+    {
+      "name": "Statehood",
+      "anchor": "Statehood",
+      "level": 2
+    },
+    {
+      "name": "Good Friday earthquake",
+      "anchor": "Good_Friday_earthquake",
+      "level": 2
+    },
+    {
+      "name": "Oil boom",
+      "anchor": "Oil_boom",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Regions",
+      "anchor": "Regions",
+      "level": 2
+    },
+    {
+      "name": "Land ownership",
+      "anchor": "Land_ownership",
+      "level": 2
+    },
+    {
+      "name": "Alaska Heritage Resources Survey",
+      "anchor": "Alaska_Heritage_Resources_Survey",
+      "level": 2
+    },
+    {
+      "name": "Cities, towns and boroughs",
+      "anchor": "Cities,_towns_and_boroughs",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Fauna",
+      "anchor": "Fauna",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Race and ethnicity",
+      "anchor": "Race_and_ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Languages",
+      "anchor": "Languages",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Energy",
+      "anchor": "Energy",
+      "level": 2
+    },
+    {
+      "name": "Cost of living",
+      "anchor": "Cost_of_living",
+      "level": 2
+    },
+    {
+      "name": "Agriculture and fishing",
+      "anchor": "Agriculture_and_fishing",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Music",
+      "anchor": "Music",
+      "level": 2
+    },
+    {
+      "name": "Film and television",
+      "anchor": "Film_and_television",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 1
+    },
+    {
+      "name": "Anchorage",
+      "anchor": "Anchorage",
+      "level": 2
+    },
+    {
+      "name": "Fairbanks",
+      "anchor": "Fairbanks",
+      "level": 2
+    },
+    {
+      "name": "Elsewhere",
+      "anchor": "Elsewhere",
+      "level": 2
+    },
+    {
+      "name": "Public health and safety",
+      "anchor": "Public_health_and_safety",
+      "level": 1
+    },
+    {
+      "name": "Health insurance",
+      "anchor": "Health_insurance",
+      "level": 2
+    },
+    {
+      "name": "Hospitals",
+      "anchor": "Hospitals",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Road",
+      "anchor": "Road",
+      "level": 2
+    },
+    {
+      "name": "Rail",
+      "anchor": "Rail",
+      "level": 2
+    },
+    {
+      "name": "Sea",
+      "anchor": "Sea",
+      "level": 2
+    },
+    {
+      "name": "Air",
+      "anchor": "Air",
+      "level": 2
+    },
+    {
+      "name": "Snow",
+      "anchor": "Snow",
+      "level": 2
+    },
+    {
+      "name": "Communication",
+      "anchor": "Communication",
+      "level": 1
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government",
+      "level": 2
+    },
+    {
+      "name": "State politics",
+      "anchor": "State_politics",
+      "level": 2
+    },
+    {
+      "name": "Voter registration",
+      "anchor": "Voter_registration",
+      "level": 2
+    },
+    {
+      "name": "Taxes",
+      "anchor": "Taxes",
+      "level": 2
+    },
+    {
+      "name": "Federal politics",
+      "anchor": "Federal_politics",
+      "level": 2
+    },
+    {
+      "name": "Elections",
+      "anchor": "Elections",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    },
+    {
+      "name": "U.S. federal government",
+      "anchor": "U.S._federal_government",
+      "level": 2
+    },
+    {
+      "name": "Alaska state government",
+      "anchor": "Alaska_state_government",
+      "level": 2
+    }
+  ]
+}
