@@ -1,4 +1,4 @@
-import { geoAlbers, geoArea, geoCentroid, geoConicEqualArea, geoMercator, geoPath } from "d3-geo";
+import { geoAlbers, geoArea, geoCentroid, geoConicEqualArea, geoDistance, geoMercator, geoPath } from "d3-geo";
 import { topology } from "topojson-server";
 import { feature as fromTopology } from "topojson-client";
 import { filter, filterWeight, presimplify, simplify, sphericalRingArea, sphericalTriangleArea } from "topojson-simplify";
@@ -12,10 +12,10 @@ const islandIds = {
 
 export const panels = [
   { id: "alaska", title: "Alaska", ids: ["AK"], box: [24, 441, 222, 98] },
-  { id: "hawaii", title: "Hawaiʻi", ids: ["HI"], box: [254, 441, 157, 98] },
+  { id: "hawaii", title: "Hawaiʻi · main islands", ids: ["HI"], box: [254, 441, 157, 98] },
   { id: "caribbean", title: "Caribbean", ids: ["PR", "VI"], box: [419, 441, 171, 98] },
   { id: "marianas", title: "Mariana Islands", ids: ["MP", "GU"], box: [598, 441, 171, 98] },
-  { id: "samoa", title: "American Samoa", ids: ["AS"], box: [777, 441, 159, 98] },
+  { id: "samoa", title: "American Samoa · main", ids: ["AS"], box: [777, 441, 159, 98] },
 ];
 
 const collection = (features) => ({ type: "FeatureCollection", features });
@@ -63,6 +63,17 @@ function projected(feature, path, region, projection) {
   };
 }
 
+function displayIslands(feature) {
+  const ranges = {
+    HI: (lon, lat) => lon > -161.5 && lat > 18 && lat < 23,
+    AS: (lon, lat) => lon > -171.5 && lon < -169 && lat < -13,
+  };
+  const range = ranges[feature.id];
+  if (!range) return feature;
+  const kept = polygons(feature.geometry).filter((coordinates) => range(...geoCentroid({ type: "Polygon", coordinates })));
+  return kept.length ? { ...feature, geometry: { type: "MultiPolygon", coordinates: kept } } : feature;
+}
+
 function simplified(features, triangleWeight, ringWeight) {
   const graph = presimplify(topology({ regions: collection(features) }), sphericalTriangleArea);
   const reduced = simplify(graph, triangleWeight);
@@ -105,18 +116,26 @@ export async function geography(regions) {
   const conus = Object.values(light).filter((row) => !insetIds.has(row.id) && regions[row.id].type !== "island");
   const mainProjection = projectionFor("conus").fitExtent([[55, 25], [909, 426]], collection(conus));
   const mainPath = geoPath(mainProjection).digits(1);
+  map.kmPerUnit = geoDistance(mainProjection.invert([430, 210]), mainProjection.invert([530, 210])) * 6371.0088 / 100;
 
   for (const feature of conus) {
     map.shapes[feature.id] = { ...projected(feature, mainPath, regions[feature.id], mainProjection), panel: "conus" };
   }
   for (const panel of panels) {
-    const features = panel.ids.map((id) => id === "AK" ? light[id] : detailed[id]);
     const [x, y, w, h] = panel.box;
-    const proj = projectionFor(panel.ids[0], regions[panel.ids[0]].coordinates)
-      .fitExtent([[x + 12, y + 23], [x + w - 12, y + h - 10]], collection(features));
-    const path = geoPath(proj).digits(1);
-    for (const feature of features) {
-      map.shapes[feature.id] = { ...projected(feature, path, regions[feature.id], proj), panel: panel.id };
+    const cellWidth = w / panel.ids.length;
+    for (const [index, id] of panel.ids.entries()) {
+      const feature = displayIslands(id === "AK" ? light[id] : detailed[id]);
+      const left = x + cellWidth * index;
+      const proj = projectionFor(id, regions[id].coordinates)
+        .fitExtent([[left + 11, y + 21], [left + cellWidth - 11, y + h - 21]], feature);
+      const shape = projected(feature, geoPath(proj).digits(1), regions[id], proj);
+      map.shapes[id] = {
+        ...shape,
+        label: [left + cellWidth / 2, y + h - 11],
+        hitBox: [left + 1, y + 20, cellWidth - 2, h - 22],
+        panel: panel.id,
+      };
     }
   }
 

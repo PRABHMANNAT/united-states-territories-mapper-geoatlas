@@ -13,13 +13,17 @@ const labelAdjustments: Record<string, number[]> = {
 
 export function AtlasSvg({
   data, regions, selection = [], fills, thematic, water, labels = true, camera = overviewCamera,
-  onSelect, onHover, svgRef,
+  onSelect, onHover, svgRef, showScale = false, customLabels,
 }: {
   data: MapData; regions: Region[]; selection?: string[]; fills?: Record<string, string>; thematic?: boolean;
   water?: boolean; labels?: boolean; camera?: Camera; onSelect?: (id: string) => void;
   onHover?: (id: string | null) => void; svgRef?: Ref<SVGSVGElement>;
+  showScale?: boolean;
+  customLabels?: Record<string, string>;
 }) {
   const id = useId().replaceAll(":", "");
+  const scale = Math.max(50, Math.round(400 / camera.k / 50) * 50);
+  const scaleWidth = (scale / data.kmPerUnit) * camera.k;
   return <svg ref={svgRef} xmlns="http://www.w3.org/2000/svg" className="atlas-svg" width={data.width} height={data.height}
     viewBox={`0 0 ${data.width} ${data.height}`} role={onSelect ? "group" : "img"} aria-label="Map of U.S. states and territories">
     <defs>
@@ -47,12 +51,14 @@ export function AtlasSvg({
           aria-label={region.name} className={`map-region${active ? " selected" : ""}${thematic && !fills?.[region.id] ? " missing" : ""}`}
           onPointerEnter={() => onHover?.(region.id)} onPointerLeave={() => onHover?.(null)} onClick={() => onSelect?.(region.id)}>
           <title>{region.name}</title>
+          {shape.hitBox && onSelect && <rect x={shape.hitBox[0]} y={shape.hitBox[1]} width={shape.hitBox[2]} height={shape.hitBox[3]} className="inset-hit-area" />}
           <path className="region-path" d={shape.path} fill={fills?.[region.id]} vectorEffect="non-scaling-stroke"/>
           {callout && labels && <path d={`M${lx} ${ly} L${lx + dx} ${ly + dy}`} className="label-leader" vectorEffect="non-scaling-stroke"/>}
-          {(labels || shape.panel !== "conus" || region.id === "DC") && <text x={lx + dx} y={ly + dy} className={`region-label${labels ? "" : " map-dot"}`}>{labels ? region.id : "·"}</text>}
+          {(labels || shape.panel !== "conus" || region.id === "DC") && <text x={lx + dx} y={ly + dy} className={`region-label${labels ? "" : " map-dot"}`}>{labels ? customLabels?.[region.id] || region.id : "·"}</text>}
         </g>;
       })}
       {water && <g clipPath={`url(#${id}-land)`} pointerEvents="none">{data.water.map((feature, i) => <path key={i} d={feature.path} className={`water-${feature.kind}`} vectorEffect="non-scaling-stroke"/>)}</g>}
     </g>
+    {showScale && <g className="map-scale" transform="translate(30 405)"><path d={`M0 -3v6M0 0h${scaleWidth}m0 -3v6`} /><text x="0" y="-9">≈ {scale} km</text></g>}
   </svg>;
 }

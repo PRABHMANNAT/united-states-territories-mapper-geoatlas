@@ -29,15 +29,29 @@ export type Country = {
 };
 
 export type Source = { name: string; url: string; vintage: string };
+export type Flag = {
+  id: string;
+  title: string;
+  asset: string;
+  author: string | null;
+  license: string;
+  licenseUrl: string | null;
+  source: string;
+  width: number;
+  height: number;
+  modification: string;
+};
 export type Shape = {
   path: string;
   bounds: number[];
   label: number[];
+  hitBox?: number[];
   panel: string;
 };
 export type MapData = {
   width: number;
   height: number;
+  kmPerUnit: number;
   shapes: Record<string, Shape>;
   silhouettes: Record<string, string>;
   panels: { id: string; title: string; ids: string[]; box: number[] }[];
