@@ -29,7 +29,6 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
   const [title, setTitle] = useState("North America");
   const [background, setBackground] = useState("#f5f5f5");
   const [labels, setLabels] = useState(true);
-  const [paint, setPaint] = useState(false);
   const [status, setStatus] = useState("");
   const svg = useRef<SVGSVGElement>(null);
   const currentKey = `${country}-adm${level}`;
@@ -65,7 +64,6 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
   const depth = (id: string) => localPlaces.get(id)?.level ?? (atlasById.get(id)?.parent ? 1 : 0);
   const visible = [...new Set([...coverage, ...extraDivisions])].sort((a, b) => depth(a) - depth(b));
   const visibleSet = new Set(visible);
-  const activeVisible = visibleSet.has(active);
   const readyToExport = Boolean(outlines && coverage.every((id) => combinedOutlines[id]));
   const bounds = outlines && atlasBounds(coverage, combinedOutlines);
   const shownSources = [...new Set(visible.flatMap((id) => divisionLayerKey(id) ?? []))];
@@ -98,6 +96,15 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
     setZoom(1);
   }
 
+  function paintPlace(id: string, nextColor?: string) {
+    setFills((current) => {
+      const next = { ...current };
+      if (!nextColor || current[id] === nextColor) delete next[id];
+      else next[id] = nextColor;
+      return next;
+    });
+  }
+
   function choose(id: string) {
     const place = placeFor(id);
     if (!place) return;
@@ -107,7 +114,7 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
       setDivision("");
       setDivisionQuery("");
     }
-    if (editing && paint) setFills((current) => ({ ...current, [id]: color }));
+    if (editing) paintPlace(id, color);
   }
 
   async function save(format: "svg" | "png") {
@@ -303,9 +310,8 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
           {paintPalette.map((hex) => <button key={hex} type="button" aria-label={`Select color ${hex}`} aria-pressed={color === hex} style={{ backgroundColor: hex }} onClick={() => setColor(hex)}/>)}
         </div></fieldset>
         <label className="continent-color-input">Custom paint color<input type="color" value={color} onChange={(event) => setColor(event.target.value)}/></label>
-        <label className="continent-check"><input type="checkbox" checked={paint} onChange={(event) => setPaint(event.target.checked)}/> Paint when I click the map</label>
-        {selected && <div className="button-row"><button className="primary-button" disabled={!activeVisible} onClick={() => setFills({ ...fills, [active]: color })}>Color {selected.name}</button>
-          <button className="quiet-button" disabled={!fills[active]} onClick={() => setFills(Object.fromEntries(Object.entries(fills).filter(([id]) => id !== active)))}>Clear color</button></div>}
+        <p>Click a place to apply the selected color. Click it again with that color to clear it.</p>
+        {selected && <button className="quiet-button" disabled={!fills[active]} onClick={() => paintPlace(active)}>Clear color</button>}
       </section>}
 
     </aside>

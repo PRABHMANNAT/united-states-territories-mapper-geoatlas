@@ -25,10 +25,12 @@ test("combines North American countries and subdivisions, then paints and export
   await page.getByRole("link", { name: "Customize map" }).click();
   await expect(page).toHaveURL(/places=usa,usa-ak,can-ab,can-yt/);
   const alberta = page.getByRole("button", { name: "Alberta", exact: true });
-  await alberta.focus();
-  await alberta.press("Enter");
   await page.getByLabel("Custom paint color").fill("#b41b73");
-  await page.getByRole("button", { name: "Color Alberta" }).click();
+  await alberta.press("Enter");
+  await expect(alberta.locator("path")).toHaveAttribute("fill", "#b41b73");
+  await alberta.press("Space");
+  await expect(alberta.locator("path")).not.toHaveAttribute("fill", "#b41b73");
+  await alberta.press("Enter");
   await expect(alberta.locator("path")).toHaveAttribute("fill", "#b41b73");
   await expect(page.getByRole("button", { name: "Yukon", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Alaska", exact: true })).toBeVisible();
