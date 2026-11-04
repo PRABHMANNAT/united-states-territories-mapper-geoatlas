@@ -1,0 +1,69 @@
+{
+  "id": "XN",
+  "title": "Navassa Island",
+  "url": "https://en.wikipedia.org/wiki/Navassa_Island",
+  "revision": 1382197418,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1382197418",
+  "revisionDate": "2026-10-27T06:26:33Z",
+  "wikidata": "Q25359",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Navassa Island (; Haitian Creole: Lanavaz; French: Île de la Navasse, sometimes la Navase) is an uninhabited island in the Windward Passage of the Caribbean Sea. Located east of Jamaica, south of Cuba, and 40 nautical miles (74 km; 46 mi) west of Jérémie on the Tiburon Peninsula of Haiti, it is subject to an ongoing territorial dispute between Haiti and the United States, the latter of which administers the island through the U.S. Fish and Wildlife Service.",
+  "sections": [
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "1504 to 1901",
+      "anchor": "1504_to_1901",
+      "level": 2
+    },
+    {
+      "name": "1901 to present",
+      "anchor": "1901_to_present",
+      "level": 2
+    },
+    {
+      "name": "Geography, topography and ecology",
+      "anchor": "Geography,_topography_and_ecology",
+      "level": 1
+    },
+    {
+      "name": "Ecology",
+      "anchor": "Ecology",
+      "level": 2
+    },
+    {
+      "name": "Birds",
+      "anchor": "Birds",
+      "level": 2
+    },
+    {
+      "name": "Maritime boundary disputes",
+      "anchor": "Maritime_boundary_disputes",
+      "level": 1
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "General references",
+      "anchor": "General_references",
+      "level": 2
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
