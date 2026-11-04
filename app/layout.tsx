@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Footer, Navigation } from "@/components/navigation";
 import { regions } from "@/lib/data";
 import "./globals.css";
+import "./workspace.css";
 
 export const metadata: Metadata = {
   metadataBase: process.env.STATEATLAS_URL ? new URL(process.env.STATEATLAS_URL) : undefined,

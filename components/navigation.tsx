@@ -2,17 +2,20 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, Compass, Github, History, Layers3, Map, Moon, Search, Sun, Swords } from "lucide-react";
+import { ArrowRight, BarChart3, ChevronRight, Compass, Database, Github, GraduationCap, History, House, Layers3, Map, Menu, Moon, Search, Sun, Columns2, X } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
 
 export const nav = [
+  { href: "/", title: "Overview", icon: House },
   { href: "/map", title: "Atlas", icon: Map },
   { href: "/rankings", title: "Rankings", icon: BarChart3 },
-  { href: "/compare", title: "Compare", icon: Swords },
-  { href: "/creator", title: "Creator", icon: Layers3 },
+  { href: "/compare", title: "Compare", icon: Columns2 },
+  { href: "/creator", title: "Map creator", icon: Layers3 },
   { href: "/timeline", title: "Timeline", icon: History },
+  { href: "/quiz", title: "Geography quiz", icon: GraduationCap },
+  { href: "/data", title: "Data & sources", icon: Database },
 ];
 
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
@@ -25,7 +28,7 @@ function subscribeTheme(listener: () => void) {
 }
 
 export function Brand() {
-  return <Link href="/" className="brand"><span className="brand-icon"><Compass size={22} strokeWidth={1.5} /></span><span>State<span>Atlas</span><small>THE AMERICAN ATLAS</small></span></Link>;
+  return <Link href="/" className="brand" aria-label="StateAtlas home"><span className="brand-icon"><Compass size={24} strokeWidth={1.6} /></span><span>State<span>Atlas</span><small>AN AMERICAN ATLAS</small></span></Link>;
 }
 
 type Result = { name: string; detail: string; href: string; keys?: string };
@@ -52,11 +55,15 @@ export function Navigation({ regions }: { regions: Region[] }) {
   const router = useRouter();
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   const dark = useSyncExternalStore(subscribeTheme, readTheme, initialTheme);
+  const currentPage = nav.find((item) => item.href === pathname)?.title ?? "Region profile";
 
   function open() {
+    setMenuOpen(false);
     setQuery("");
     setIndex(0);
     if (!dialog.current?.open) dialog.current?.showModal();
@@ -88,8 +95,6 @@ export function Navigation({ regions }: { regions: Region[] }) {
 
   const options: Result[] = [
     ...nav.map((item) => ({ name: item.title, detail: "Page", href: item.href })),
-    { name: "Quiz", detail: "Page", href: "/quiz" },
-    { name: "Data and API", detail: "Page", href: "/data" },
     { name: "Largest state", detail: "Land area ranking", href: "/rankings?metric=land" },
     { name: "Rivers and lakes", detail: "Map layer", href: "/map?layer=waterways" },
     ...metrics.map((item) => ({ name: item.name, detail: "Ranking", href: `/rankings?metric=${item.id}` })),
@@ -110,15 +115,22 @@ export function Navigation({ regions }: { regions: Region[] }) {
   }
 
   return <>
-    <header className="site-header"><div className="shell header-inner">
+    <header className={`site-header${menuOpen ? " menu-open" : ""}`}><div className="header-inner">
       <Brand />
-      <nav aria-label="Main navigation">{nav.map(({ href, title }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{title}</Link>)}</nav>
-      <div className="header-tools">
-        <button className="header-search" onClick={open} aria-label="Search the atlas"><Search size={16} /> <span>Search atlas</span> <kbd>Ctrl K</kbd></button>
-        <button className="icon-button theme-button" onClick={toggleTheme} aria-label="Toggle light or dark theme" aria-pressed={dark}><Moon className="moon-icon" size={18}/><Sun className="sun-icon" size={18}/></button>
-        <a className="icon-button github-nav" href={github} aria-label="GitHub repository"><Github size={18}/></a>
+      <button ref={menuButton} className="mobile-menu icon-button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={22}/> : <Menu size={22}/>}</button>
+      <nav id="primary-navigation" aria-label="Main navigation" onKeyDown={(event) => { if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); } }}>
+        <p className="nav-caption">WORKSPACE</p>
+        {nav.map(({ href, title, icon: Icon }, i) => <Link key={href} href={href} className={i === 6 ? "nav-secondary" : undefined} aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}><Icon size={18} strokeWidth={1.7}/><span>{title}</span>{pathname === href && <span className="nav-active-dot"/>}</Link>)}
+      </nav>
+      <div className="sidebar-bottom">
+        <div className="sidebar-note"><span className="availability-dot"/> Open data. Open exploration.<small>50 states. A wider perspective.</small></div>
+        <a href={github}><Github size={16}/> View the project <ArrowRight size={14}/></a>
       </div>
     </div></header>
+    <div className="workspace-bar"><div className="shell workspace-bar-inner"><div className="workspace-breadcrumb"><span>United States</span><ChevronRight size={14}/><strong>{currentPage}</strong></div><div className="header-tools">
+      <button className="header-search" onClick={open} aria-label="Search the atlas"><Search size={16}/><span>Search places & tools</span><kbd>Ctrl K</kbd></button>
+      <button className="icon-button theme-button" onClick={toggleTheme} aria-label="Toggle light or dark theme" aria-pressed={dark}><Moon className="moon-icon" size={18}/><Sun className="sun-icon" size={18}/></button>
+    </div></div></div>
     <dialog ref={dialog} className="command-dialog" aria-labelledby="command-title" onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       <div className="command-inner">
         <h2 className="sr-only" id="command-title">Search StateAtlas</h2>

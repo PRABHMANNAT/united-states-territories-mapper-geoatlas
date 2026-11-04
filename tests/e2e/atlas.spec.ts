@@ -56,6 +56,8 @@ test("edits a map, undoes a change and exports a vector image", async ({ page })
 });
 
 test("supports command search, timeline playback and JSON API", async ({ page, request }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/timeline");
   await page.getByRole("button", { name: "Play", exact: true }).click();
   await expect(page.getByRole("slider", { name: "Reference year" })).toHaveAttribute("aria-valuetext", "2021");
@@ -67,6 +69,43 @@ test("supports command search, timeline playback and JSON API", async ({ page, r
   const response = await request.get("/api/v1/rankings?metric=gdp&limit=2");
   expect(response.ok()).toBe(true);
   expect((await response.json()).data.items[0].region.id).toBe("CA");
+  expect(errors).toEqual([]);
+});
+
+test("navigates the workspace and explores timeline observations without inventing missing data", async ({ page }, testInfo) => {
+  await page.goto("/timeline");
+  const menu = page.getByRole("button", { name: "Open navigation", exact: true });
+  if (await menu.isVisible()) await menu.click();
+  await page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "Rankings", exact: true }).click();
+  await expect(page).toHaveURL(/\/rankings$/);
+  if (await menu.isVisible()) {
+    await expect(menu).toHaveAttribute("aria-expanded", "false");
+    await menu.click();
+    await page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "Timeline", exact: true }).press("Escape");
+    await expect(menu).toBeFocused();
+    await menu.click();
+  }
+  await page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "Timeline", exact: true }).click();
+  await page.getByRole("button", { name: "Go to 2023", exact: true }).click();
+  const slider = page.getByRole("slider", { name: "Reference year" });
+  await expect(slider).toHaveAttribute("aria-valuetext", "2023");
+  await page.getByRole("button", { name: "Next year", exact: true }).click();
+  await expect(slider).toHaveAttribute("aria-valuetext", "2024");
+  await page.getByRole("button", { name: "Previous year", exact: true }).click();
+  await expect(slider).toHaveAttribute("aria-valuetext", "2023");
+  await expect(page.getByRole("img", { name: /^California, Population:/ })).toBeVisible();
+  await page.getByRole("combobox", { name: "Jurisdiction", exact: true }).selectOption("GU");
+  await expect(page.getByText("Data unavailable", { exact: true })).toBeVisible();
+  await expect(page.getByText("This place has no observations in this series.", { exact: false })).toBeVisible();
+  await page.getByRole("combobox", { name: "Jurisdiction", exact: true }).selectOption("TX");
+  await page.getByRole("combobox", { name: "Metric", exact: true }).selectOption("population-growth");
+  await page.getByRole("button", { name: "Next year", exact: true }).click();
+  await expect(page.locator(".year-difference")).toContainText("pp");
+  await page.getByRole("button", { name: "Reset timeline", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Previous year", exact: true })).toBeDisabled();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
+  await page.keyboard.press("Control+Home");
+  await page.screenshot({ path: testInfo.outputPath(`timeline-${testInfo.project.name}.png`), fullPage: true });
 });
 
 test("captures the home layout with no horizontal overflow", async ({ page }, testInfo) => {

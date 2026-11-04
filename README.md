@@ -6,7 +6,9 @@ StateAtlas is an interactive atlas and statistical field guide for the 50 states
 
 ![StateAtlas homepage with the interactive map and California profile](docs/screenshots/atlas-desktop.png)
 
-[Mobile screenshot](docs/screenshots/atlas-mobile.png) · [Social preview artwork](public/social.png)
+[Mobile screenshot](docs/screenshots/atlas-mobile.png) · [Timeline workspace](docs/screenshots/timeline-desktop.png) · [Social preview artwork](public/social.png)
+
+Use the workspace navigation to move between tools, or search places and metrics with **Ctrl/Cmd K**. On smaller screens, the menu beside the wordmark opens all destinations. Light and dark themes remember your preference.
 
 ## Run locally
 
@@ -28,7 +30,7 @@ Open [http://localhost:3000](http://localhost:3000). The app ships with versione
 | `/rankings` | Rank 18 metrics by reference year and jurisdiction scope. Switch between table, bar, and map views. |
 | `/compare` | Compare two to four jurisdictions and find World Bank economies with similar population, land area, or nominal GDP. |
 | `/creator` | Color regions in groups, design a legend, undo edits, save locally, and export SVG, PNG, JSON, or CSV. |
-| `/timeline` | Play annual population and GDP series on a choropleth with fixed thresholds. |
+| `/timeline` | Play annual population and GDP series, jump or step between years, and inspect each place’s trend with fixed map thresholds and explicit missing-data states. |
 | `/quiz` | Practice silhouettes, locations, capitals, population, and land area. |
 | `/data` | Read the API examples, review methodology, and download observations and boundaries. |
 
