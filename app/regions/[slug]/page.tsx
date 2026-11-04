@@ -55,7 +55,6 @@ export default async function Profile({ params }: PageProps<"/regions/[slug]">) 
   const related = nearbyRegions(region, regions);
   const [longitude, latitude] = region.coordinates;
   return <div className="shell inner-page region-profile">
-    <Link href="/map" className="breadcrumb">Atlas / Region profiles</Link>
     <div className="profile-hero"><PageHeading label={`FIELD GUIDE / ${region.id}`} title={region.name}>{regionTypeLabels[region.type]}{region.censusRegion ? ` · Census ${region.censusRegion} region` : ""}</PageHeading><Shape path={mapData.silhouettes[region.id]} /></div>
     <div className="profile-layout">
       <aside className="panel profile-nav"><p className="eyebrow"><span/> ON THIS PAGE</p><nav aria-label="Region sections"><a href="#overview">Overview</a>{visibleChapters.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}<a href="#explore">Related jurisdictions</a><a href="#references">References</a></nav></aside>
