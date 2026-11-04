@@ -1,0 +1,274 @@
+{
+  "id": "IL",
+  "title": "Illinois",
+  "url": "https://en.wikipedia.org/wiki/Illinois",
+  "revision": 1381149813,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1381149813",
+  "revisionDate": "2026-10-20T08:35:48Z",
+  "wikidata": "Q1204",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Illinois (  IL-ih-NOY) is a state in the Midwestern United States. It borders on Lake Michigan to its northeast, the Wabash and Ohio rivers to its south, and the Mississippi River generally to its west.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Pre-European",
+      "anchor": "Pre-European",
+      "level": 2
+    },
+    {
+      "name": "European exploration and settlement prior to 1800",
+      "anchor": "European_exploration_and_settlement_prior_to_1800",
+      "level": 2
+    },
+    {
+      "name": "19th century",
+      "anchor": "19th_century",
+      "level": 2
+    },
+    {
+      "name": "20th century",
+      "anchor": "20th_century",
+      "level": 2
+    },
+    {
+      "name": "21st century",
+      "anchor": "21st_century",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Topography",
+      "anchor": "Topography",
+      "level": 2
+    },
+    {
+      "name": "Geology",
+      "anchor": "Geology",
+      "level": 2
+    },
+    {
+      "name": "Divisions",
+      "anchor": "Divisions",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Urban areas",
+      "anchor": "Urban_areas",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Manufacturing",
+      "anchor": "Manufacturing",
+      "level": 2
+    },
+    {
+      "name": "Services",
+      "anchor": "Services",
+      "level": 2
+    },
+    {
+      "name": "Investments",
+      "anchor": "Investments",
+      "level": 2
+    },
+    {
+      "name": "Energy",
+      "anchor": "Energy",
+      "level": 2
+    },
+    {
+      "name": "Taxes",
+      "anchor": "Taxes",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Museums",
+      "anchor": "Museums",
+      "level": 2
+    },
+    {
+      "name": "Music",
+      "anchor": "Music",
+      "level": 2
+    },
+    {
+      "name": "Movies",
+      "anchor": "Movies",
+      "level": 2
+    },
+    {
+      "name": "Recreation",
+      "anchor": "Recreation",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 2
+    },
+    {
+      "name": "Law and politics",
+      "anchor": "Law_and_politics",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government",
+      "level": 2
+    },
+    {
+      "name": "Federal representation",
+      "anchor": "Federal_representation",
+      "level": 2
+    },
+    {
+      "name": "Party balance",
+      "anchor": "Party_balance",
+      "level": 2
+    },
+    {
+      "name": "History of corruption",
+      "anchor": "History_of_corruption",
+      "level": 2
+    },
+    {
+      "name": "U.S. presidential elections",
+      "anchor": "U.S._presidential_elections",
+      "level": 2
+    },
+    {
+      "name": "African-American U.S. senators",
+      "anchor": "African-American_U.S._senators",
+      "level": 2
+    },
+    {
+      "name": "Political families",
+      "anchor": "Political_families",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Illinois State Board of Education",
+      "anchor": "Illinois_State_Board_of_Education",
+      "level": 2
+    },
+    {
+      "name": "Primary and secondary schools",
+      "anchor": "Primary_and_secondary_schools",
+      "level": 2
+    },
+    {
+      "name": "Colleges and universities",
+      "anchor": "Colleges_and_universities",
+      "level": 2
+    },
+    {
+      "name": "School financing",
+      "anchor": "School_financing",
+      "level": 2
+    },
+    {
+      "name": "Public libraries",
+      "anchor": "Public_libraries",
+      "level": 2
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Airports",
+      "anchor": "Airports",
+      "level": 2
+    },
+    {
+      "name": "Highways",
+      "anchor": "Highways",
+      "level": 2
+    },
+    {
+      "name": "Buses",
+      "anchor": "Buses",
+      "level": 2
+    },
+    {
+      "name": "Railroads",
+      "anchor": "Railroads",
+      "level": 2
+    },
+    {
+      "name": "Waterways",
+      "anchor": "Waterways",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Further reading",
+      "anchor": "Further_reading",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
