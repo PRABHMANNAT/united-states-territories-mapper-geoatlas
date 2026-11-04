@@ -55,5 +55,41 @@
       "anchor": "External_links",
       "level": 1
     }
-  ]
+  ],
+  "summaries": [
+    {
+      "name": "History",
+      "text": "Kingman Reef was discovered on June 14, 1798, by the American captain Edmund Fanning of the ship Betsey. It was first described by Captain W. E. Kingman (whose name the island bears) of the ship Shooting Star on November 29, 1853. It was claimed in 1859 by the United States Guano Company, under the name \"Dangers Rock,\" along with several other islands. The claim was made under the U.S. Guano Islands Act of 1856, although there is no evidence that guano existed or was ever mined on Kingman Reef. The British steamship Tarta struck the reef in June 1874, and it was later surveyed by HMS Penguin (1876) in 1897, establishing that Kingman Reef was the same hazard previously charted as Caldew Reef and Maria Shoal, among other names.\n\nOn May 10, 1922, Lorrin A. Thurston became the first person to raise the American flag on the atoll and read an annexation proclamation. The Palmyra Copra Co. intended to use Kingman as a fishing base, as demand for copra had declined after World War I and Palmyra Island lacked a suitable anchorage. Thurston formally claimed Kingman for the United States by reading the following declaration while standing on its shore:"
+    },
+    {
+      "name": "Geography",
+      "text": "It is the northernmost of the Northern Line Islands and lies 36 nautical miles (67 km) northwest of the next closest island (Palmyra Atoll), and 930 nautical miles (1,720 km) south of Honolulu.\n\nThe reef encloses a lagoon up to 53 fathoms (318 ft; 97 m) deep in its eastern part near the northeastern spit of land. The total area within the outer rim of the reef is 20 sq nmi (70 km). There are two small strips (spits) of dry land composed of coral rubble and giant clamshells on the eastern rim with areas of 2 and 1 acre (0.8 and 0.4 ha) having a coastline of 2 miles (3 km), a short spit on the northeast side of the lagoon and a spit twice as long but thinner on its south side."
+    },
+    {
+      "name": "Political status",
+      "text": "Kingman Reef has the status of an unincorporated territory of the United States, administered from Washington, D.C., by the U.S. Department of Interior. The atoll is closed to the public. For statistical purposes, Kingman Reef is grouped as part of the United States Minor Outlying Islands. In January 2009, Kingman Reef was designated a marine national monument.\n\nThe pre-20th century names Danger Rock, Caldew Reef, Maria Shoal, and Crane Shoal refer to this atoll, which was entirely submerged at high tide. Thomas Hale Streets described its state in the 1870s, when it had:"
+    },
+    {
+      "name": "Ecology",
+      "text": "Kingman Reef supports a vast variety of marine life. Giant clams are abundant in the shallows, and there are approximately 38 genera and 130 species of stony corals on the reef. This is more than three times the species diversity of corals in the main Hawaiian Islands. The ecosystem of the reef and its subsequent food chain is known for the distinct quality of being primarily predator-based. Sharks comprised 74% of the top predator biomass (329 g·m) at Kingman Reef and 57% at Palmyra Atoll (97 g·m). Low shark numbers have been observed at Tabuaeran and Kiritimati.\n\nThe percentage of the total fish biomass on the reef is made up of 85% apex predators, creating a high level of competition for food and nutrients among local organisms – particularly sharks, jacks, and other carnivores. The threatened green sea turtles that frequent nearby Palmyra Atoll travel to Kingman Reef to forage and bask on the coral rubble spits at low tide."
+    },
+    {
+      "name": "National Wildlife Refuge",
+      "text": "On September 1, 2000, the Navy relinquished its control over Kingman Reef to the U.S. Fish and Wildlife Service. On January 18, 2001, Secretary of the Interior Bruce Babbitt created the Kingman Reef National Wildlife Refuge during his final days in office with Secretary's Order 3223. It is composed of the emergent coral rubble spits and all waters out to 12 nautical miles (22 km). While there are only 3 acres (0.012 km) of land, 483,754 acres (1,957.68 km) of water area is included in the Refuge. Along with six other islands, the reef was administered as part of the Pacific Remote Islands National Wildlife Refuge Complex. In January 2009, that entity was upgraded to the Pacific Remote Islands Marine National Monument by President George W. Bush. In 2025, this was renamed Pacific Islands Heritage Marine National Monument."
+    },
+    {
+      "name": "Amateur radio expeditions",
+      "text": "Since the early 1940s, Kingman Reef has had minimal human contact. However, amateur radio operators from around the world have occasionally visited the reef to put it \"on the air\" in what is known as a DX-pedition. In 1974, a group of amateurs using the callsign KP6KR sailed to the reef and set up a temporary radio station and antenna. Other groups visited the island in subsequent years, including 1977, 1980, 1981, 1988, and 1993.\n\nMore recently, 15 amateur radio operators from the Palmyra DX Group visited the reef in October 2000. Using the FCC-issued special event callsign K5K, the group made more than 80,000 individual contacts with amateurs worldwide for 10 days."
+    }
+  ],
+  "image": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Kingman_Reef_NWR._Photo_credit-_Susan_White-USFWS_%2812198955306%29.jpg/960px-Kingman_Reef_NWR._Photo_credit-_Susan_White-USFWS_%2812198955306%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "width": 900,
+    "height": 597,
+    "title": "Kingman Reef NWR. Photo credit- Susan White-USFWS (12198955306).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Kingman_Reef_NWR._Photo_credit-_Susan_White-USFWS_(12198955306).jpg",
+    "author": "USFWS - Pacific Region, Susan White/USFWS",
+    "license": "Public domain",
+    "licenseUrl": ""
+  }
 }

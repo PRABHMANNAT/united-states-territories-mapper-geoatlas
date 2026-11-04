@@ -15,6 +15,8 @@ export type Article = {
   licenseUrl: string;
   extract: string;
   sections: Section[];
+  image?: { url: string; width: number; height: number; title: string; source: string; author: string; license: string; licenseUrl: string };
+  summaries?: { name: string; text: string }[];
 };
 
 export async function readArticle(region: Region): Promise<Article | null> {
@@ -47,4 +49,9 @@ export function topicSections(article: Article, pattern: RegExp) {
     if (topic || pattern.test(item.name)) sections.push(item);
   }
   return sections.slice(0, 8);
+}
+
+export function topicExcerpts(article: Article, pattern: RegExp) {
+  const sections = topicSections(article, pattern);
+  return article.summaries?.filter((item) => sections.some((section) => section.name === item.name)).slice(0, 3) ?? [];
 }

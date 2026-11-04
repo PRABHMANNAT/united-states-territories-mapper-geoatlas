@@ -2,30 +2,41 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, Compass, Github, History, Layers3, Map, Moon, Search, Sun, Swords } from "lucide-react";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ArrowRight, ArrowUpRight, BarChart3, BookOpen, Database, Github, GraduationCap, Heart, History, House, Layers3, Linkedin, Map, Menu, Search, Star, Columns2, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { atlasById, atlasPlaces } from "@/lib/north-america";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
 
 export const nav = [
-  { href: "/map", title: "Atlas", icon: Map },
+  { href: "/", title: "Atlas", icon: House },
+  { href: "/places", title: "Place directory", icon: BookOpen },
+  { href: "/us", title: "U.S. atlas", icon: Map },
   { href: "/rankings", title: "Rankings", icon: BarChart3 },
-  { href: "/compare", title: "Compare", icon: Swords },
-  { href: "/creator", title: "Creator", icon: Layers3 },
+  { href: "/compare", title: "Compare states", icon: Columns2 },
+  { href: "/creator", title: "Map creator", icon: Layers3 },
   { href: "/timeline", title: "Timeline", icon: History },
+  { href: "/quiz", title: "Geography quiz", icon: GraduationCap },
+  { href: "/data", title: "Data & sources", icon: Database },
 ];
 
+const quickDestinations = nav.filter(({ href }) => ["/places", "/us", "/compare"].includes(href));
+
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
-const themeEvent = "stateatlas-theme-change";
-const readTheme = () => document.documentElement.dataset.theme === "dark";
-const initialTheme = () => false;
-function subscribeTheme(listener: () => void) {
-  window.addEventListener(themeEvent, listener);
-  return () => window.removeEventListener(themeEvent, listener);
-}
+
+const socialLinks = [
+  { href: `${github}/stargazers`, label: "See stars on GitHub", text: "GitHub stars", icon: Star },
+  { href: "https://www.linkedin.com/in/prabhmannat", label: "Follow on LinkedIn", text: "LinkedIn", icon: Linkedin },
+  { href: "https://github.com/PRABHMANNAT", label: "Follow on GitHub", text: "Follow on GitHub", icon: Github },
+];
 
 export function Brand() {
-  return <Link href="/" className="brand"><span className="brand-icon"><Compass size={22} strokeWidth={1.5} /></span><span>State<span>Atlas</span><small>THE AMERICAN ATLAS</small></span></Link>;
+  return <Link href="/" className="brand" aria-label="NorthAtlas home">
+    <span className="brand-icon"><svg viewBox="0 0 40 40" width="24" height="24" aria-hidden="true">
+      <path fill="currentColor" d="m6 11 5-4 6 1 4-3 4 2-1 5 5 1 4-4 4 1-3 5-5 4-3 5-3 1-3-3-4-1-2-5-4-1-2 2-3-2Zm16 14 4 1 1 3 4 1 3 4-2 2-3-3-4-1-2-4Zm9-1 5 1 2 2-4 1-3-2Z"/>
+    </svg></span>
+    <span>North<span>Atlas</span><small>NORTH AMERICAN ATLAS</small></span>
+  </Link>;
 }
 
 type Result = { name: string; detail: string; href: string; keys?: string };
@@ -52,11 +63,13 @@ export function Navigation({ regions }: { regions: Region[] }) {
   const router = useRouter();
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
-  const dark = useSyncExternalStore(subscribeTheme, readTheme, initialTheme);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function open() {
+    setMenuOpen(false);
     setQuery("");
     setIndex(0);
     if (!dialog.current?.open) dialog.current?.showModal();
@@ -78,22 +91,18 @@ export function Navigation({ regions }: { regions: Region[] }) {
     };
   }, []);
 
-  function toggleTheme() {
-    const next = document.documentElement.dataset.theme !== "dark";
-    document.documentElement.dataset.theme = next ? "dark" : "light";
-    try { localStorage.setItem("stateatlas-theme", next ? "dark" : "light"); }
-    catch { /* The theme still applies to the current page. */ }
-    window.dispatchEvent(new Event(themeEvent));
-  }
-
   const options: Result[] = [
     ...nav.map((item) => ({ name: item.title, detail: "Page", href: item.href })),
-    { name: "Quiz", detail: "Page", href: "/quiz" },
-    { name: "Data and API", detail: "Page", href: "/data" },
     { name: "Largest state", detail: "Land area ranking", href: "/rankings?metric=land" },
     { name: "Rivers and lakes", detail: "Map layer", href: "/map?layer=waterways" },
     ...metrics.map((item) => ({ name: item.name, detail: "Ranking", href: `/rankings?metric=${item.id}` })),
     ...regions.map((region) => ({ name: region.name, detail: region.capital ?? "Island", href: `/regions/${region.slug}`, keys: `${region.id} ${region.capital ?? ""}` })),
+    ...atlasPlaces.map((place) => ({
+      name: place.name,
+      detail: place.parent ? atlasById.get(place.parent)?.name ?? place.type : place.type,
+      href: `/places/${place.id}`,
+      keys: `${place.id} ${place.code ?? ""}`,
+    })),
   ];
   const comparison = query.match(/^compare\s+(.+)\s+(?:and|vs\.?|with)\s+(.+)$/i);
   if (comparison) {
@@ -110,19 +119,33 @@ export function Navigation({ regions }: { regions: Region[] }) {
   }
 
   return <>
-    <header className="site-header"><div className="shell header-inner">
+    <header className={`site-header${menuOpen ? " menu-open" : ""}`}><div className="header-inner">
       <Brand />
-      <nav aria-label="Main navigation">{nav.map(({ href, title }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{title}</Link>)}</nav>
+      <button ref={menuButton} className="mobile-menu icon-button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={22}/> : <Menu size={22}/>}</button>
+      <nav id="primary-navigation" aria-label="Main navigation" onKeyDown={(event) => { if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); } }}>
+        {nav.map(({ href, title, icon: Icon }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}><Icon size={18} strokeWidth={1.7}/><span>{title}</span></Link>)}
+      </nav>
+      <div className="header-destinations" role="navigation" aria-label="Atlas destinations">
+        {quickDestinations.map(({ href, title, icon: Icon }) => <Link key={href} href={href}
+          aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}>
+          <Icon size={14} aria-hidden="true"/> {title}
+        </Link>)}
+      </div>
       <div className="header-tools">
-        <button className="header-search" onClick={open} aria-label="Search the atlas"><Search size={16} /> <span>Search atlas</span> <kbd>Ctrl K</kbd></button>
-        <button className="icon-button theme-button" onClick={toggleTheme} aria-label="Toggle light or dark theme" aria-pressed={dark}><Moon className="moon-icon" size={18}/><Sun className="sun-icon" size={18}/></button>
-        <a className="icon-button github-nav" href={github} aria-label="GitHub repository"><Github size={18}/></a>
+        <div className="header-social" role="group" aria-label="Project and creator links">
+          {socialLinks.map(({ href, label, text, icon: Icon }) =>
+            <a key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+              <Icon size={15} aria-hidden="true"/><span>{text}</span>
+            </a>
+          )}
+        </div>
+        <button className="icon-button header-search" onClick={open} aria-label="Search the atlas" title="Search places & tools (Ctrl/Cmd K)"><Search size={18}/></button>
       </div>
     </div></header>
     <dialog ref={dialog} className="command-dialog" aria-labelledby="command-title" onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       <div className="command-inner">
-        <h2 className="sr-only" id="command-title">Search StateAtlas</h2>
-        <div className="command-field"><Search size={21} /><input ref={input} placeholder="Search states, capitals, statistics…" value={query} aria-label="Search StateAtlas" onChange={(event) => { setQuery(event.target.value); setIndex(0); }} onKeyDown={(event) => {
+        <h2 className="sr-only" id="command-title">Search NorthAtlas</h2>
+        <div className="command-field"><Search size={21} /><input ref={input} placeholder="Search countries, subdivisions, and tools…" value={query} aria-label="Search NorthAtlas" onChange={(event) => { setQuery(event.target.value); setIndex(0); }} onKeyDown={(event) => {
           if (event.key === "ArrowDown" || event.key === "ArrowUp") {
             event.preventDefault();
             setIndex((active) => Math.max(0, Math.min(matches.length - 1, active + (event.key === "ArrowDown" ? 1 : -1))));
@@ -138,5 +161,18 @@ export function Navigation({ regions }: { regions: Region[] }) {
 }
 
 export function Footer() {
-  return <footer className="site-footer"><div className="shell footer-inner"><Brand /><p>An open, source-linked atlas of the United States.</p><nav aria-label="More atlas tools"><Link href="/quiz">Quiz</Link><Link href="/data">Data &amp; API</Link><a href={github}>GitHub</a></nav></div></footer>;
+  return <footer className="site-footer">
+    <div className="shell footer-inner">
+      <div className="footer-identity">
+        <Brand />
+        <p>An open atlas of North America.</p>
+      </div>
+      <nav aria-label="More atlas tools">
+        <Link href="/quiz">Quiz</Link>
+        <Link href="/data">Data &amp; API</Link>
+        <a href={github}>GitHub <ArrowUpRight size={13} aria-hidden="true"/></a>
+      </nav>
+      <p className="footer-credit"><Heart size={14} aria-hidden="true"/> <span>Made with love by <a href="https://github.com/PRABHMANNAT">Prabhmannat Singh</a></span></p>
+    </div>
+  </footer>;
 }

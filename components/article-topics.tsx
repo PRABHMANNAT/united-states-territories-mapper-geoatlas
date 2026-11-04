@@ -1,8 +1,7 @@
-import { ExternalLink } from "lucide-react";
-import { topicSections, type Article } from "@/lib/encyclopedia-data";
+import { topicExcerpts, type Article } from "@/lib/encyclopedia-data";
 
 export function ArticleTopics({ article, pattern }: { article: Article; pattern: RegExp }) {
-  const sections = topicSections(article, pattern);
-  if (!sections.length) return null;
-  return <ul className="article-topics">{sections.map((item) => <li key={item.anchor}><a href={`${article.revisionUrl}#${encodeURIComponent(item.anchor)}`}>{item.name} <ExternalLink size={12}/></a></li>)}</ul>;
+  const excerpts = topicExcerpts(article, pattern);
+  if (!excerpts.length) return null;
+  return <div className="chapter-reading">{excerpts.map((item) => <article key={item.name}><h3>{item.name}</h3>{item.text.split("\n\n").slice(0, 2).map((text, index) => <p key={index}>{text}</p>)}</article>)}</div>;
 }

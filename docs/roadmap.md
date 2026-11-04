@@ -2,7 +2,7 @@
 
 ## Geography
 
-- Add a bundled elevation layer from USGS products and expand hydrography using 3DHP coverage where useful. Provider-backed topographic and satellite layers are available when configured.
+- Add a bundled elevation layer from USGS products and expand hydrography using 3DHP coverage where useful. USGS topographic and satellite/aerial layers are now available by default; bundled offline elevation remains future work.
 - Add county density from a separate, same-vintage population and boundaries snapshot.
 - Improve inset zoom and outlying-island map navigation.
 

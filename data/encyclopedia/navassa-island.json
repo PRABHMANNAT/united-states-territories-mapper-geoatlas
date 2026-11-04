@@ -65,5 +65,49 @@
       "anchor": "External_links",
       "level": 1
     }
-  ]
+  ],
+  "summaries": [
+    {
+      "name": "1504 to 1901",
+      "text": "In 1504, Christopher Columbus, stranded on Jamaica during his fourth voyage, sent some crew members by canoe to Hispaniola for help. En route, they landed on the island, which had no water. They called it Navaza (from nava-, Spanish for 'plain' / 'field'), and mariners largely avoided it for the next 350 years. In 1798, Médéric Louis Élie Moreau de Saint-Méry, a member of the French Parliament best known for his publications on Saint-Domingue, referred to \"la Navasse\" as a \"small island between Saint-Domingue and Jamaica\".\n\nFrom 1801 to 1867, the successive constitutions of Haiti claimed sovereignty over adjacent islands, both named and unnamed, although Navassa was not specifically enumerated until 1874. Navassa Island was claimed for the United States on September 19, 1857, by Peter Duncan, an American sea captain, under the Guano Islands Act of 1856, for the rich guano deposits found on the island and for not being within the lawful jurisdiction of any other government, nor occupied by another government's citizens."
+    },
+    {
+      "name": "Guano mining and the Navassa Island Rebellion of 1889",
+      "text": "Guano phosphate is a superior organic fertilizer that became a mainstay of American agriculture in the mid-19th century. In November 1857, Duncan transferred his discoverer's rights to his employer, an American guano trader in Jamaica, who sold them to the newly formed Navassa Phosphate Company of Baltimore. After an interruption for the American Civil War, the company built larger mining facilities on Navassa with barrack housing for 140 black contract laborers from Maryland, houses for white supervisors, a blacksmith shop, warehouses, and a church.\n\nMining began in 1865. The workers dug out the guano by dynamite and pick-axe and hauled it in rail cars to the landing point at Lulu Bay, where it was put into sacks and lowered onto boats for transfer to the Company barque, the S.S. Romance. The living quarters at Lulu Bay were referred to as 'Lulu Town', as appears on old maps. Railway tracks eventually extended inland. In September 1875, the fierce 1875 Indianola hurricane swept over the island, destroying much of the company's infrastructure, including the rail line and workers' homes. In total, the storm caused an estimated $25,000 (equivalent to $730,000 in 2025) in damage on the island."
+    },
+    {
+      "name": "1901 to present",
+      "text": "In 1905, the U.S. Lighthouse Service identified Navassa Island as a good location for a new lighthouse. However, plans for the light moved slowly. With the opening of the Panama Canal in 1914, shipping between the American eastern seaboard and the Canal through the Windward Passage between Cuba and Haiti increased in the area of Navassa, which proved a hazard to navigation. Congress appropriated $125,000 in 1913 to build a lighthouse on Navassa, and in 1917 the Lighthouse Service built the 162-foot (49-meter) Navassa Island Light on the island, 395 feet (120 meters) above sea level. At the same time, a wireless telegraphy station was established on the island. A keeper and two assistants were assigned to live there until the Lighthouse Service installed an automatic beacon in 1929.\n\nAfter merging with the Lighthouse Service in 1939, the U.S. Coast Guard serviced the light bi-annually. The U.S. Navy set up an observation post for the duration of World War II. The island has been uninhabited since then. Fishing activities, mainly from Haiti, take place around Navassa."
+    },
+    {
+      "name": "National Wildlife Refuge",
+      "text": "In September 1999, the United States Fish and Wildlife Service established the Navassa Island National Wildlife Refuge, which encompasses 1,344 acres (5.44 km) of land and a 12-nautical-mile (22 km; 14 mi) radius of marine habitat around the island. Later that year, full administrative responsibility for Navassa was transferred from the Office of Insular Affairs to the U.S. Fish and Wildlife Service.\n\nThe National Wildlife Refuge protects coral reef ecosystems, native wildlife, and plants and provides opportunities for scientific research on and around Navassa Island. Navassa Island features large seabird colonies, including over 5,000 nesting red-footed booby (Sula sula). Navassa is home to four endemic lizard species. Two other endemic lizards, Cyclura cornuta onchiopsis and Leiocephalus eremitus, are extinct."
+    },
+    {
+      "name": "Geography, topography and ecology",
+      "text": "Navassa Island is about 2.1 square miles (5.4 km) in area. It is located 35 miles (56 km) west of Haiti's southwest peninsula, 103 miles (166 km) south of the U.S. naval base at Guantánamo Bay, Cuba, and about one-quarter of the way from mainland Haiti to Jamaica in the Jamaica Channel.\n\nNavassa reaches an elevation of 250 feet (76 m) at Dunning Hill 110 yards (100 m) south of the lighthouse, Navassa Island Light. This location is 440 yards (400 m) from the southwestern coast or 655 yards (600 m) east of Lulu Bay."
+    },
+    {
+      "name": "Ecology",
+      "text": "Navassa Island's topography, ecology, and modern history are similar to those of Mona Island, a small limestone island located in the Mona Passage between Puerto Rico and the Dominican Republic. These islands were once centers of guano mining and are now nature reserves for the United States.\n\nTransient Haitian fishers and others camp on Navassa Island. Still, it is uninhabited. Navassa has no ports or harbors, only offshore anchorages, and its only natural resource is guano. Economic activity consists of subsistence fishing and commercial trawling activities. A 2009 survey of fishermen in southwestern Haiti estimated some 300 people, primarily from Anse d'Hainault Arrondissement, regularly fished near the island."
+    },
+    {
+      "name": "Birds",
+      "text": "The island, with its surrounding marine waters, has been recognized as an Important Bird Area (IBA) by BirdLife International because it supports breeding colonies of red-footed boobies and magnificent frigatebirds, as well as hundreds of white-crowned pigeons."
+    },
+    {
+      "name": "Maritime boundary disputes",
+      "text": "The dispute has prevented the definitive delimitation of the maritime zones between the United States and Jamaica, Cuba, and Haiti, as well as determining the maritime frontier at the point of confluence between Jamaica, Cuba, and Haiti. The island was disregarded for the purposes of determining equidistant boundary calculation with Cuba during the signing of the Cuba–Haiti Maritime Boundary Agreement in 1977. Cuba backs Haiti's claim to the island."
+    }
+  ],
+  "image": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Navassa_Island.svg/960px-Navassa_Island.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "width": 900,
+    "height": 969,
+    "title": "Navassa Island.svg",
+    "source": "https://commons.wikimedia.org/wiki/File:Navassa_Island.svg",
+    "author": "User:Indolences",
+    "license": "Public domain",
+    "licenseUrl": ""
+  }
 }

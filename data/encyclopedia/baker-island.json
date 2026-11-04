@@ -70,5 +70,45 @@
       "anchor": "External_links",
       "level": 1
     }
-  ]
+  ],
+  "summaries": [
+    {
+      "name": "Description",
+      "text": "A cemetery and remnants from previous settlements are located near the middle of Baker Island's west coast, where the boat landing area is situated. There are no ports or harbors on the island, and offshore anchorage is prohibited. The narrow fringing reef surrounding Baker Island presents a significant maritime hazard, making access to the shore difficult. To aid in navigation, a day beacon is positioned near the site of the former village.\n\nBaker Island's abandoned World War II runway, which measures 5,463 ft (1,665 m) in length, is now completely overgrown with vegetation and is unserviceable."
+    },
+    {
+      "name": "History",
+      "text": "Baker Island was first discovered in 1818 by Captain Elisha Folger of the Nantucket whaling ship Equator, who named the island \"New Nantucket\". In August 1825, it was sighted again by Captain Obed Starbuck aboard the Loper, another Nantucket whaler. The island later took its name from Captain Michael Baker, who visited it in 1834. Some accounts suggest that Baker visited the island earlier, in 1832, and returned on August 14, 1839, aboard the whaler Gideon Howland, where he reportedly buried an American seaman. Captain Baker formerly claimed the island in 1855 and subsequently sold his interest to a group that later established the American Guano Company.\n\nThe United States officially took possession of Baker Island in 1857 under the Guano Islands Act of 1856. The island's guano deposits were mined by the American Guano Company from 1859 until 1878. Workers from various parts of the Pacific, including Hawaiʻi, were brought in for the mining operations. The Hawaiian laborers referred to Baker Island as \"Puaka‘ilima\", named after the ilima flower. The scale of guano extraction can be illustrated by ship movements in late 1868, where several ships, including the British vessel Montebello and the American ship Eldorado, transported tons of guano to Liverpool, England."
+    },
+    {
+      "name": "Airfield",
+      "text": "On August 11, 1943, a U.S. Army defense force arrived on Baker Island as part of the broader Gilbert and Marshall Islands campaign during World War II. By September 1943, the Army had constructed a 5,463-foot (1,665 m) airfield on the island. This airfield served as a crucial staging base for the Seventh Air Force, allowing B-24 Liberator bombers to launch attacks on Japanese positions, including Mili Atoll in the Marshall Islands. Additionally, the 45th Fighter Squadron operated P-40 fighters from Baker Island's airfield from September 1 to November 27, 1943. However, the strategic importance of the airfield diminished quickly, and by January 1, 1944, it was abandoned as military operations shifted further west."
+    },
+    {
+      "name": "LORAN Station Baker",
+      "text": "The LORAN (Long Range Navigation) radio station on Baker operated from September 1944 until July 1946. This station, designated as Unit 91 with the radio call sign NRN-1, was a critical navigation aid for U.S. military operations in the Pacific during and immediately after World War II. LORAN stations like the one on Baker Island were part of a network used to assist ships and aircraft in determining their positions accurately, particularly in the vast and often featureless expanse of the Pacific Ocean."
+    },
+    {
+      "name": "Flora and fauna",
+      "text": "Baker Island is devoid of natural fresh water sources and receives minimal rainfall, making it an arid and inhospitable environment. The island, over 3700 feet wide, is remote and uninhabited despite its historical significance. It is designated as a wildlife refuge and is characterized by sparse vegetation, including four types of grass, prostrate vines, and low-growing shrubs. The treeless landscape provides a crucial habitat for various seabirds, waders, and marine wildlife.\n\nBaker Island has been recognized as an Important Bird Area (IBA) by BirdLife International due to its support for large breeding colonies of seabirds, such as lesser frigatebirds, masked boobies and sooty terns. The island is home to over one million seabirds, including significant populations of albatrosses. Migratory waders, including ruddy turnstones, bar-tailed godwits, sanderlings, and Pacific golden plovers, visit the island seasonally. Additionally, endangered species like green turtles and hawksbill turtles, as well as gray reef sharks, spinner dolphins, monk seals, and hermit crabs, can be found along the surrounding reef."
+    },
+    {
+      "name": "National Wildlife Refuge",
+      "text": "On June 27, 1974, Secretary of the Interior Rogers Morton established the Baker Island National Wildlife Refuge. In 2009, the refuge was expanded to include submerged lands extending 12 nautical miles (22 km) from the island's shoreline. The refuge now encompasses 531 acres (215 hectares) of land and 410,184 acres (165,996 hectares) of surrounding marine waters. Baker Island, along with six other islands, is managed by the U.S. Fish and Wildlife Service as part of the Pacific Remote Islands National Wildlife Refuge Complex. In January 2009, this entity was redesignated as the Pacific Remote Islands Marine National Monument by President George W. Bush. This was renamed Pacific Islands Heritage Marine National Monument in 2025.\n\nEnvironmental challenges facing the refuge include remnants of abandoned military debris from World War II and the threat of illegal fishing in offshore waters. Additionally,  invasive species introduced by human activity, such as cockroaches and coconut palms, have displaced native wildlife. Feral cats, which were first introduced to the island in 1937, were eradicated by 1965."
+    },
+    {
+      "name": "Human debris and remnants",
+      "text": "Debris from past human activity, particularly from the U.S. military's occupation of Baker Island during World War II, is scattered across the island and in the surrounding offshore waters. The most prominent remnant is the 5,400-by-150-foot (1,646-by-46-meter) airstrip, which is now completely overgrown with vegetation and is unusable. On the western coast of the island, a day beacon remains from the wartime era, although it has not been maintained since World War II. This beacon is now primarily used by albatross birds and hermit crabs for breeding, and it also serves as a landmark for the U.S. Fish and Wildlife Service during their infrequent visits to the atoll.\n\nIn the northeast section of the island, which appears to have been the main camp area during the military occupation, the remains of several buildings and heavy equipment are still visible. Five wooden antenna poles, each approximately 40 feet (12 meters) tall, continue to stand. Additionally, debris from several crashed aircraft, along with large equipment such as bulldozers, can be found both on the island and underwater."
+    }
+  ],
+  "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/71/Nwrbakerisle_a320.gif?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "width": 320,
+    "height": 192,
+    "title": "Nwrbakerisle a320.gif",
+    "source": "https://commons.wikimedia.org/wiki/File:Nwrbakerisle_a320.gif",
+    "author": "U.S. Fish & Wildlife Service",
+    "license": "Public domain",
+    "licenseUrl": ""
+  }
 }
