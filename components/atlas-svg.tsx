@@ -57,7 +57,10 @@ export function AtlasSvg({
           {(labels || shape.panel !== "conus" || region.id === "DC") && <text x={lx + dx} y={ly + dy} className={`region-label${labels ? "" : " map-dot"}`}>{labels ? customLabels?.[region.id] || region.id : "·"}</text>}
         </g>;
       })}
-      {water && <g clipPath={`url(#${id}-land)`} pointerEvents="none">{data.water.map((feature, i) => <path key={i} d={feature.path} className={`water-${feature.kind}`} vectorEffect="non-scaling-stroke"/>)}</g>}
+      {water && <g pointerEvents="none" aria-hidden="true">
+        <g clipPath={`url(#${id}-land)`}>{data.water.filter((feature) => feature.kind === "river").map((feature, i) => <path key={i} d={feature.path} className="water-river" vectorEffect="non-scaling-stroke"/>)}</g>
+        {data.water.filter((feature) => feature.kind === "lake").map((feature, i) => <path key={i} d={feature.path} className="water-lake" vectorEffect="non-scaling-stroke"/>)}
+      </g>}
     </g>
     {showScale && <g className="map-scale" transform="translate(30 405)"><path d={`M0 -3v6M0 0h${scaleWidth}m0 -3v6`} /><text x="0" y="-9">≈ {scale} km</text></g>}
   </svg>;

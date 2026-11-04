@@ -143,6 +143,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
         {focus && <div className="map-tooltip"><strong>{focus.name}</strong>{activeMetric && <span>{formatValue(layer, values[focus.id])}</span>}</div>}
       </div>}
       {activeMetric && <div className="map-legend"><strong>{activeMetric.name} · {year}</strong>{legend.map((item) => <span key={item.color}><i style={{ background: item.color }} /> {item.label}</span>)}<span><i className="legend-missing" /> No data</span></div>}
+      {layer === "waterways" && <div className="map-legend"><strong>Major continental rivers and lakes</strong><a href={sources.earth?.url}>Natural Earth · 1:50m</a></div>}
       <div className="map-caption"><span><Crosshair size={14} /> {region ? coordinates(region) : raster && !rasterFailed ? "Web Mercator" : "Albers equal-area · separate inset scales"}</span>
         {(!raster || rasterFailed) && <div><button className="text-button" aria-pressed={labels} onClick={() => setLabels((value) => !value)}>{labels ? "Hide labels" : "Show labels"}</button><button className="text-button" onClick={saveImage}><ArrowDownToLine size={14}/> PNG</button></div>}</div>
       <span className="sr-only" role="status">{status}</span>
