@@ -3,6 +3,7 @@ import { csvParse, dsvFormat } from "d3-dsv";
 import { unzipSync } from "fflate";
 import { cached } from "./cache.mjs";
 import { acsBase, acsTables, sourceUrls, worldBankIndicators, worldBankURL } from "./sources.mjs";
+import { readTerritorialGDP, readUrbanShare } from "./territory-data.mjs";
 
 const number = (value) => {
   if (value === null || value === undefined || String(value).trim() === "") return null;
@@ -60,11 +61,13 @@ export async function statistics(regions, area) {
     }
   }
 
+  await Promise.all([readTerritorialGDP(add), readUrbanShare(add)]);
+
   for (const id of Object.keys(regions)) {
     for (let year = 2020; year <= 2025; year++) {
       const population = find(id, "population", year);
       add(id, "density", year, divide(population, area[id]?.land), "derived");
-      add(id, "gdp-per-capita", year, divide(find(id, "gdp", year), population), "derived");
+      if (regions[id].type !== "territory" || id === "PR") add(id, "gdp-per-capita", year, divide(find(id, "gdp", year), population), "derived");
     }
   }
 
@@ -87,7 +90,7 @@ export async function statistics(regions, area) {
     for (const [metric, table, numerator, denominator] of [
       ["poverty", "b17001", [2], 1],
       ["homeownership", "b25003", [2], 1],
-      ["degree", "b15003", [22, 23, 24, 25], 1],
+      ["degree", "b15003", [20, 21, 22, 23], 1],
       ["unemployment", "b23025", [5], 3],
     ]) {
       const parts = numerator.map((part) => cell(table, part));

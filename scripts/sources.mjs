@@ -9,7 +9,17 @@ export const sourceUrls = {
   lakes: "https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_lakes.zip",
   rivers: "https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_rivers_lake_centerlines.zip",
   countries: "https://api.worldbank.org/v2/country?format=json&per_page=400",
+  urban: "https://www2.census.gov/geo/docs/reference/ua/State_Urban_Rural_Pop_2020_2010.xlsx",
+  puertoRico: "https://apps.bea.gov/regional/zip/PRGDP.zip",
 };
+
+export const territoryWorkbooks = {
+  AS: ["American Samoa", "2023-10/asgdp1023.xlsx"],
+  GU: ["Guam", "2024-04/gugdp0424.xlsx"],
+  MP: ["Northern Mariana Islands", "2024-11/cngdp1124.xlsx"],
+  VI: ["U.S. Virgin Islands", "2024-06/vigdp0624.xlsx"],
+};
+export const territoryURL = (path) => `https://www.bea.gov/sites/default/files/${path}`;
 
 export const acsBase = "https://www2.census.gov/programs-surveys/acs/summary_file/2025/table-based-SF/data/1YRData/";
 export const acsTables = ["b19013", "b17001", "b01002", "b25077", "b25003", "b15003", "b25010", "b23025"];
@@ -30,6 +40,11 @@ export const sources = {
   islandCensus: { name: "Census Island Areas Censuses", url: sourceUrls.islandCensus, vintage: "2020 decennial count" },
   bea: { name: "BEA GDP by State (SAGDP1)", url: "https://www.bea.gov/data/gdp/gdp-state", vintage: "Annual series through 2025" },
   acs: { name: "Census American Community Survey", url: acsBase, vintage: "2025 ACS 1-year estimates" },
+  urban: { name: "Census Urban and Rural Classification", url: sourceUrls.urban, vintage: "2020 Census" },
+  beaPR: { name: "BEA Puerto Rico GDP bulk archive", url: sourceUrls.puertoRico, vintage: "Archived annual series through 2022" },
+  ...Object.fromEntries(Object.entries(territoryWorkbooks).map(([id, [name, path]]) => [
+    `bea${id}`, { name: `BEA GDP for ${name}`, url: territoryURL(path), vintage: "Territorial annual estimates through 2022" },
+  ])),
   derived: { name: "StateAtlas calculation", url: "/data#methodology", vintage: "See observation and metric definition" },
   earth: { name: "Natural Earth", url: "https://www.naturalearthdata.com/about/terms-of-use/", vintage: "1:10m subunits · 1:50m hydrography" },
   world: { name: "World Bank World Development Indicators", url: "https://databank.worldbank.org/source/world-development-indicators", vintage: "Observation years 2023–2025" },
