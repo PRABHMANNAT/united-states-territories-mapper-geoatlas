@@ -553,3 +553,13 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 .profile-image { margin: 20px 0; padding: 20px; border-radius: 20px; background: #f7f7f7; }
 .profile-image img { width: 100%; height: 260px; object-fit: contain; }
 .profile-image figcaption { margin-top: 12px; font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }
+
+.profile-references summary { cursor: pointer; }
+.profile-references summary h2 { display: inline; font-size: 24px; margin-left: 8px; }
+.profile-references summary span { display: block; margin: 4px 0 0 24px; color: var(--muted); font-size: 13px; }
+.reference-groups { display: grid; gap: 24px; padding-top: 24px; }
+.reference-groups h3, .reference-groups h4 { margin: 0 0 6px; }
+.reference-groups h4 { margin-top: 14px; }
+.reference-groups p + p { margin-top: 8px; }
+.reference-groups a { text-decoration: underline; overflow-wrap: anywhere; }
+.reference-groups .article-topics { margin-top: 6px; }

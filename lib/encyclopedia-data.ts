@@ -50,3 +50,8 @@ export function topicSections(article: Article, pattern: RegExp) {
   }
   return sections.slice(0, 8);
 }
+
+export function topicExcerpts(article: Article, pattern: RegExp) {
+  const sections = topicSections(article, pattern);
+  return article.summaries?.filter((item) => sections.some((section) => section.name === item.name)).slice(0, 3) ?? [];
+}
