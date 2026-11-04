@@ -1,0 +1,289 @@
+{
+  "id": "NM",
+  "title": "New Mexico",
+  "url": "https://en.wikipedia.org/wiki/New_Mexico",
+  "revision": 1383241406,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1383241406",
+  "revisionDate": "2026-11-01T18:32:59Z",
+  "wikidata": "Q1522",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "New Mexico is a landlocked state in the Southwestern region of the United States. It is one of the Mountain States of the southern Rocky Mountains, sharing the Four Corners region with Utah, Colorado, and Arizona.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Prehistory",
+      "anchor": "Prehistory",
+      "level": 2
+    },
+    {
+      "name": "First Spanish colonial period",
+      "anchor": "First_Spanish_colonial_period",
+      "level": 2
+    },
+    {
+      "name": "Pueblo Revolt",
+      "anchor": "Pueblo_Revolt",
+      "level": 2
+    },
+    {
+      "name": "Return of the Spanish",
+      "anchor": "Return_of_the_Spanish",
+      "level": 2
+    },
+    {
+      "name": "Increased Comanche influence",
+      "anchor": "Increased_Comanche_influence",
+      "level": 2
+    },
+    {
+      "name": "Mexican territorial period",
+      "anchor": "Mexican_territorial_period",
+      "level": 2
+    },
+    {
+      "name": "Initial American territorial period",
+      "anchor": "Initial_American_territorial_period",
+      "level": 2
+    },
+    {
+      "name": "Postwar American territorial period",
+      "anchor": "Postwar_American_territorial_period",
+      "level": 2
+    },
+    {
+      "name": "Statehood",
+      "anchor": "Statehood",
+      "level": 2
+    },
+    {
+      "name": "World War II and aftermath",
+      "anchor": "World_War_II_and_aftermath",
+      "level": 2
+    },
+    {
+      "name": "21st century",
+      "anchor": "21st_century",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Flora and fauna",
+      "anchor": "Flora_and_fauna",
+      "level": 2
+    },
+    {
+      "name": "Public lands",
+      "anchor": "Public_lands",
+      "level": 2
+    },
+    {
+      "name": "Environmental issues",
+      "anchor": "Environmental_issues",
+      "level": 2
+    },
+    {
+      "name": "Settlements",
+      "anchor": "Settlements",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Population",
+      "anchor": "Population",
+      "level": 2
+    },
+    {
+      "name": "Race and ethnicity",
+      "anchor": "Race_and_ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Immigration",
+      "anchor": "Immigration",
+      "level": 2
+    },
+    {
+      "name": "Languages",
+      "anchor": "Languages",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Road",
+      "anchor": "Road",
+      "level": 2
+    },
+    {
+      "name": "Highways",
+      "anchor": "Highways",
+      "level": 2
+    },
+    {
+      "name": "Rail",
+      "anchor": "Rail",
+      "level": 2
+    },
+    {
+      "name": "Aerospace",
+      "anchor": "Aerospace",
+      "level": 2
+    },
+    {
+      "name": "Government and politics",
+      "anchor": "Government_and_politics",
+      "level": 1
+    },
+    {
+      "name": "Governmental structure",
+      "anchor": "Governmental_structure",
+      "level": 2
+    },
+    {
+      "name": "Politics",
+      "anchor": "Politics",
+      "level": 2
+    },
+    {
+      "name": "Local government",
+      "anchor": "Local_government",
+      "level": 2
+    },
+    {
+      "name": "Law",
+      "anchor": "Law",
+      "level": 2
+    },
+    {
+      "name": "Fiscal policy",
+      "anchor": "Fiscal_policy",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Primary and secondary education",
+      "anchor": "Primary_and_secondary_education",
+      "level": 2
+    },
+    {
+      "name": "Postsecondary education",
+      "anchor": "Postsecondary_education",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Architecture",
+      "anchor": "Architecture",
+      "level": 2
+    },
+    {
+      "name": "Art, literature, and media",
+      "anchor": "Art,_literature,_and_media",
+      "level": 2
+    },
+    {
+      "name": "Cuisine",
+      "anchor": "Cuisine",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 2
+    },
+    {
+      "name": "Historic heritage",
+      "anchor": "Historic_heritage",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Further reading",
+      "anchor": "Further_reading",
+      "level": 1
+    },
+    {
+      "name": "Primary sources",
+      "anchor": "Primary_sources",
+      "level": 2
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government",
+      "level": 2
+    },
+    {
+      "name": "Federal government",
+      "anchor": "Federal_government",
+      "level": 2
+    },
+    {
+      "name": "Tourism",
+      "anchor": "Tourism",
+      "level": 2
+    }
+  ]
+}
