@@ -36,11 +36,12 @@ After starting the app, try the [U.S. + Alaska + Alberta + Yukon map](http://loc
 | `/places` | Browse countries and their subdivision directories, or read sourced profiles for territories and first-level subdivisions. |
 | `/creator` | Build a custom North American map and export it as PNG or SVG. |
 | `/map` | Explore the detailed U.S. atlas with satellite and terrain imagery, statistical layers, waterways, and draggable state outlines for same-scale comparisons. |
-| `/rankings` and `/compare` | Rank U.S. jurisdictions by metric and year, compare them side by side, or find similar economies in World Bank data. |
+| `/rankings` | Rank U.S. jurisdictions by metric and year. |
+| `/compare` | Compare two to four U.S. jurisdictions side by side, or find similar economies in World Bank data. |
 | `/timeline` and `/quiz` | Explore changes in population and GDP or practice geography. |
 | `/data` | Find downloadable datasets, metric definitions, and API examples. |
 
-Press **Ctrl/Cmd + K** to find a place or tool. The [U.S. creator](http://localhost:3000/creator?scope=us) supports legends, undo and redo, saved projects, and JSON or CSV export.
+Choose **Compare states** in the top navbar to open the comparison tool. On phones, open the navigation menu first. Press **Ctrl/Cmd + K** to find a place or tool. The [U.S. creator](http://localhost:3000/creator?scope=us) supports legends, undo and redo, saved projects, and JSON or CSV export.
 
 ## Run locally
 

@@ -13,12 +13,14 @@ export const nav = [
   { href: "/places", title: "Place directory", icon: BookOpen },
   { href: "/us", title: "U.S. atlas", icon: Map },
   { href: "/rankings", title: "Rankings", icon: BarChart3 },
-  { href: "/compare", title: "Compare", icon: Columns2 },
+  { href: "/compare", title: "Compare states", icon: Columns2 },
   { href: "/creator", title: "Map creator", icon: Layers3 },
   { href: "/timeline", title: "Timeline", icon: History },
   { href: "/quiz", title: "Geography quiz", icon: GraduationCap },
   { href: "/data", title: "Data & sources", icon: Database },
 ];
+
+const quickDestinations = nav.filter(({ href }) => ["/places", "/us", "/compare"].includes(href));
 
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
 
@@ -124,8 +126,10 @@ export function Navigation({ regions }: { regions: Region[] }) {
         {nav.map(({ href, title, icon: Icon }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}><Icon size={18} strokeWidth={1.7}/><span>{title}</span></Link>)}
       </nav>
       <div className="header-destinations" role="navigation" aria-label="Atlas destinations">
-        <Link href="/places" aria-current={pathname === "/places" ? "page" : undefined} onClick={() => setMenuOpen(false)}><BookOpen size={14} aria-hidden="true"/> Place directory</Link>
-        <Link href="/us" aria-current={pathname === "/us" ? "page" : undefined} onClick={() => setMenuOpen(false)}><Map size={14} aria-hidden="true"/> U.S. atlas</Link>
+        {quickDestinations.map(({ href, title, icon: Icon }) => <Link key={href} href={href}
+          aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}>
+          <Icon size={14} aria-hidden="true"/> {title}
+        </Link>)}
       </div>
       <div className="header-tools">
         <div className="header-social" role="group" aria-label="Project and creator links">
