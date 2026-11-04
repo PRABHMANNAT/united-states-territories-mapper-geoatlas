@@ -92,7 +92,8 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
   function pointerDown(event: PointerEvent<HTMLDivElement>) {
     if (event.button !== 0 || camera.k === 1 || !svg.current) return;
     moved.current = false;
-    drag.current = { startX: event.clientX, startY: event.clientY, camera, scale: data.width / svg.current.getBoundingClientRect().width, moved: false };
+    const screenScale = svg.current.getScreenCTM()?.a;
+    drag.current = { startX: event.clientX, startY: event.clientY, camera, scale: screenScale ? 1 / screenScale : data.width / svg.current.getBoundingClientRect().width, moved: false };
   }
   function pointerMove(event: PointerEvent<HTMLDivElement>) {
     if (!drag.current) return;
@@ -132,6 +133,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
         </select></label>
       </div>
       {unavailable && <p className="map-notice" role="status">{rasterFailed ? "Imagery is unavailable in this browser. Political boundaries are shown below." : layer === "terrain" ? "Topographic imagery requires a configured tile provider. Political boundaries are shown below." : "Satellite imagery requires a licensed tile provider. Political boundaries are shown below."}</p>}
+      <div className="map-scene">
       {raster && !rasterFailed ? <RasterMap key={layer} provider={raster} region={region} onSelect={select} onUnavailable={() => setRasterFailed(true)}/> : <div className={`map-stage${camera.k > 1 ? " zoomed" : ""}`} ref={stage} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd}>
         <AtlasSvg data={data} regions={regions} svgRef={svg} selection={selected ? [selected] : []} thematic={Boolean(activeMetric)} fills={fills} water={layer === "waterways"} labels={labels} camera={camera} onSelect={select} onHover={setHovered} showScale={camera.k === 1}/>
         <div className="map-zoom" onPointerDown={(event) => event.stopPropagation()}>
@@ -142,12 +144,6 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
         </div>
         {focus && <div className="map-tooltip"><strong>{focus.name}</strong>{activeMetric && <span>{formatValue(layer, values[focus.id])}</span>}</div>}
       </div>}
-      {activeMetric && <div className="map-legend"><strong>{activeMetric.name} · {year}</strong>{legend.map((item) => <span key={item.color}><i style={{ background: item.color }} /> {item.label}</span>)}<span><i className="legend-missing" /> No data</span></div>}
-      {layer === "waterways" && <div className="map-legend"><strong>Major continental rivers and lakes</strong><a href={sources.earth?.url}>Natural Earth · 1:50m</a></div>}
-      <div className="map-caption"><span><Crosshair size={14} /> {region ? coordinates(region) : raster && !rasterFailed ? "Web Mercator" : "Albers equal-area · separate inset scales"}</span>
-        {(!raster || rasterFailed) && <div><button className="text-button" aria-pressed={labels} onClick={() => setLabels((value) => !value)}>{labels ? "Hide labels" : "Show labels"}</button><button className="text-button" onClick={saveImage}><ArrowDownToLine size={14}/> PNG</button></div>}</div>
-      <span className="sr-only" role="status">{status}</span>
-    </section>
     <aside className="atlas-sidebar" aria-label="Region details">
       <div className="region-picker"><label><Search size={16} /><input aria-label="Find a state or territory" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Find a jurisdiction…" onKeyDown={(event) => {
         if (event.key === "Enter" && matches[0]) select(matches[0].id, !home);
@@ -164,7 +160,7 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
             return <div key={key}><dt>{metricById[key].name} {value && <small>{value.year}</small>}</dt><dd>{formatValue(key, value?.value, "metric", true)}</dd></div>;
           })}
         </dl>
-        {lead && <div className="drawer-intro"><p>{lead.text}</p><small><a href={lead.url}>Wikipedia contributors</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></small></div>}
+        {!home && lead && <div className="drawer-intro"><p>{lead.text}</p><small><a href={lead.url}>Wikipedia contributors</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></small></div>}
         {activeMetric && year && <p className="source-line">{sources[observations.find((item) => item.metric === layer && item.year === year)?.source ?? "derived"]?.name}
           {(() => {
             const row = ranked(regions, observations, layer, year, "states-dc", "desc").find((row) => row.region.id === selected);
@@ -178,6 +174,14 @@ export function MapStudio({ regions, data, observations, sources, initialId, ini
       </select></label>
       {!home && <div className="map-share"><ShareButton /></div>}
     </aside>
+      </div>
+      {activeMetric && <div className="map-legend"><strong>{activeMetric.name} · {year}</strong>{legend.map((item) => <span key={item.color}><i style={{ background: item.color }} /> {item.label}</span>)}<span><i className="legend-missing" /> No data</span></div>}
+      {layer === "waterways" && <div className="map-legend"><strong>Major continental rivers and lakes</strong><a href={sources.earth?.url}>Natural Earth · 1:50m</a></div>}
+      <div className="map-caption"><span><Crosshair size={14} /> {region ? coordinates(region) : raster && !rasterFailed ? "Web Mercator" : "Albers equal-area · separate inset scales"}</span>
+        {(!raster || rasterFailed) && <div><button className="text-button" aria-pressed={labels} onClick={() => setLabels((value) => !value)}>{labels ? "Hide labels" : "Show labels"}</button><button className="text-button" onClick={saveImage}><ArrowDownToLine size={14}/> PNG</button></div>}</div>
+      <span className="sr-only" role="status">{status}</span>
+    </section>
+
   </div>;
 }
 

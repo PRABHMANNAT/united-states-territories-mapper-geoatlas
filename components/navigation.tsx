@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, ChevronRight, Compass, Database, Github, GraduationCap, History, House, Layers3, Map, Menu, Moon, Search, Sun, Columns2, X } from "lucide-react";
+import { ArrowRight, BarChart3, Compass, Database, GraduationCap, History, House, Layers3, Map, Menu, Moon, Search, Sun, Columns2, X } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
@@ -60,7 +60,6 @@ export function Navigation({ regions }: { regions: Region[] }) {
   const [index, setIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const dark = useSyncExternalStore(subscribeTheme, readTheme, initialTheme);
-  const currentPage = nav.find((item) => item.href === pathname)?.title ?? "Region profile";
 
   function open() {
     setMenuOpen(false);
@@ -119,18 +118,13 @@ export function Navigation({ regions }: { regions: Region[] }) {
       <Brand />
       <button ref={menuButton} className="mobile-menu icon-button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={22}/> : <Menu size={22}/>}</button>
       <nav id="primary-navigation" aria-label="Main navigation" onKeyDown={(event) => { if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); } }}>
-        <p className="nav-caption">WORKSPACE</p>
-        {nav.map(({ href, title, icon: Icon }, i) => <Link key={href} href={href} className={i === 6 ? "nav-secondary" : undefined} aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}><Icon size={18} strokeWidth={1.7}/><span>{title}</span>{pathname === href && <span className="nav-active-dot"/>}</Link>)}
+        {nav.map(({ href, title, icon: Icon }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}><Icon size={18} strokeWidth={1.7}/><span>{title}</span></Link>)}
       </nav>
-      <div className="sidebar-bottom">
-        <div className="sidebar-note"><span className="availability-dot"/> Open data. Open exploration.<small>50 states. A wider perspective.</small></div>
-        <a href={github}><Github size={16}/> View the project <ArrowRight size={14}/></a>
+      <div className="header-tools">
+        <button className="icon-button header-search" onClick={open} aria-label="Search the atlas" title="Search places & tools (Ctrl/Cmd K)"><Search size={18}/></button>
+        <button className="icon-button theme-button" onClick={toggleTheme} aria-label="Toggle light or dark theme" aria-pressed={dark}><Moon className="moon-icon" size={18}/><Sun className="sun-icon" size={18}/></button>
       </div>
     </div></header>
-    <div className="workspace-bar"><div className="shell workspace-bar-inner"><div className="workspace-breadcrumb"><span>United States</span><ChevronRight size={14}/><strong>{currentPage}</strong></div><div className="header-tools">
-      <button className="header-search" onClick={open} aria-label="Search the atlas"><Search size={16}/><span>Search places & tools</span><kbd>Ctrl K</kbd></button>
-      <button className="icon-button theme-button" onClick={toggleTheme} aria-label="Toggle light or dark theme" aria-pressed={dark}><Moon className="moon-icon" size={18}/><Sun className="sun-icon" size={18}/></button>
-    </div></div></div>
     <dialog ref={dialog} className="command-dialog" aria-labelledby="command-title" onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       <div className="command-inner">
         <h2 className="sr-only" id="command-title">Search StateAtlas</h2>

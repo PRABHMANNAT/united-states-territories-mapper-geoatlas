@@ -112,6 +112,15 @@ test("captures the home layout with no horizontal overflow", async ({ page }, te
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "The United States, explored." })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
+  const atlas = await page.locator(".atlas-card").boundingBox();
+  const scene = await page.locator(".map-scene").boundingBox();
+  const profile = await page.getByRole("complementary", { name: "Region details" }).boundingBox();
+  expect(atlas!.width).toBeGreaterThan(page.viewportSize()!.width - 55);
+  expect(profile!.x).toBeGreaterThanOrEqual(scene!.x);
+  expect(profile!.x + profile!.width).toBeLessThanOrEqual(scene!.x + scene!.width);
+  expect(profile!.y + profile!.height).toBeLessThanOrEqual(scene!.y + scene!.height);
+  expect((await page.locator(".site-header").boundingBox())!.height).toBeLessThan(75);
+  expect((await page.locator(".home-intro").boundingBox())!.height).toBeLessThan(115);
   await page.screenshot({ path: testInfo.outputPath(`home-${testInfo.project.name}.png`), fullPage: true });
 });
 
