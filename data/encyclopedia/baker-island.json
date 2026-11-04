@@ -1,0 +1,74 @@
+{
+  "id": "XB",
+  "title": "Baker Island",
+  "url": "https://en.wikipedia.org/wiki/Baker_Island",
+  "revision": 1374437192,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1374437192",
+  "revisionDate": "2026-09-12T01:49:16Z",
+  "wikidata": "Q46879",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Baker Island, once known as New Nantucket in the early 19th century, is a small, uninhabited atoll located just north of the Equator in the central Pacific Ocean, approximately 1,920 miles (3,090 kilometres) southwest of Honolulu. Positioned almost halfway between Hawaii and Australia, its closest neighbor is Howland Island, situated 42 mi (68 km) to the north-northwest.",
+  "sections": [
+    {
+      "name": "Description",
+      "anchor": "Description",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Airfield",
+      "anchor": "Airfield",
+      "level": 1
+    },
+    {
+      "name": "LORAN Station Baker",
+      "anchor": "LORAN_Station_Baker",
+      "level": 1
+    },
+    {
+      "name": "Flora and fauna",
+      "anchor": "Flora_and_fauna",
+      "level": 1
+    },
+    {
+      "name": "National Wildlife Refuge",
+      "anchor": "National_Wildlife_Refuge",
+      "level": 1
+    },
+    {
+      "name": "Human debris and remnants",
+      "anchor": "Human_debris_and_remnants",
+      "level": 1
+    },
+    {
+      "name": "Gallery",
+      "anchor": "Gallery",
+      "level": 1
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Further reading",
+      "anchor": "Further_reading",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
