@@ -15,6 +15,8 @@ export type Article = {
   licenseUrl: string;
   extract: string;
   sections: Section[];
+  image?: { url: string; width: number; height: number; title: string; source: string; author: string; license: string; licenseUrl: string };
+  summaries?: { name: string; text: string }[];
 };
 
 export async function readArticle(region: Region): Promise<Article | null> {

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { ProfileCharts } from "@/components/profile-charts";
 import { notFound } from "next/navigation";
 import { ArrowRight, ArrowDownToLine, BookOpen, ExternalLink, MapPin } from "lucide-react";
 import { ArticleTopics } from "@/components/article-topics";
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/regions/[slug]">)
 const chapters = [
   { id: "history", title: "History", pattern: /history|indigenous|colonial|statehood/i, metrics: [] },
   { id: "geography", title: "Geography", pattern: /geography|climate|mountain|river|ecology/i, metrics: ["area", "land", "water", "density"] },
-  { id: "population", title: "Population", pattern: /population|demographic|settlement|cities/i, metrics: ["population", "population-growth", "median-age", "degree", "urban"] },
+  { id: "population", title: "Population", pattern: /population|demographic|cities/i, metrics: ["population", "population-growth", "median-age", "degree", "urban"] },
   { id: "economy", title: "Economy and housing", pattern: /economy|industr|employment/i, metrics: ["gdp", "real-gdp-growth", "gdp-per-capita", "income", "poverty", "unemployment", "home-value", "homeownership"] },
   { id: "government", title: "Government", pattern: /government|politics|administrative/i, metrics: [] },
   { id: "culture", title: "Culture", pattern: /culture|cuisine|sport|music|landmark/i, metrics: [] },
@@ -40,15 +42,16 @@ export default async function Profile({ params }: PageProps<"/regions/[slug]">) 
   const visibleChapters = chapters.filter((chapter) => chapter.metrics.length || article?.sections.some((item) => chapter.pattern.test(item.name)));
   const related = nearbyRegions(region, regions);
   const [longitude, latitude] = region.coordinates;
-  return <div className="shell inner-page">
+  return <div className="shell inner-page region-profile">
     <Link href="/map" className="breadcrumb">Atlas / Region profiles</Link>
     <div className="profile-hero"><PageHeading label={`FIELD GUIDE / ${region.id}`} title={region.name}>{regionTypeLabels[region.type]}{region.censusRegion ? ` · Census ${region.censusRegion} region` : ""}</PageHeading><Shape path={mapData.silhouettes[region.id]} /></div>
     <div className="profile-layout">
       <aside className="panel profile-nav"><p className="eyebrow"><span/> ON THIS PAGE</p><nav aria-label="Region sections"><a href="#overview">Overview</a>{visibleChapters.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}<a href="#explore">Related jurisdictions</a></nav></aside>
       <div className="profile-content">
         <section className="panel tool-panel" id="overview"><div className="tool-summary"><div><h2>Overview</h2><p><MapPin size={15}/> {latitude.toFixed(4)}°, {longitude.toFixed(4)}°</p></div></div>
+          {article?.image && <figure className="profile-image"><Image unoptimized src={article.image.url} width={article.image.width} height={article.image.height} alt={article.image.title} /><figcaption><a href={article.image.source}>{article.image.title}</a> · {article.image.author} · {article.image.licenseUrl ? <a href={article.image.licenseUrl}>{article.image.license}</a> : article.image.license}</figcaption></figure>}
           <dl className="overview-details"><div><dt>{region.type === "territory" ? "Capital or seat" : "Capital"}</dt><dd>{region.capital ?? "—"}</dd></div><div><dt>Jurisdiction type</dt><dd>{regionTypeLabels[region.type]}</dd></div><div><dt>Census FIPS</dt><dd>{region.fips ?? "—"}</dd></div></dl>
-          {flag && <figure className="flag-credit"><RegionFlag flag={flag} name={region.name} size={100}/><figcaption><a href={flag.source}>{flag.title.replace(/^File:/, "")}</a>{flag.author ? ` · ${flag.author}` : ""} · {flag.licenseUrl ? <a href={flag.licenseUrl}>{flag.license}</a> : flag.license} · {flag.modification}</figcaption></figure>}
+          {flag && !article?.image?.title.toLowerCase().includes("flag") && <figure className="flag-credit"><RegionFlag flag={flag} name={region.name} size={100}/><figcaption><a href={flag.source}>{flag.title.replace(/^File:/, "")}</a>{flag.author ? ` · ${flag.author}` : ""} · {flag.licenseUrl ? <a href={flag.licenseUrl}>{flag.license}</a> : flag.license} · {flag.modification}</figcaption></figure>}
           {article ? <div className="encyclopedia prose">
             <h3><BookOpen size={17}/> Encyclopedia</h3>
             <blockquote>{article.extract}</blockquote>
@@ -64,6 +67,7 @@ export default async function Profile({ params }: PageProps<"/regions/[slug]">) 
             return <div key={id}><dt>{metricById[id].name}</dt><dd>{row ? formatValue(id, row.value) : "Data unavailable"}</dd>
               {row && <small>{row.year} · <a href={sources[row.source]?.url}>{sources[row.source]?.name}</a>{row.margin !== undefined ? ` · MOE ±${formatValue(id, row.margin)}` : ""}</small>}</div>;
           })}</dl>
+          <ProfileCharts region={region.id} chapter={item.id}/>
           {article && <ArticleTopics article={article} pattern={item.pattern} />}
         </section>)}
         <section id="explore" className="panel tool-panel"><div className="tool-summary"><h2>Related jurisdictions</h2></div>

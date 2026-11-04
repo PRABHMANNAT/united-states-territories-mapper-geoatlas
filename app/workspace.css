@@ -518,3 +518,38 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 @media (prefers-reduced-motion: reduce) {
   button, .primary-button, .quiet-button, .header-inner nav a { transition: none; }
 }
+
+/* Region field guides: readable chapters and source-linked visual evidence. */
+.region-profile .profile-hero { padding: 28px 0; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+.region-profile .profile-hero .silhouette { width: 150px; height: 120px; color: #b8b8b8; }
+.region-profile .profile-nav { top: 86px; padding: 22px; }
+.region-profile .profile-nav nav a { padding: 9px 12px; border-radius: 12px; }
+.region-profile .profile-nav nav a:hover { background: var(--surface-alt); }
+.region-profile .profile-content { gap: 24px; }
+.region-profile .tool-panel { padding: clamp(22px, 3vw, 40px); scroll-margin-top: 90px; }
+.region-profile .tool-summary h2 { font-size: 28px; letter-spacing: -.9px; }
+.chapter-reading { display: grid; gap: 26px; margin: 24px 0; max-width: 78ch; }
+.chapter-reading h3 { font-size: 18px; margin-bottom: 12px; letter-spacing: -.3px; }
+.chapter-reading p { font-size: 15px; line-height: 1.85; color: #474747; margin-top: 12px; }
+.region-profile .article-topics { margin-top: 20px; gap: 8px; }
+.region-profile .article-topics a { display: inline-flex; gap: 7px; align-items: center; background: #f5f5f5; padding: 8px 12px; border-radius: 999px; text-decoration: none; font-size: 12px; }
+.region-profile .flag-credit { padding: 22px; background: #f7f7f7; border-radius: 18px; }
+.profile-charts { display: grid; gap: 20px; margin-block: 24px; }
+.profile-chart { margin: 0; padding: 24px; border: 1px solid var(--line); border-radius: 20px; }
+.profile-chart h3 { font-size: 18px; }
+.profile-chart figcaption p, .share-indicator p { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.observation-bars { display: grid; gap: 12px; margin: 22px 0; }
+.observation-bars > div { display: grid; grid-template-columns: 40px 1fr minmax(80px, auto); gap: 12px; align-items: center; font-size: 12px; }
+.observation-bars strong { text-align: right; font-variant-numeric: tabular-nums; }
+.observation-track { height: 18px; background: #f1f1f1; border-radius: 5px; overflow: hidden; }
+.observation-track i { display: block; height: 100%; background: #333; border-radius: 5px; }
+.share-indicator { margin-top: 22px; }
+.share-indicator > div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.share-indicator meter { display: block; width: 100%; height: 16px; margin-block: 8px; }
+.share-indicator meter::-webkit-meter-optimum-value { background: #333; }
+.share-indicator small { font-size: 11px; color: var(--muted); }
+@media(max-width:700px) { .region-profile .profile-nav { position: static; } .profile-chart { padding: 16px; } .region-profile .profile-hero .silhouette { width: 80px; } }
+
+.profile-image { margin: 20px 0; padding: 20px; border-radius: 20px; background: #f7f7f7; }
+.profile-image img { width: 100%; height: 260px; object-fit: contain; }
+.profile-image figcaption { margin-top: 12px; font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }

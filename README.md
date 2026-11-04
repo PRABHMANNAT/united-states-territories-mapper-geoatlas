@@ -56,3 +56,5 @@ Run `pnpm data:build` to reconstruct snapshots from the source cache. See the [d
 - [Contributing](CONTRIBUTING.md)
 
 The software uses the [MIT License](LICENSE). Each dataset has separate reuse terms.
+
+Region profiles include revision-linked Wikipedia chapter excerpts (CC BY-SA 4.0), Wikimedia images with individual credits, and charts drawn from the bundled Census/BEA observations. Encyclopedia context may use different reference years from statistical cards. Run `python scripts/enrich-profiles.py` to update chapter excerpts at the pinned article revisions, then `python scripts/profile-images.py` for credited free images. Images load from Wikimedia and require connectivity; text and statistical charts are bundled. Indicator shares have different denominators and are not a demographic composition. Missing observations are never interpolated.

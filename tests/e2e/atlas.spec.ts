@@ -180,3 +180,17 @@ test("changes map palettes and opens a fullscreen map with keyboard exit", async
   await page.getByRole("button", { name: "Show region details", exact: true }).click();
   await expect(page.getByRole("heading", { name: "California", exact: true })).toBeVisible();
 });
+
+test("reads sourced region chapters and demographic charts", async ({ page }, testInfo) => {
+  await page.goto("/regions/iowa");
+  await expect(page.locator("#history .chapter-reading")).toContainText("Iowa");
+  await expect(page.locator("#government .chapter-reading")).not.toBeEmpty();
+  await expect(page.getByRole("heading", { name: "Community indicators", exact: true })).toBeVisible();
+  await expect(page.locator(".profile-image img")).toBeVisible();
+  await page.getByRole("navigation", { name: "Region sections" }).getByRole("link", { name: "Population", exact: true }).click();
+  await expect(page.locator("#population meter")).toHaveCount(2);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: testInfo.outputPath(`profile-${testInfo.project.name}.png`) });
+  await page.goto("/regions/baker-island");
+  await expect(page.getByText("No comparable observations available.").first()).toBeVisible();
+});
