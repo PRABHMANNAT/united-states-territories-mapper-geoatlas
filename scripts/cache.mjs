@@ -20,7 +20,7 @@ export async function cached(name, url) {
     for (let attempt = 0; attempt < 4; attempt++) {
       try {
         const response = await fetch(url, {
-          headers: { "User-Agent": "StateAtlas open-data ingestion" },
+          headers: { "User-Agent": "StateAtlasData/0.1 (https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas)" },
           signal: AbortSignal.timeout(90_000),
         });
         if (!response.ok) {
