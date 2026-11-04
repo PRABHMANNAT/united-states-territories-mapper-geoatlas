@@ -6,12 +6,19 @@ test("opens the atlas, chooses an island and navigates to its profile", async ({
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "The United States, explored." })).toBeVisible();
   await page.getByRole("link", { name: "Explore the atlas" }).click();
+  await expect(page.getByRole("heading", { name: "Interactive atlas", exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/\/map$/);
+  await page.getByRole("button", { name: "Texas", exact: true }).locator("text").click();
+  await expect(page.getByRole("heading", { name: "Texas", exact: true })).toBeVisible();
   await page.getByRole("combobox", { name: "Jump to a jurisdiction" }).selectOption("GU");
   await expect(page.getByRole("heading", { name: "Guam", exact: true })).toBeVisible();
   await expect(page).toHaveURL(/region=GU/);
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Guam", exact: true })).toBeVisible();
   await page.getByRole("link", { name: "Open profile" }).click();
   await expect(page).toHaveURL(/regions\/guam$/);
   await expect(page.getByRole("heading", { name: "Geography", exact: true })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Flag of Guam" })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
@@ -43,6 +50,9 @@ test("edits a map, undoes a change and exports a vector image", async ({ page })
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "SVG", exact: true }).click();
   expect((await download).suggestedFilename()).toBe("stateatlas-custom.svg");
+  const imageDownload = page.waitForEvent("download");
+  await page.getByRole("button", { name: "PNG", exact: true }).click();
+  expect((await imageDownload).suggestedFilename()).toBe("stateatlas-custom.png");
 });
 
 test("supports command search, timeline playback and JSON API", async ({ page, request }) => {
@@ -64,4 +74,16 @@ test("captures the home layout with no horizontal overflow", async ({ page }, te
   await expect(page.getByRole("heading", { name: "The United States, explored." })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
   await page.screenshot({ path: testInfo.outputPath(`home-${testInfo.project.name}.png`), fullPage: true });
+});
+
+test("reports missing satellite setup, exports the offline map, and persists dark mode", async ({ page }) => {
+  await page.goto("/map?region=PR");
+  await page.getByRole("combobox", { name: "Map layer" }).selectOption("satellite");
+  await expect(page.getByText("Satellite imagery requires a licensed tile provider.")).toBeVisible();
+  const imageDownload = page.waitForEvent("download");
+  await page.getByRole("button", { name: "PNG", exact: true }).click();
+  expect((await imageDownload).suggestedFilename()).toBe("stateatlas-map.png");
+  await page.getByRole("button", { name: "Toggle light or dark theme" }).click();
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 });
