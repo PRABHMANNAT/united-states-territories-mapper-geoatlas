@@ -1,0 +1,289 @@
+{
+  "id": "TN",
+  "title": "Tennessee",
+  "url": "https://en.wikipedia.org/wiki/Tennessee",
+  "revision": 1380707474,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1380707474",
+  "revisionDate": "2026-10-17T10:37:49Z",
+  "wikidata": "Q1509",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Tennessee ( , locally ), officially the State of Tennessee, is a landlocked state in the Southeastern region of the United States. It borders Kentucky to the north, Virginia to the northeast, North Carolina to the east, Georgia, Alabama, and Mississippi to the south, Arkansas to the southwest, and Missouri to the northwest.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Pre-European era",
+      "anchor": "Pre-European_era",
+      "level": 2
+    },
+    {
+      "name": "Exploration and colonization",
+      "anchor": "Exploration_and_colonization",
+      "level": 2
+    },
+    {
+      "name": "Statehood and antebellum era",
+      "anchor": "Statehood_and_antebellum_era",
+      "level": 2
+    },
+    {
+      "name": "Civil War",
+      "anchor": "Civil_War",
+      "level": 2
+    },
+    {
+      "name": "Reconstruction and late 19th century",
+      "anchor": "Reconstruction_and_late_19th_century",
+      "level": 2
+    },
+    {
+      "name": "Early 20th century",
+      "anchor": "Early_20th_century",
+      "level": 2
+    },
+    {
+      "name": "Mid-20th century to present",
+      "anchor": "Mid-20th_century_to_present",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Topography",
+      "anchor": "Topography",
+      "level": 2
+    },
+    {
+      "name": "Hydrology",
+      "anchor": "Hydrology",
+      "level": 2
+    },
+    {
+      "name": "Ecology",
+      "anchor": "Ecology",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Cities, towns, and counties",
+      "anchor": "Cities,_towns,_and_counties",
+      "level": 1
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Ethnicity",
+      "anchor": "Ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Taxation",
+      "anchor": "Taxation",
+      "level": 2
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Industry",
+      "anchor": "Industry",
+      "level": 2
+    },
+    {
+      "name": "Business and technology",
+      "anchor": "Business_and_technology",
+      "level": 2
+    },
+    {
+      "name": "Energy and mineral production",
+      "anchor": "Energy_and_mineral_production",
+      "level": 2
+    },
+    {
+      "name": "Tourism",
+      "anchor": "Tourism",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Music",
+      "anchor": "Music",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Colleges and universities",
+      "anchor": "Colleges_and_universities",
+      "level": 2
+    },
+    {
+      "name": "Media",
+      "anchor": "Media",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Roads",
+      "anchor": "Roads",
+      "level": 2
+    },
+    {
+      "name": "Airports",
+      "anchor": "Airports",
+      "level": 2
+    },
+    {
+      "name": "Railroads",
+      "anchor": "Railroads",
+      "level": 2
+    },
+    {
+      "name": "Waterways",
+      "anchor": "Waterways",
+      "level": 2
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "Executive and legislative branches",
+      "anchor": "Executive_and_legislative_branches",
+      "level": 2
+    },
+    {
+      "name": "Judicial system",
+      "anchor": "Judicial_system",
+      "level": 2
+    },
+    {
+      "name": "Local",
+      "anchor": "Local",
+      "level": 2
+    },
+    {
+      "name": "Federal",
+      "anchor": "Federal",
+      "level": 2
+    },
+    {
+      "name": "Tribal",
+      "anchor": "Tribal",
+      "level": 2
+    },
+    {
+      "name": "Politics",
+      "anchor": "Politics",
+      "level": 1
+    },
+    {
+      "name": "Voting rights and electoral law",
+      "anchor": "Voting_rights_and_electoral_law",
+      "level": 2
+    },
+    {
+      "name": "Historical political alignment",
+      "anchor": "Historical_political_alignment",
+      "level": 2
+    },
+    {
+      "name": "State elections",
+      "anchor": "State_elections",
+      "level": 2
+    },
+    {
+      "name": "Federal elections",
+      "anchor": "Federal_elections",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 1
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Bibliography",
+      "anchor": "Bibliography",
+      "level": 2
+    },
+    {
+      "name": "Citations",
+      "anchor": "Citations",
+      "level": 2
+    },
+    {
+      "name": "Further reading",
+      "anchor": "Further_reading",
+      "level": 1
+    },
+    {
+      "name": "Primary sources",
+      "anchor": "Primary_sources",
+      "level": 2
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
