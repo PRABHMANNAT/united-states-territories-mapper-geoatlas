@@ -4,6 +4,10 @@
 
 StateAtlas is an interactive atlas and statistical field guide for the 50 states, Washington, D.C., five inhabited territories, and nine U.S. Minor Outlying Islands.
 
+![StateAtlas homepage with the interactive map and California profile](docs/screenshots/atlas-desktop.png)
+
+[Mobile screenshot](docs/screenshots/atlas-mobile.png) · [Social preview artwork](public/social.png)
+
 ## Run locally
 
 Install Node.js 24 and pnpm 11. From the repository root, run:
@@ -13,7 +17,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The app ships with a versioned snapshot, so the atlas, rankings, and exports work without API keys or a database. Wikipedia excerpts load from Wikimedia on request.
+Open [http://localhost:3000](http://localhost:3000). The app ships with versioned observations and Wikipedia profile excerpts. The core atlas, rankings, and exports work without API keys or a database. Optional satellite and topographic imagery use a configured tile provider.
 
 ## Explore
 
