@@ -4,9 +4,12 @@ import { ArrowRight, ArrowDownToLine, BookOpen, ExternalLink, MapPin } from "luc
 import { ArticleTopics } from "@/components/article-topics";
 import { Encyclopedia } from "@/components/encyclopedia";
 import { PageHeading } from "@/components/page-heading";
+import { RegionFlag } from "@/components/region-flag";
 import { Shape } from "@/components/shape";
 import { findRegion, mapData, observations, regions, sources } from "@/lib/data";
 import { readArticle } from "@/lib/encyclopedia-data";
+import { readFlag } from "@/lib/flag-data";
+import { nearbyRegions } from "@/lib/geography";
 import { metricById } from "@/lib/metrics";
 import { formatValue, latest } from "@/lib/statistics";
 import { regionTypeLabels } from "@/lib/types";
@@ -33,9 +36,9 @@ export default async function Profile({ params }: PageProps<"/regions/[slug]">) 
   const { slug } = await params;
   const region = findRegion(slug);
   if (!region || region.slug !== slug) notFound();
-  const article = await readArticle(region);
+  const [article, flag] = await Promise.all([readArticle(region), readFlag(region.slug)]);
   const visibleChapters = chapters.filter((chapter) => chapter.metrics.length || article?.sections.some((item) => chapter.pattern.test(item.name)));
-  const related = regions.filter((item) => item.id !== region.id && (region.censusRegion ? item.censusRegion === region.censusRegion : item.type === region.type)).slice(0, 5);
+  const related = nearbyRegions(region, regions);
   const [longitude, latitude] = region.coordinates;
   return <div className="shell inner-page">
     <Link href="/map" className="breadcrumb">Atlas / Region profiles</Link>
@@ -45,6 +48,7 @@ export default async function Profile({ params }: PageProps<"/regions/[slug]">) 
       <div className="profile-content">
         <section className="panel tool-panel" id="overview"><div className="tool-summary"><div><h2>Overview</h2><p><MapPin size={15}/> {latitude.toFixed(4)}°, {longitude.toFixed(4)}°</p></div></div>
           <dl className="overview-details"><div><dt>{region.type === "territory" ? "Capital or seat" : "Capital"}</dt><dd>{region.capital ?? "—"}</dd></div><div><dt>Jurisdiction type</dt><dd>{regionTypeLabels[region.type]}</dd></div><div><dt>Census FIPS</dt><dd>{region.fips ?? "—"}</dd></div></dl>
+          {flag && <figure className="flag-credit"><RegionFlag flag={flag} name={region.name} size={100}/><figcaption><a href={flag.source}>{flag.title.replace(/^File:/, "")}</a>{flag.author ? ` · ${flag.author}` : ""} · {flag.licenseUrl ? <a href={flag.licenseUrl}>{flag.license}</a> : flag.license} · {flag.modification}</figcaption></figure>}
           {article ? <div className="encyclopedia prose">
             <h3><BookOpen size={17}/> Encyclopedia</h3>
             <blockquote>{article.extract}</blockquote>
@@ -63,8 +67,9 @@ export default async function Profile({ params }: PageProps<"/regions/[slug]">) 
           {article && <ArticleTopics article={article} pattern={item.pattern} />}
         </section>)}
         <section id="explore" className="panel tool-panel"><div className="tool-summary"><h2>Related jurisdictions</h2></div>
-          <div className="button-row">{related.map((item) => <Link className="quiet-button" href={`/regions/${item.slug}`} key={item.id}>{item.name}</Link>)}</div>
-          <Link className="text-button" href={`/compare?regions=${region.id},${region.id === "CA" ? "TX" : "CA"}`}>Compare {region.name} <ArrowRight size={15}/></Link>
+          <p className="source-line">Closest geographic reference points</p>
+          <div className="button-row">{related.map(({ region: item, distance }) => <Link className="quiet-button" href={`/regions/${item.slug}`} key={item.id}>{item.name} <small>{Math.round(distance).toLocaleString("en-US")} km</small></Link>)}</div>
+          <Link className="text-button" href={`/compare?regions=${region.id},${related[0].region.id}&target=${region.id}&countryMetric=land`}>Compare {region.name} <ArrowRight size={15}/></Link>
         </section>
       </div>
     </div>
