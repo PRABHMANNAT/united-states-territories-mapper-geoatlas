@@ -4,9 +4,10 @@ import { regions } from "@/lib/data";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: process.env.STATEATLAS_URL ? new URL(process.env.STATEATLAS_URL) : undefined,
   title: { default: "StateAtlas · The American Atlas", template: "%s · StateAtlas" },
   description: "Explore every state. Compare every statistic. Understand America.",
-  openGraph: { title: "StateAtlas", description: "An open atlas of U.S. states, territories, and outlying islands.", images: ["/social.svg"] },
+  openGraph: { title: "StateAtlas", description: "An open atlas of U.S. states, territories, and outlying islands.", images: process.env.STATEATLAS_URL ? ["/social.png"] : undefined },
 };
 
 const themeScript = "try{document.documentElement.dataset.theme=localStorage.getItem('stateatlas-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{}";
