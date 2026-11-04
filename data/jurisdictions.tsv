@@ -1,0 +1,66 @@
+id	fips	type	name	capital	slug
+AL	01	state	Alabama	Montgomery	alabama
+AK	02	state	Alaska	Juneau	alaska
+AZ	04	state	Arizona	Phoenix	arizona
+AR	05	state	Arkansas	Little Rock	arkansas
+CA	06	state	California	Sacramento	california
+CO	08	state	Colorado	Denver	colorado
+CT	09	state	Connecticut	Hartford	connecticut
+DE	10	state	Delaware	Dover	delaware
+DC	11	district	Washington, D.C.	Washington	washington-dc
+FL	12	state	Florida	Tallahassee	florida
+GA	13	state	Georgia	Atlanta	georgia
+HI	15	state	Hawaii	Honolulu	hawaii
+ID	16	state	Idaho	Boise	idaho
+IL	17	state	Illinois	Springfield	illinois
+IN	18	state	Indiana	Indianapolis	indiana
+IA	19	state	Iowa	Des Moines	iowa
+KS	20	state	Kansas	Topeka	kansas
+KY	21	state	Kentucky	Frankfort	kentucky
+LA	22	state	Louisiana	Baton Rouge	louisiana
+ME	23	state	Maine	Augusta	maine
+MD	24	state	Maryland	Annapolis	maryland
+MA	25	state	Massachusetts	Boston	massachusetts
+MI	26	state	Michigan	Lansing	michigan
+MN	27	state	Minnesota	Saint Paul	minnesota
+MS	28	state	Mississippi	Jackson	mississippi
+MO	29	state	Missouri	Jefferson City	missouri
+MT	30	state	Montana	Helena	montana
+NE	31	state	Nebraska	Lincoln	nebraska
+NV	32	state	Nevada	Carson City	nevada
+NH	33	state	New Hampshire	Concord	new-hampshire
+NJ	34	state	New Jersey	Trenton	new-jersey
+NM	35	state	New Mexico	Santa Fe	new-mexico
+NY	36	state	New York	Albany	new-york
+NC	37	state	North Carolina	Raleigh	north-carolina
+ND	38	state	North Dakota	Bismarck	north-dakota
+OH	39	state	Ohio	Columbus	ohio
+OK	40	state	Oklahoma	Oklahoma City	oklahoma
+OR	41	state	Oregon	Salem	oregon
+PA	42	state	Pennsylvania	Harrisburg	pennsylvania
+RI	44	state	Rhode Island	Providence	rhode-island
+SC	45	state	South Carolina	Columbia	south-carolina
+SD	46	state	South Dakota	Pierre	south-dakota
+TN	47	state	Tennessee	Nashville	tennessee
+TX	48	state	Texas	Austin	texas
+UT	49	state	Utah	Salt Lake City	utah
+VT	50	state	Vermont	Montpelier	vermont
+VA	51	state	Virginia	Richmond	virginia
+WA	53	state	Washington	Olympia	washington
+WV	54	state	West Virginia	Charleston	west-virginia
+WI	55	state	Wisconsin	Madison	wisconsin
+WY	56	state	Wyoming	Cheyenne	wyoming
+AS	60	territory	American Samoa	Pago Pago	american-samoa
+GU	66	territory	Guam	Hagåtña	guam
+MP	69	territory	Northern Mariana Islands	Saipan	northern-mariana-islands
+PR	72	territory	Puerto Rico	San Juan	puerto-rico
+VI	78	territory	U.S. Virgin Islands	Charlotte Amalie	us-virgin-islands
+XB		island	Baker Island		baker-island
+XH		island	Howland Island		howland-island
+XJ		island	Jarvis Island		jarvis-island
+XT		island	Johnston Atoll		johnston-atoll
+XK		island	Kingman Reef		kingman-reef
+XM		island	Midway Atoll		midway-atoll
+XN		island	Navassa Island		navassa-island
+XP		island	Palmyra Atoll		palmyra-atoll
+XW		island	Wake Island		wake-island
