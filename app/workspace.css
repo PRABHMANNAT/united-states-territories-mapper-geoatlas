@@ -399,14 +399,15 @@ body > main { min-height: calc(100dvh - 128px); }
 /* One monochrome interface; geographic color is reserved for the map. */
 ::selection { color: var(--surface); background: var(--ink); }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline-color: var(--ink); }
-.site-header { background: color-mix(in srgb, var(--surface) 88%, transparent); border-color: var(--line); color: var(--ink); backdrop-filter: blur(20px); box-shadow: 0 4px 24px #00000006; border-radius: 20px; }
-.site-header .brand, .site-header .brand > span > span { color: var(--ink); }
-.site-header .brand-icon { color: var(--ink); background: var(--surface-alt); }
-.header-inner nav a { color: var(--muted); border-radius: 999px; }
-.header-inner nav a:hover, .header-inner nav a[aria-current] { color: var(--ink); background: var(--surface-alt); }
-.site-header .header-tools .icon-button, .mobile-menu { color: var(--ink); }
-.site-header .header-tools .icon-button:hover, .mobile-menu:hover { background: var(--surface-alt); color: var(--ink); }
-.menu-open .header-inner nav { background: var(--surface); border-color: var(--line); }
+.site-header { background: #000; border-color: #202020; color: #fff; box-shadow: 0 4px 24px #00000015; border-radius: 20px; }
+.site-header .brand, .site-header .brand > span > span { color: #fff; }
+.site-header .brand-icon { color: #fff; background: #232323; }
+.site-header .header-inner nav a { color: #fff; border-radius: 999px; }
+.site-header .header-inner nav a:hover, .site-header .header-inner nav a[aria-current] { color: #fff; background: #272727; }
+.site-header .header-tools .icon-button, .site-header .mobile-menu { color: #fff; }
+.site-header .header-tools .icon-button:hover, .site-header .mobile-menu:hover { background: #272727; color: #fff; }
+.site-header :is(a, button):focus-visible { outline-color: #fff; }
+.menu-open .header-inner nav { background: #000; border-color: #333; }
 .home-intro h1 { font-weight: 600; }
 .home-intro h1 em { color: var(--ink); font-weight: 600; }
 .home-intro { min-height: 62px; padding-block: 10px; }
@@ -500,7 +501,7 @@ button, .primary-button, .quiet-button, .header-inner nav a { transition: backgr
 .quiet-button:hover { background: #f5f5f5; border-color: #d2d2d2; }
 button:active:not(:disabled), .primary-button:active, .quiet-button:active { transform: translateY(1px); }
 .icon-button { border-radius: 50%; }
-.site-header .header-search { background: var(--surface-alt); }
+.site-header .header-search { background: #232323; }
 .site-header .brand-icon { border-radius: 10px; }
 .select-control { border-radius: 999px; padding-left: 12px; overflow: hidden; }
 .select-control select { border-radius: 999px; }

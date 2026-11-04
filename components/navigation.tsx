@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, Compass, Database, GraduationCap, History, House, Layers3, Map, Menu, Search, Columns2, X } from "lucide-react";
+import { ArrowRight, BarChart3, Database, GraduationCap, History, House, Layers3, Map, Menu, Search, Columns2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
@@ -21,7 +21,11 @@ export const nav = [
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
 
 export function Brand() {
-  return <Link href="/" className="brand" aria-label="StateAtlas home"><span className="brand-icon"><Compass size={24} strokeWidth={1.6} /></span><span>State<span>Atlas</span><small>AN AMERICAN ATLAS</small></span></Link>;
+  return <Link href="/" className="brand" aria-label="StateAtlas home"><span className="brand-icon"><svg viewBox="0 0 24 16" width="24" height="16" aria-hidden="true">
+    <rect x="1" y="1" width="22" height="14" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+    <path d="M11 1v8H1m10-4h12m-12 4h12M1 12h22" fill="none" stroke="currentColor" strokeWidth="1.3"/>
+    <path d="M4 3.5h.01m4 0h.01M4 6.5h.01m4 0h.01" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+  </svg></span><span>State<span>Atlas</span><small>AN AMERICAN ATLAS</small></span></Link>;
 }
 
 type Result = { name: string; detail: string; href: string; keys?: string };
