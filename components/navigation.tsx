@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, ArrowUpRight, BarChart3, BookOpen, Database, Github, GraduationCap, Heart, History, House, Layers3, Linkedin, Map, Menu, Search, Star, Columns2, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BarChart3, BookOpen, Database, Github, GraduationCap, Heart, History, House, Layers3, Linkedin, Map, Menu, Scan, Search, Star, Columns2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { atlasById, atlasPlaces } from "@/lib/north-america";
 import { metrics } from "@/lib/metrics";
@@ -14,13 +14,14 @@ export const nav = [
   { href: "/us", title: "U.S. atlas", icon: Map },
   { href: "/rankings", title: "Rankings", icon: BarChart3 },
   { href: "/compare", title: "Compare states", icon: Columns2 },
+  { href: "/compare-size", title: "Compare sizes", icon: Scan },
   { href: "/creator", title: "Map creator", icon: Layers3 },
   { href: "/timeline", title: "Timeline", icon: History },
   { href: "/quiz", title: "Geography quiz", icon: GraduationCap },
   { href: "/data", title: "Data & sources", icon: Database },
 ];
 
-const quickDestinations = nav.filter(({ href }) => ["/places", "/us", "/compare"].includes(href));
+const quickDestinations = nav.filter(({ href }) => ["/places", "/us", "/compare", "/compare-size"].includes(href));
 
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
 
