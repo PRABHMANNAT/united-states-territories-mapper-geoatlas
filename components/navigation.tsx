@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, Compass, Database, GraduationCap, History, House, Layers3, Map, Menu, Moon, Search, Sun, Columns2, X } from "lucide-react";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ArrowRight, BarChart3, Compass, Database, GraduationCap, History, House, Layers3, Map, Menu, Search, Columns2, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
 
@@ -19,13 +19,6 @@ export const nav = [
 ];
 
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
-const themeEvent = "stateatlas-theme-change";
-const readTheme = () => document.documentElement.dataset.theme === "dark";
-const initialTheme = () => false;
-function subscribeTheme(listener: () => void) {
-  window.addEventListener(themeEvent, listener);
-  return () => window.removeEventListener(themeEvent, listener);
-}
 
 export function Brand() {
   return <Link href="/" className="brand" aria-label="StateAtlas home"><span className="brand-icon"><Compass size={24} strokeWidth={1.6} /></span><span>State<span>Atlas</span><small>AN AMERICAN ATLAS</small></span></Link>;
@@ -59,7 +52,6 @@ export function Navigation({ regions }: { regions: Region[] }) {
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const dark = useSyncExternalStore(subscribeTheme, readTheme, initialTheme);
 
   function open() {
     setMenuOpen(false);
@@ -83,14 +75,6 @@ export function Navigation({ regions }: { regions: Region[] }) {
       window.removeEventListener("atlas-search", open);
     };
   }, []);
-
-  function toggleTheme() {
-    const next = document.documentElement.dataset.theme !== "dark";
-    document.documentElement.dataset.theme = next ? "dark" : "light";
-    try { localStorage.setItem("stateatlas-theme", next ? "dark" : "light"); }
-    catch { /* The theme still applies to the current page. */ }
-    window.dispatchEvent(new Event(themeEvent));
-  }
 
   const options: Result[] = [
     ...nav.map((item) => ({ name: item.title, detail: "Page", href: item.href })),
@@ -122,7 +106,6 @@ export function Navigation({ regions }: { regions: Region[] }) {
       </nav>
       <div className="header-tools">
         <button className="icon-button header-search" onClick={open} aria-label="Search the atlas" title="Search places & tools (Ctrl/Cmd K)"><Search size={18}/></button>
-        <button className="icon-button theme-button" onClick={toggleTheme} aria-label="Toggle light or dark theme" aria-pressed={dark}><Moon className="moon-icon" size={18}/><Sun className="sun-icon" size={18}/></button>
       </div>
     </div></header>
     <dialog ref={dialog} className="command-dialog" aria-labelledby="command-title" onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>

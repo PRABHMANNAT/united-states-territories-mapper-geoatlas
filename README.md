@@ -8,7 +8,7 @@ StateAtlas is an interactive atlas and statistical field guide for the 50 states
 
 [Mobile screenshot](docs/screenshots/atlas-mobile.png) · [Timeline workspace](docs/screenshots/timeline-desktop.png) · [Social preview artwork](public/social.png)
 
-Use the slim floating navigation to move between tools, or search places and metrics with **Ctrl/Cmd K**. The full-width atlas keeps search and region details inside the map panel, with a compact heading and shortcut row. On smaller screens, the menu beside the wordmark opens all destinations and region details sit below the map within the same panel. Light and dark themes remember your preference.
+Use the slim floating navigation to move between tools, or search places and metrics with **Ctrl/Cmd K**. The full-width atlas keeps search and region details inside the map panel, with a compact heading and shortcut row. On smaller screens, the menu beside the wordmark opens all destinations and region details sit below the map within the same panel. A single black-and-white interface uses rounded controls and consistent contrast, independent of system appearance. Map palettes remain available for geographic data.
 
 ## Run locally
 

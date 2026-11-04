@@ -124,17 +124,20 @@ test("captures the home layout with no horizontal overflow", async ({ page }, te
   await page.screenshot({ path: testInfo.outputPath(`home-${testInfo.project.name}.png`), fullPage: true });
 });
 
-test("falls back when imagery is offline, exports the map, and persists dark mode", async ({ page }) => {
+test("falls back offline, exports the map, and keeps the single theme", async ({ page }) => {
   await page.route("https://basemap.nationalmap.gov/**", (route) => route.abort());
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.addInitScript(() => localStorage.setItem("stateatlas-theme", "dark"));
   await page.goto("/map?region=PR");
   await page.getByRole("combobox", { name: "Map layer" }).selectOption("satellite");
   await expect(page.getByText("Imagery could not be loaded.", { exact: false })).toBeVisible({ timeout: 25000 });
   const imageDownload = page.waitForEvent("download");
   await page.getByRole("button", { name: "PNG", exact: true }).click();
   expect((await imageDownload).suggestedFilename()).toBe("stateatlas-map.png");
-  await page.getByRole("button", { name: "Toggle light or dark theme" }).click();
   await page.reload();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.getByRole("button", { name: "Toggle light or dark theme" })).toHaveCount(0);
+  await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(246, 246, 246)");
 });
 
 test("loads satellite and terrain with bundled worker and public provider defaults", async ({ page }) => {

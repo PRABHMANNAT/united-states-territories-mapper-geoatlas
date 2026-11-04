@@ -11,11 +11,8 @@ export const metadata: Metadata = {
   openGraph: { title: "StateAtlas", description: "An open atlas of U.S. states, territories, and outlying islands.", images: process.env.STATEATLAS_URL ? ["/social.png"] : undefined },
 };
 
-const themeScript = "try{document.documentElement.dataset.theme=localStorage.getItem('stateatlas-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{}";
-
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning>
-    <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
+  return <html lang="en">
     <body><a className="skip-link" href="#main">Skip to content</a><Navigation regions={regions} /><main id="main">{children}</main><Footer /></body>
   </html>;
 }

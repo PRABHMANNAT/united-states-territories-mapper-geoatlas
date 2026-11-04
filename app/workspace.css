@@ -396,13 +396,13 @@ body > main { min-height: calc(100dvh - 128px); }
   .site-footer .footer-inner { padding-block: 12px; gap: 5px; }
 }
 
-/* Monochrome application chrome; geographic color is reserved for the map. */
+/* One monochrome interface; geographic color is reserved for the map. */
 ::selection { color: var(--surface); background: var(--ink); }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline-color: var(--ink); }
-.site-header { background: color-mix(in srgb, var(--surface) 88%, transparent); border-color: var(--line); color: var(--ink); backdrop-filter: blur(20px); box-shadow: 0 3px 20px #00000008; }
+.site-header { background: color-mix(in srgb, var(--surface) 88%, transparent); border-color: var(--line); color: var(--ink); backdrop-filter: blur(20px); box-shadow: 0 4px 24px #00000006; border-radius: 20px; }
 .site-header .brand, .site-header .brand > span > span { color: var(--ink); }
 .site-header .brand-icon { color: var(--ink); background: var(--surface-alt); }
-.header-inner nav a { color: var(--muted); }
+.header-inner nav a { color: var(--muted); border-radius: 999px; }
 .header-inner nav a:hover, .header-inner nav a[aria-current] { color: var(--ink); background: var(--surface-alt); }
 .site-header .header-tools .icon-button, .mobile-menu { color: var(--ink); }
 .site-header .header-tools .icon-button:hover, .mobile-menu:hover { background: var(--surface-alt); color: var(--ink); }
@@ -418,15 +418,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .map-toolbar .map-tag { color: var(--ink); }
 .map-toolbar .map-tag small { display: none; }
 .map-toolbar .map-tag strong { font-size: 12px; font-weight: 600; }
-.atlas-card { border-radius: 16px; }
+.atlas-card { border-radius: 22px; }
 .atlas-workspace .map-toolbar { padding: 10px 14px; gap: 15px; flex-wrap: wrap; min-height: 58px; }
-.map-modes { display: flex; align-items: center; gap: 3px; border: 1px solid var(--line); border-radius: 9px; padding: 3px; background: var(--surface-alt); margin-left: 6px; }
-.map-modes button { background: transparent; border: 0; border-radius: 6px; font-size: 11px; padding: 6px 13px; min-height: 29px; color: var(--muted); }
-.map-modes button[aria-pressed="true"] { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 1px 4px #00000013; }
+.map-modes { display: flex; align-items: center; gap: 3px; border: 1px solid var(--line); border-radius: 999px; padding: 4px; background: var(--surface-alt); margin-left: 6px; }
+.map-modes button { background: transparent; border: 0; border-radius: 999px; font-size: 11px; padding: 6px 16px; min-height: 29px; color: var(--muted); }
+.map-modes button[aria-pressed="true"] { background: var(--ink); color: #fff; font-weight: 600; box-shadow: 0 2px 5px #00000015; }
 .map-toolbar-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 .map-toolbar-actions > .select-control { max-width: 200px; border-color: var(--line); }
 .map-toolbar-actions select { min-height: 34px; font-size: 11px; width: 100%; }
-.map-toolbar-actions .icon-button { width: 34px; height: 34px; border: 1px solid var(--line); }
+.map-toolbar-actions .icon-button { width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; }
 .palette-picker { display: flex; align-items: center; gap: 3px; padding: 0 6px; }
 .palette-swatch { width: 26px; height: 30px; border: 1px solid transparent; background: transparent; border-radius: 7px; padding: 4px; display: grid; place-items: center; }
 .palette-swatch span { display: block; width: 15px; height: 15px; border-radius: 50%; }
@@ -436,7 +436,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .map-scene .atlas-sidebar { width: 224px; }
 .map-scene .atlas-sidebar[hidden] { display: none; }
 .details-hidden .map-scene .atlas-svg { width: 100%; }
-.map-scene .region-card { border-color: var(--line); border-radius: 14px; box-shadow: 0 8px 30px #0000000a; }
+.map-scene .region-card { border-color: var(--line); border-radius: 20px; box-shadow: 0 8px 30px #00000007; }
 .map-scene .region-picker label { border-color: var(--line); box-shadow: 0 2px 10px #00000005; }
 .map-scene .region-title .silhouette { color: var(--muted); }
 .map-scene .region-card-label .eyebrow { letter-spacing: 1.3px; }
@@ -456,7 +456,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .raster-status > span { white-space: nowrap; }
 .imagery-overview { position: absolute; left: 10px; top: 116px; min-height: 31px; font-size: 10px; padding: 6px 9px; z-index: 1; }
 .maplibregl-ctrl-attrib { font-size: 10px !important; max-width: calc(100% - 20px); }
-.maplibregl-ctrl-group { border-radius: 8px !important; overflow: hidden; }
+.maplibregl-ctrl-group { border-radius: 14px !important; overflow: hidden; }
 .atlas-expanded { position: fixed; z-index: 80; inset: 0; background: var(--paper); padding: 0; }
 .atlas-expanded > .atlas-card { height: 100%; display: flex; flex-direction: column; border-radius: 0; border: 0; }
 .atlas-expanded .map-scene { flex: 1; min-height: 0; overflow: auto; }
@@ -488,4 +488,33 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .atlas-expanded .raster-panel { height: 65dvh; }
   .atlas-expanded.details-hidden .raster-panel { height: 100%; }
   .raster-status { font-size: 9px; }
+}
+
+/* Rounded controls and restrained depth across atlas tools. */
+button, input, select { border-radius: 12px; }
+button, .primary-button, .quiet-button, .header-inner nav a { transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
+.primary-button, .quiet-button { border-radius: 999px; min-height: 40px; padding: 10px 18px; font-weight: 600; letter-spacing: -.1px; }
+.primary-button { background: #171717; color: #fff; border-color: #171717; box-shadow: inset 0 1px 0 #ffffff1a, 0 2px 4px #0000000a; }
+.primary-button:hover { background: #303030; border-color: #303030; box-shadow: 0 4px 10px #00000012; }
+.quiet-button { border-color: var(--line); box-shadow: 0 1px 2px #00000004; }
+.quiet-button:hover { background: #f5f5f5; border-color: #d2d2d2; }
+button:active:not(:disabled), .primary-button:active, .quiet-button:active { transform: translateY(1px); }
+.icon-button { border-radius: 50%; }
+.site-header .header-search { background: var(--surface-alt); }
+.site-header .brand-icon { border-radius: 10px; }
+.select-control { border-radius: 999px; padding-left: 12px; overflow: hidden; }
+.select-control select { border-radius: 999px; }
+.map-modes button:hover:not([aria-pressed="true"]) { background: #e6e6e6; color: var(--ink); }
+.map-scene .region-picker label { border-radius: 14px; }
+.map-scene .region-picker input { border-radius: 14px; }
+.jump-control select { border-radius: 14px; border-color: var(--line); }
+.map-scene .profile-link { border-radius: 999px; }
+.map-scene .map-zoom { border-radius: 14px; border-color: var(--line); box-shadow: 0 4px 12px #00000008; }
+.map-zoom button:hover:not(:disabled) { background: var(--surface-alt); }
+.panel, .feature-card, .timeline-canvas, .timeline-value, .compare-card, .ranking-map, .creator-map { border-radius: 20px; }
+.command-dialog { border-radius: 24px; }
+.command-results button { border-radius: 12px; }
+.table-scroll { border-radius: 16px; }
+@media (prefers-reduced-motion: reduce) {
+  button, .primary-button, .quiet-button, .header-inner nav a { transition: none; }
 }
