@@ -1,0 +1,259 @@
+{
+  "id": "ND",
+  "title": "North Dakota",
+  "url": "https://en.wikipedia.org/wiki/North_Dakota",
+  "revision": 1381083894,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1381083894",
+  "revisionDate": "2026-10-19T22:45:01Z",
+  "wikidata": "Q1207",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "North Dakota (   də-KOH-tə) is a landlocked U.S. state in the Upper Midwest, named after the indigenous Dakota and Sioux peoples. It is bordered by the Canadian provinces of Saskatchewan and Manitoba to the north and by the U.S. states of Minnesota to the east, South Dakota to the south, and Montana to the west.",
+  "sections": [
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Pre-colonial history",
+      "anchor": "Pre-colonial_history",
+      "level": 2
+    },
+    {
+      "name": "European exploration and colonization",
+      "anchor": "European_exploration_and_colonization",
+      "level": 2
+    },
+    {
+      "name": "Settlement and statehood",
+      "anchor": "Settlement_and_statehood",
+      "level": 2
+    },
+    {
+      "name": "20th century",
+      "anchor": "20th_century",
+      "level": 2
+    },
+    {
+      "name": "21st century",
+      "anchor": "21st_century",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Population",
+      "anchor": "Population",
+      "level": 2
+    },
+    {
+      "name": "Race and ethnicity",
+      "anchor": "Race_and_ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Native American tribes",
+      "anchor": "Native_American_tribes",
+      "level": 2
+    },
+    {
+      "name": "Languages",
+      "anchor": "Languages",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Energy",
+      "anchor": "Energy",
+      "level": 2
+    },
+    {
+      "name": "Tourism",
+      "anchor": "Tourism",
+      "level": 2
+    },
+    {
+      "name": "Health care",
+      "anchor": "Health_care",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Native American First Nations",
+      "anchor": "Native_American_First_Nations",
+      "level": 2
+    },
+    {
+      "name": "Pow wows",
+      "anchor": "Pow_wows",
+      "level": 2
+    },
+    {
+      "name": "Norwegian and Icelandic influences",
+      "anchor": "Norwegian_and_Icelandic_influences",
+      "level": 2
+    },
+    {
+      "name": "Germans from Russia",
+      "anchor": "Germans_from_Russia",
+      "level": 2
+    },
+    {
+      "name": "Fine and performing arts",
+      "anchor": "Fine_and_performing_arts",
+      "level": 2
+    },
+    {
+      "name": "Entertainment",
+      "anchor": "Entertainment",
+      "level": 2
+    },
+    {
+      "name": "Cuisine",
+      "anchor": "Cuisine",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 2
+    },
+    {
+      "name": "Media",
+      "anchor": "Media",
+      "level": 1
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Higher education",
+      "anchor": "Higher_education",
+      "level": 2
+    },
+    {
+      "name": "Primary and secondary education",
+      "anchor": "Primary_and_secondary_education",
+      "level": 2
+    },
+    {
+      "name": "Emergency services",
+      "anchor": "Emergency_services",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "Executive",
+      "anchor": "Executive",
+      "level": 2
+    },
+    {
+      "name": "Legislative",
+      "anchor": "Legislative",
+      "level": 2
+    },
+    {
+      "name": "Judicial",
+      "anchor": "Judicial",
+      "level": 2
+    },
+    {
+      "name": "Indian tribes and reservations",
+      "anchor": "Indian_tribes_and_reservations",
+      "level": 2
+    },
+    {
+      "name": "Federal",
+      "anchor": "Federal",
+      "level": 2
+    },
+    {
+      "name": "Politics",
+      "anchor": "Politics",
+      "level": 2
+    },
+    {
+      "name": "State taxes",
+      "anchor": "State_taxes",
+      "level": 2
+    },
+    {
+      "name": "Notable people",
+      "anchor": "Notable_people",
+      "level": 1
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Bibliography",
+      "anchor": "Bibliography",
+      "level": 1
+    },
+    {
+      "name": "Primary sources",
+      "anchor": "Primary_sources",
+      "level": 2
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
