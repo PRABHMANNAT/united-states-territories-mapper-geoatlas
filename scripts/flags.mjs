@@ -53,7 +53,7 @@ for (const [index, group] of chunk(candidates, 10).entries()) {
     const publicDomain = /^public domain$/i.test(license);
     const creativeCommons = /^(CC0|CC BY(-SA)? \d(\.\d)?)$/i.test(license) && /^https?:\/\/creativecommons\.org\//i.test(licenseUrl ?? "");
     if (!publicDomain && !(creativeCommons && author)) { console.log(`${region.id}: skipped reuse terms ${license}`); continue; }
-    if (!file.thumburl || !file.descriptionurl || new URL(file.thumburl).hostname !== "upload.wikimedia.org") continue;
+    if (!file.thumburl || !file.descriptionurl || !["thumb.wikimedia.org", "upload.wikimedia.org"].includes(new URL(file.thumburl).hostname)) continue;
     try {
       const bytes = await cached(`flag-image-${region.id}.bin`, file.thumburl);
       const png = bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
