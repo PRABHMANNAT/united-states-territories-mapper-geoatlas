@@ -35,6 +35,7 @@ const json = (path, data) => writeFile(path, `${JSON.stringify(data)}\n`);
 await Promise.all([
   json("data/snapshot/regions.json", Object.values(regions)),
   json("data/snapshot/map.json", geo.map),
+  json("data/snapshot/boundaries.json", geo.topology),
   json("data/snapshot/observations.json", observations),
   json("data/snapshot/countries.json", world),
   json("data/snapshot/manifest.json", snapshot),
