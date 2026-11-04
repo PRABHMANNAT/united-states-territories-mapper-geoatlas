@@ -1,0 +1,264 @@
+{
+  "id": "OK",
+  "title": "Oklahoma",
+  "url": "https://en.wikipedia.org/wiki/Oklahoma",
+  "revision": 1383598773,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1383598773",
+  "revisionDate": "2026-11-03T16:30:30Z",
+  "wikidata": "Q1649",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Oklahoma (  OH-klə-HOH-mə; Choctaw: Oklahumma, pronounced [oklahómma]), is a landlocked state in the South Central, Southern, and Southwestern regions of the United States. It borders Texas to the southwest, Kansas to the north, Missouri to the northeast, Arkansas to the southeast, New Mexico to the west, and Colorado to the northwest.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Pre-Columbian",
+      "anchor": "Pre-Columbian",
+      "level": 2
+    },
+    {
+      "name": "European exploration and colonization",
+      "anchor": "European_exploration_and_colonization",
+      "level": 2
+    },
+    {
+      "name": "19th century",
+      "anchor": "19th_century",
+      "level": 2
+    },
+    {
+      "name": "20th century",
+      "anchor": "20th_century",
+      "level": 2
+    },
+    {
+      "name": "21st century",
+      "anchor": "21st_century",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Borders",
+      "anchor": "Borders",
+      "level": 2
+    },
+    {
+      "name": "Topography",
+      "anchor": "Topography",
+      "level": 2
+    },
+    {
+      "name": "Flora and fauna",
+      "anchor": "Flora_and_fauna",
+      "level": 2
+    },
+    {
+      "name": "Protected lands",
+      "anchor": "Protected_lands",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Cities and towns",
+      "anchor": "Cities_and_towns",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Race and ethnicity",
+      "anchor": "Race_and_ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Language",
+      "anchor": "Language",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Incarceration",
+      "anchor": "Incarceration",
+      "level": 2
+    },
+    {
+      "name": "Gender issues",
+      "anchor": "Gender_issues",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Industry",
+      "anchor": "Industry",
+      "level": 2
+    },
+    {
+      "name": "Energy",
+      "anchor": "Energy",
+      "level": 2
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Cherokee Language education",
+      "anchor": "Cherokee_Language_education",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Arts",
+      "anchor": "Arts",
+      "level": 2
+    },
+    {
+      "name": "Festivals and events",
+      "anchor": "Festivals_and_events",
+      "level": 2
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 2
+    },
+    {
+      "name": "Health",
+      "anchor": "Health",
+      "level": 1
+    },
+    {
+      "name": "Life expectancy",
+      "anchor": "Life_expectancy",
+      "level": 2
+    },
+    {
+      "name": "Impact of COVID-19",
+      "anchor": "Impact_of_COVID-19",
+      "level": 2
+    },
+    {
+      "name": "Media",
+      "anchor": "Media",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government",
+      "level": 2
+    },
+    {
+      "name": "Local government",
+      "anchor": "Local_government",
+      "level": 2
+    },
+    {
+      "name": "National politics",
+      "anchor": "National_politics",
+      "level": 2
+    },
+    {
+      "name": "Military",
+      "anchor": "Military",
+      "level": 2
+    },
+    {
+      "name": "State symbols",
+      "anchor": "State_symbols",
+      "level": 1
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Further reading",
+      "anchor": "Further_reading",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    },
+    {
+      "name": "Government",
+      "anchor": "Government",
+      "level": 2
+    },
+    {
+      "name": "Tourism and recreation",
+      "anchor": "Tourism_and_recreation",
+      "level": 2
+    },
+    {
+      "name": "Culture and history",
+      "anchor": "Culture_and_history",
+      "level": 2
+    },
+    {
+      "name": "Maps and demographics",
+      "anchor": "Maps_and_demographics",
+      "level": 2
+    }
+  ]
+}
