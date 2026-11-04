@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowRight, BarChart3, Compass, Github, History, Layers3, Map, Moon, Search, Sun, Swords } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { metrics } from "@/lib/metrics";
 import type { Region } from "@/lib/types";
 
@@ -16,6 +16,13 @@ export const nav = [
 ];
 
 const github = "https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas";
+const themeEvent = "stateatlas-theme-change";
+const readTheme = () => document.documentElement.dataset.theme === "dark";
+const initialTheme = () => false;
+function subscribeTheme(listener: () => void) {
+  window.addEventListener(themeEvent, listener);
+  return () => window.removeEventListener(themeEvent, listener);
+}
 
 export function Brand() {
   return <Link href="/" className="brand"><span className="brand-icon"><Compass size={22} strokeWidth={1.5} /></span><span>State<span>Atlas</span><small>THE AMERICAN ATLAS</small></span></Link>;
@@ -47,7 +54,7 @@ export function Navigation({ regions }: { regions: Region[] }) {
   const input = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
-  const [dark, setDark] = useState(false);
+  const dark = useSyncExternalStore(subscribeTheme, readTheme, initialTheme);
 
   function open() {
     setQuery("");
@@ -74,8 +81,9 @@ export function Navigation({ regions }: { regions: Region[] }) {
   function toggleTheme() {
     const next = document.documentElement.dataset.theme !== "dark";
     document.documentElement.dataset.theme = next ? "dark" : "light";
-    localStorage.setItem("stateatlas-theme", next ? "dark" : "light");
-    setDark(next);
+    try { localStorage.setItem("stateatlas-theme", next ? "dark" : "light"); }
+    catch { /* The theme still applies to the current page. */ }
+    window.dispatchEvent(new Event(themeEvent));
   }
 
   const options: Result[] = [
