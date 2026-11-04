@@ -1,0 +1,379 @@
+{
+  "id": "VT",
+  "title": "Vermont",
+  "url": "https://en.wikipedia.org/wiki/Vermont",
+  "revision": 1380482878,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1380482878",
+  "revisionDate": "2026-10-16T00:18:34Z",
+  "wikidata": "Q16551",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Vermont ( ) is a landlocked state in the New England region of the Northeastern United States. It borders Massachusetts to the south, New Hampshire to the east, New York to the west, and the Canadian province of Quebec to the north.",
+  "sections": [
+    {
+      "name": "Toponymy",
+      "anchor": "Toponymy",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Pre-colonial",
+      "anchor": "Pre-colonial",
+      "level": 2
+    },
+    {
+      "name": "Colonial",
+      "anchor": "Colonial",
+      "level": 2
+    },
+    {
+      "name": "Sovereignty",
+      "anchor": "Sovereignty",
+      "level": 2
+    },
+    {
+      "name": "Revolutionary War",
+      "anchor": "Revolutionary_War",
+      "level": 2
+    },
+    {
+      "name": "Admission to the Union",
+      "anchor": "Admission_to_the_Union",
+      "level": 2
+    },
+    {
+      "name": "Civil War",
+      "anchor": "Civil_War",
+      "level": 2
+    },
+    {
+      "name": "Post–Civil War to the present",
+      "anchor": "Post–Civil_War_to_the_present",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Cities",
+      "anchor": "Cities",
+      "level": 2
+    },
+    {
+      "name": "Largest towns",
+      "anchor": "Largest_towns",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Geology",
+      "anchor": "Geology",
+      "level": 2
+    },
+    {
+      "name": "Fauna",
+      "anchor": "Fauna",
+      "level": 2
+    },
+    {
+      "name": "Flora",
+      "anchor": "Flora",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Population",
+      "anchor": "Population",
+      "level": 2
+    },
+    {
+      "name": "Dialect",
+      "anchor": "Dialect",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Personal income",
+      "anchor": "Personal_income",
+      "level": 2
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Manufacturing",
+      "anchor": "Manufacturing",
+      "level": 2
+    },
+    {
+      "name": "Energy",
+      "anchor": "Energy",
+      "level": 2
+    },
+    {
+      "name": "Health",
+      "anchor": "Health",
+      "level": 2
+    },
+    {
+      "name": "Labor",
+      "anchor": "Labor",
+      "level": 2
+    },
+    {
+      "name": "Insurance",
+      "anchor": "Insurance",
+      "level": 2
+    },
+    {
+      "name": "Recreation",
+      "anchor": "Recreation",
+      "level": 2
+    },
+    {
+      "name": "Quarrying",
+      "anchor": "Quarrying",
+      "level": 2
+    },
+    {
+      "name": "Nonprofits and volunteerism",
+      "anchor": "Nonprofits_and_volunteerism",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Higher education",
+      "anchor": "Higher_education",
+      "level": 2
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Road",
+      "anchor": "Road",
+      "level": 2
+    },
+    {
+      "name": "Ferry",
+      "anchor": "Ferry",
+      "level": 2
+    },
+    {
+      "name": "Rail",
+      "anchor": "Rail",
+      "level": 2
+    },
+    {
+      "name": "Intercity bus",
+      "anchor": "Intercity_bus",
+      "level": 2
+    },
+    {
+      "name": "Local bus",
+      "anchor": "Local_bus",
+      "level": 2
+    },
+    {
+      "name": "Air",
+      "anchor": "Air",
+      "level": 2
+    },
+    {
+      "name": "Media",
+      "anchor": "Media",
+      "level": 1
+    },
+    {
+      "name": "Newspapers of record",
+      "anchor": "Newspapers_of_record",
+      "level": 2
+    },
+    {
+      "name": "Broadcast and web media",
+      "anchor": "Broadcast_and_web_media",
+      "level": 2
+    },
+    {
+      "name": "Electrical utilities",
+      "anchor": "Electrical_utilities",
+      "level": 1
+    },
+    {
+      "name": "Public health",
+      "anchor": "Public_health",
+      "level": 1
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "Finances and taxation",
+      "anchor": "Finances_and_taxation",
+      "level": 2
+    },
+    {
+      "name": "Politics",
+      "anchor": "Politics",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 1
+    },
+    {
+      "name": "Winter sports",
+      "anchor": "Winter_sports",
+      "level": 2
+    },
+    {
+      "name": "Baseball",
+      "anchor": "Baseball",
+      "level": 2
+    },
+    {
+      "name": "Basketball",
+      "anchor": "Basketball",
+      "level": 2
+    },
+    {
+      "name": "Football",
+      "anchor": "Football",
+      "level": 2
+    },
+    {
+      "name": "Hockey",
+      "anchor": "Hockey",
+      "level": 2
+    },
+    {
+      "name": "Soccer",
+      "anchor": "Soccer",
+      "level": 2
+    },
+    {
+      "name": "Motorsport",
+      "anchor": "Motorsport",
+      "level": 2
+    },
+    {
+      "name": "Other",
+      "anchor": "Other_2",
+      "level": 2
+    },
+    {
+      "name": "Residents",
+      "anchor": "Residents",
+      "level": 1
+    },
+    {
+      "name": "In fiction",
+      "anchor": "In_fiction",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Bibliography",
+      "anchor": "Bibliography",
+      "level": 1
+    },
+    {
+      "name": "Sources",
+      "anchor": "Sources",
+      "level": 2
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    },
+    {
+      "name": "General",
+      "anchor": "General",
+      "level": 2
+    },
+    {
+      "name": "Government",
+      "anchor": "Government",
+      "level": 2
+    },
+    {
+      "name": "Geology",
+      "anchor": "Geology_2",
+      "level": 2
+    },
+    {
+      "name": "Maps and demographics",
+      "anchor": "Maps_and_demographics",
+      "level": 2
+    },
+    {
+      "name": "Tourism and recreation",
+      "anchor": "Tourism_and_recreation",
+      "level": 2
+    },
+    {
+      "name": "Business",
+      "anchor": "Business",
+      "level": 2
+    },
+    {
+      "name": "Culture and history",
+      "anchor": "Culture_and_history",
+      "level": 2
+    }
+  ]
+}
