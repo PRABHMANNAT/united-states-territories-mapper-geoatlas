@@ -568,3 +568,11 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
   text-align: justify;
   hyphens: auto;
 }
+
+.region-profile :is(.profile-metrics, .overview-details) > div {
+  background: #000;
+  color: #fff;
+  border-radius: 12px;
+}
+.region-profile :is(.profile-metrics, .overview-details) dt,
+.region-profile .profile-metrics small { color: #fff; }
