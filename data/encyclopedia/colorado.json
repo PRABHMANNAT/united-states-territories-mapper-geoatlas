@@ -1,0 +1,314 @@
+{
+  "id": "CO",
+  "title": "Colorado",
+  "url": "https://en.wikipedia.org/wiki/Colorado",
+  "revision": 1383518837,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1383518837",
+  "revisionDate": "2026-11-03T03:12:10Z",
+  "wikidata": "Q1261",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Colorado is a landlocked state in the Mountain West subregion of the Western United States. It is part of the Southwestern United States, sharing the Four Corners region with Arizona, New Mexico, and Utah.",
+  "sections": [
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Colorado Territory",
+      "anchor": "Colorado_Territory",
+      "level": 2
+    },
+    {
+      "name": "Statehood",
+      "anchor": "Statehood",
+      "level": 2
+    },
+    {
+      "name": "Twentieth and twenty-first centuries",
+      "anchor": "Twentieth_and_twenty-first_centuries",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Plains",
+      "anchor": "Plains",
+      "level": 2
+    },
+    {
+      "name": "Front Range",
+      "anchor": "Front_Range",
+      "level": 2
+    },
+    {
+      "name": "Mountains",
+      "anchor": "Mountains",
+      "level": 2
+    },
+    {
+      "name": "South Central region",
+      "anchor": "South_Central_region",
+      "level": 2
+    },
+    {
+      "name": "Western Slope",
+      "anchor": "Western_Slope",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 1
+    },
+    {
+      "name": "Eastern Plains",
+      "anchor": "Eastern_Plains",
+      "level": 2
+    },
+    {
+      "name": "Front Range foothills",
+      "anchor": "Front_Range_foothills",
+      "level": 2
+    },
+    {
+      "name": "Extreme weather",
+      "anchor": "Extreme_weather",
+      "level": 2
+    },
+    {
+      "name": "Climate change",
+      "anchor": "Climate_change",
+      "level": 2
+    },
+    {
+      "name": "Records",
+      "anchor": "Records",
+      "level": 2
+    },
+    {
+      "name": "Extreme temperatures",
+      "anchor": "Extreme_temperatures",
+      "level": 2
+    },
+    {
+      "name": "Earthquakes",
+      "anchor": "Earthquakes",
+      "level": 2
+    },
+    {
+      "name": "Fauna",
+      "anchor": "Fauna",
+      "level": 1
+    },
+    {
+      "name": "Government",
+      "anchor": "Government",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government",
+      "level": 2
+    },
+    {
+      "name": "Counties",
+      "anchor": "Counties",
+      "level": 2
+    },
+    {
+      "name": "Municipalities",
+      "anchor": "Municipalities",
+      "level": 2
+    },
+    {
+      "name": "Unincorporated communities",
+      "anchor": "Unincorporated_communities",
+      "level": 2
+    },
+    {
+      "name": "Special districts",
+      "anchor": "Special_districts",
+      "level": 2
+    },
+    {
+      "name": "Statistical areas",
+      "anchor": "Statistical_areas",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Birth data",
+      "anchor": "Birth_data",
+      "level": 2
+    },
+    {
+      "name": "Language",
+      "anchor": "Language",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Health",
+      "anchor": "Health",
+      "level": 1
+    },
+    {
+      "name": "Obesity",
+      "anchor": "Obesity",
+      "level": 2
+    },
+    {
+      "name": "Life expectancy",
+      "anchor": "Life_expectancy",
+      "level": 2
+    },
+    {
+      "name": "Homelessness",
+      "anchor": "Homelessness",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Agriculture",
+      "anchor": "Agriculture",
+      "level": 2
+    },
+    {
+      "name": "Natural resources",
+      "anchor": "Natural_resources",
+      "level": 2
+    },
+    {
+      "name": "Electricity generation",
+      "anchor": "Electricity_generation",
+      "level": 2
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "Arts and film",
+      "anchor": "Arts_and_film",
+      "level": 2
+    },
+    {
+      "name": "Cuisine",
+      "anchor": "Cuisine",
+      "level": 2
+    },
+    {
+      "name": "Wine and beer",
+      "anchor": "Wine_and_beer",
+      "level": 2
+    },
+    {
+      "name": "Marijuana and hemp",
+      "anchor": "Marijuana_and_hemp",
+      "level": 2
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Indigenous people",
+      "anchor": "Indigenous_people",
+      "level": 1
+    },
+    {
+      "name": "Military installations",
+      "anchor": "Military_installations",
+      "level": 1
+    },
+    {
+      "name": "Protected areas",
+      "anchor": "Protected_areas",
+      "level": 1
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 1
+    },
+    {
+      "name": "Professional sports teams",
+      "anchor": "Professional_sports_teams",
+      "level": 2
+    },
+    {
+      "name": "College athletics",
+      "anchor": "College_athletics",
+      "level": 2
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Footnotes",
+      "anchor": "Footnotes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Sources",
+      "anchor": "Sources",
+      "level": 1
+    },
+    {
+      "name": "Further reading",
+      "anchor": "Further_reading",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    },
+    {
+      "name": "State government",
+      "anchor": "State_government_2",
+      "level": 2
+    },
+    {
+      "name": "Federal government",
+      "anchor": "Federal_government",
+      "level": 2
+    },
+    {
+      "name": "Other",
+      "anchor": "Other",
+      "level": 2
+    }
+  ]
+}
