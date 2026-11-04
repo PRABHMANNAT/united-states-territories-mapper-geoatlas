@@ -66,7 +66,8 @@ function projected(feature, path, region, projection) {
 function simplified(features, triangleWeight, ringWeight) {
   const graph = presimplify(topology({ regions: collection(features) }), sphericalTriangleArea);
   const reduced = simplify(graph, triangleWeight);
-  return fromTopology(filter(reduced, filterWeight(reduced, ringWeight, sphericalRingArea)), reduced.objects.regions).features;
+  const filtered = filter(reduced, filterWeight(reduced, ringWeight, sphericalRingArea));
+  return fromTopology(filtered, filtered.objects.regions).features;
 }
 
 export async function geography(regions) {
