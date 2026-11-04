@@ -1,0 +1,254 @@
+{
+  "id": "LA",
+  "title": "Louisiana",
+  "url": "https://en.wikipedia.org/wiki/Louisiana",
+  "revision": 1379551859,
+  "revisionUrl": "https://en.wikipedia.org/wiki/Special:PermanentLink/1379551859",
+  "revisionDate": "2026-10-10T17:33:00Z",
+  "wikidata": "Q1588",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "extract": "Louisiana (French: Louisiane; Spanish: Luisiana [lwiˈsjana]; Louisiana Creole: Lwizyàn) is a state in the Deep South and South Central regions of the United States. It is bordered by Texas to the west, Arkansas to the north, and Mississippi to the east.",
+  "sections": [
+    {
+      "name": "Etymology",
+      "anchor": "Etymology",
+      "level": 1
+    },
+    {
+      "name": "History",
+      "anchor": "History",
+      "level": 1
+    },
+    {
+      "name": "Pre–colonial history",
+      "anchor": "Pre–colonial_history",
+      "level": 2
+    },
+    {
+      "name": "Exploration and colonization by Europeans",
+      "anchor": "Exploration_and_colonization_by_Europeans",
+      "level": 2
+    },
+    {
+      "name": "Expansion of slavery",
+      "anchor": "Expansion_of_slavery",
+      "level": 2
+    },
+    {
+      "name": "Asylum and influence of Creoles from Saint-Domingue",
+      "anchor": "Asylum_and_influence_of_Creoles_from_Saint-Domingue",
+      "level": 2
+    },
+    {
+      "name": "Purchase by the United States",
+      "anchor": "Purchase_by_the_United_States",
+      "level": 2
+    },
+    {
+      "name": "Statehood",
+      "anchor": "Statehood",
+      "level": 2
+    },
+    {
+      "name": "Secession and the Civil War",
+      "anchor": "Secession_and_the_Civil_War",
+      "level": 2
+    },
+    {
+      "name": "Post–Civil War to mid–20th century",
+      "anchor": "Post–Civil_War_to_mid–20th_century",
+      "level": 2
+    },
+    {
+      "name": "Mid–20th century to present",
+      "anchor": "Mid–20th_century_to_present",
+      "level": 2
+    },
+    {
+      "name": "Geography",
+      "anchor": "Geography",
+      "level": 1
+    },
+    {
+      "name": "Geology",
+      "anchor": "Geology",
+      "level": 2
+    },
+    {
+      "name": "Flora and fauna",
+      "anchor": "Flora_and_fauna",
+      "level": 2
+    },
+    {
+      "name": "Climate",
+      "anchor": "Climate",
+      "level": 2
+    },
+    {
+      "name": "Publicly owned land",
+      "anchor": "Publicly_owned_land",
+      "level": 2
+    },
+    {
+      "name": "Major cities",
+      "anchor": "Major_cities",
+      "level": 2
+    },
+    {
+      "name": "Demographics",
+      "anchor": "Demographics",
+      "level": 1
+    },
+    {
+      "name": "Race and ethnicity",
+      "anchor": "Race_and_ethnicity",
+      "level": 2
+    },
+    {
+      "name": "Religion",
+      "anchor": "Religion",
+      "level": 2
+    },
+    {
+      "name": "Economy",
+      "anchor": "Economy",
+      "level": 1
+    },
+    {
+      "name": "Culture",
+      "anchor": "Culture",
+      "level": 1
+    },
+    {
+      "name": "African culture",
+      "anchor": "African_culture",
+      "level": 2
+    },
+    {
+      "name": "Creole culture",
+      "anchor": "Creole_culture",
+      "level": 2
+    },
+    {
+      "name": "Acadian culture",
+      "anchor": "Acadian_culture",
+      "level": 2
+    },
+    {
+      "name": "Isleño culture",
+      "anchor": "Isleño_culture",
+      "level": 2
+    },
+    {
+      "name": "Education",
+      "anchor": "Education",
+      "level": 1
+    },
+    {
+      "name": "Transportation",
+      "anchor": "Transportation",
+      "level": 1
+    },
+    {
+      "name": "Roads",
+      "anchor": "Roads",
+      "level": 2
+    },
+    {
+      "name": "Rail",
+      "anchor": "Rail",
+      "level": 2
+    },
+    {
+      "name": "Mass transit",
+      "anchor": "Mass_transit",
+      "level": 2
+    },
+    {
+      "name": "Air",
+      "anchor": "Air",
+      "level": 2
+    },
+    {
+      "name": "Waterways",
+      "anchor": "Waterways",
+      "level": 2
+    },
+    {
+      "name": "Law and government",
+      "anchor": "Law_and_government",
+      "level": 1
+    },
+    {
+      "name": "Administrative divisions",
+      "anchor": "Administrative_divisions",
+      "level": 2
+    },
+    {
+      "name": "Civil law",
+      "anchor": "Civil_law",
+      "level": 2
+    },
+    {
+      "name": "Marriage",
+      "anchor": "Marriage",
+      "level": 2
+    },
+    {
+      "name": "Elections",
+      "anchor": "Elections",
+      "level": 2
+    },
+    {
+      "name": "Law enforcement",
+      "anchor": "Law_enforcement",
+      "level": 2
+    },
+    {
+      "name": "Judiciary",
+      "anchor": "Judiciary",
+      "level": 2
+    },
+    {
+      "name": "National Guard",
+      "anchor": "National_Guard",
+      "level": 1
+    },
+    {
+      "name": "Sports",
+      "anchor": "Sports",
+      "level": 1
+    },
+    {
+      "name": "Notable people",
+      "anchor": "Notable_people",
+      "level": 1
+    },
+    {
+      "name": "See also",
+      "anchor": "See_also",
+      "level": 1
+    },
+    {
+      "name": "Notes",
+      "anchor": "Notes",
+      "level": 1
+    },
+    {
+      "name": "References",
+      "anchor": "References",
+      "level": 1
+    },
+    {
+      "name": "Bibliography",
+      "anchor": "Bibliography",
+      "level": 1
+    },
+    {
+      "name": "External links",
+      "anchor": "External_links",
+      "level": 1
+    }
+  ]
+}
