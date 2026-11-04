@@ -8,6 +8,7 @@ export const metadata = { title: "Data and API" };
 const downloads = [
   ["Metric observations (CSV)", "observations.csv"], ["Metric observations (JSON)", "observations.json"],
   ["Regional boundaries (TopoJSON)", "regions.topojson"], ["World Bank economy observations (JSON)", "countries.json"],
+  ["Jurisdiction registry (JSON)", "regions.json"],
   ["Provenance manifest (JSON)", "manifest.json"],
 ];
 
@@ -27,7 +28,7 @@ export default function DataPage() {
   return <div className="shell inner-page">
     <PageHeading label="REFERENCE / OPEN DATA" title="Data & API">Download the datasets behind the atlas or query the versioned, read-only API. Current snapshot {manifest.version}.</PageHeading>
     <section className="panel tool-panel prose"><div className="tool-summary"><h2>Download the snapshot</h2></div><div className="download-grid">{downloads.map(([label, file]) => <a className="quiet-button" key={file} href={`/datasets/${file}`} download>{label} <ArrowDownToLine size={16}/></a>)}</div></section>
-    <section className="panel tool-panel prose secondary-panel"><div className="tool-summary"><h2>Public API v1</h2></div><p>Successful responses include <code>version</code> and <code>data</code>. Errors include a stable <code>error.code</code> and a message. List endpoints accept <code>page</code> and <code>limit</code>.</p>
+    <section className="panel tool-panel prose secondary-panel"><div className="tool-summary"><h2>Public API v1</h2><a href="/openapi.json" className="quiet-button" download>OpenAPI definition <ArrowDownToLine size={16}/></a></div><p>Successful responses include <code>version</code> and <code>data</code>. Errors include a stable <code>error.code</code> and a message. List endpoints accept <code>page</code> and <code>limit</code>.</p>
       <dl className="endpoint-list">{endpoints.map(([href, label]) => <div key={href}><dt><a href={href}><code>{href}</code> <ArrowUpRight size={14}/></a></dt><dd>{label}</dd></div>)}</dl></section>
     <section className="panel tool-panel prose secondary-panel" id="methodology"><div className="tool-summary"><h2>Sources & methodology</h2></div>
       <p>Rankings fix one reference year and scope. Blank observations stay blank. Island Area Census counts appear in profiles and are kept separate from July 1 estimate rankings. Density uses TIGER/Line 2026 land area. National outlines and insets use different scales.</p>

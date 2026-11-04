@@ -2,6 +2,8 @@
 
 Use `GET /api/v1/…`. Responses are JSON with a dataset `version` and either a `data` value or an `error` containing `code` and `message`. Successful responses are cacheable and allow cross-origin reads.
 
+The [OpenAPI document](../public/openapi.json) lists the request parameters and response envelopes.
+
 | Route | Parameters |
 | --- | --- |
 | `regions` | `type`, `page`, `limit` |

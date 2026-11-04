@@ -1,0 +1,129 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "StateAtlas public data API",
+    "version": "1.0.0",
+    "description": "Read-only U.S. jurisdiction data. Each response includes the version of the underlying dataset."
+  },
+  "servers": [{ "url": "/api/v1" }],
+  "paths": {
+    "/regions": {
+      "get": {
+        "operationId": "listRegions",
+        "summary": "List jurisdictions",
+        "parameters": [
+          { "name": "type", "in": "query", "schema": { "enum": ["state", "district", "territory", "island"] } },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/regions/{region}": {
+      "get": {
+        "operationId": "readRegion",
+        "summary": "Read one jurisdiction",
+        "parameters": [{ "$ref": "#/components/parameters/PathRegion" }],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "404": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/regions/{region}/metrics": {
+      "get": {
+        "operationId": "readRegionMetrics",
+        "summary": "Read observations for a jurisdiction",
+        "parameters": [
+          { "$ref": "#/components/parameters/PathRegion" },
+          { "name": "metric", "in": "query", "schema": { "type": "string", "example": "population" } },
+          { "$ref": "#/components/parameters/Year" }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" }, "404": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/rankings": {
+      "get": {
+        "operationId": "rankJurisdictions",
+        "summary": "Rank jurisdictions for a metric and a reference year",
+        "parameters": [
+          { "name": "metric", "in": "query", "required": true, "schema": { "type": "string", "example": "gdp" } },
+          { "name": "scope", "in": "query", "schema": { "enum": ["states", "states-dc", "territories", "all"], "default": "states" } },
+          { "name": "order", "in": "query", "schema": { "enum": ["asc", "desc"], "default": "desc" } },
+          { "$ref": "#/components/parameters/Year" },
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" }, "404": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/compare": {
+      "get": {
+        "operationId": "compareJurisdictions",
+        "summary": "Compare two to four jurisdictions",
+        "parameters": [
+          { "name": "regions", "in": "query", "required": true, "schema": { "type": "string", "example": "CA,TX,NY" } },
+          { "name": "metric", "in": "query", "schema": { "type": "string" } },
+          { "$ref": "#/components/parameters/Year" }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" }, "404": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/boundaries": {
+      "get": {
+        "operationId": "readBoundary",
+        "summary": "Read a generalized GeoJSON feature and detailed download URL",
+        "parameters": [{ "$ref": "#/components/parameters/QueryRegion" }],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" }, "404": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/metadata/metrics": {
+      "get": {
+        "operationId": "listMetrics",
+        "summary": "Read metric definitions, units, and available years",
+        "responses": { "200": { "$ref": "#/components/responses/Success" } }
+      }
+    },
+    "/metadata/sources": {
+      "get": {
+        "operationId": "readProvenance",
+        "summary": "Read dataset source metadata and hashes",
+        "responses": { "200": { "$ref": "#/components/responses/Success" } }
+      }
+    },
+    "/country-matches": {
+      "get": {
+        "operationId": "findCountryMatches",
+        "summary": "Find the closest World Bank economy matches",
+        "parameters": [
+          { "$ref": "#/components/parameters/QueryRegion" },
+          { "name": "metric", "in": "query", "required": true, "schema": { "enum": ["population", "gdp", "land"] } },
+          { "$ref": "#/components/parameters/Year" },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 20, "default": 5 } }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/Success" }, "400": { "$ref": "#/components/responses/Error" }, "404": { "$ref": "#/components/responses/Error" } }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "PathRegion": { "name": "region", "in": "path", "required": true, "schema": { "type": "string", "example": "california" } },
+      "QueryRegion": { "name": "region", "in": "query", "required": true, "schema": { "type": "string", "example": "california" } },
+      "Year": { "name": "year", "in": "query", "schema": { "type": "integer", "minimum": 1900, "maximum": 2100 } },
+      "Page": { "name": "page", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 1000, "default": 1 } },
+      "Limit": { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 65, "default": 25 } }
+    },
+    "responses": {
+      "Success": { "description": "Versioned JSON response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Success" } } } },
+      "Error": { "description": "Structured input or lookup error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+    },
+    "schemas": {
+      "Success": { "type": "object", "required": ["version", "data"], "properties": { "version": { "type": "string" }, "data": {} } },
+      "Error": {
+        "type": "object",
+        "required": ["version", "error"],
+        "properties": {
+          "version": { "type": "string" },
+          "error": { "type": "object", "required": ["code", "message"], "properties": { "code": { "type": "string" }, "message": { "type": "string" } } }
+        }
+      }
+    }
+  }
+}
