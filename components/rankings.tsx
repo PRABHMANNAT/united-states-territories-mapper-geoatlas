@@ -5,17 +5,18 @@ import { ArrowDown, ArrowDownToLine, ArrowUp, BarChart3, Map, Table2 } from "luc
 import { useState } from "react";
 import { AtlasSvg } from "./atlas-svg";
 import { Shape } from "./shape";
+import { RegionFlag } from "./region-flag";
 import { ShareButton } from "./share";
 import { downloadCsv } from "@/lib/downloads";
 import { choropleth } from "@/lib/layers";
 import { metricById, metrics } from "@/lib/metrics";
 import { defaultRankingYear, formatValue, ranked, rankingYears, scopes } from "@/lib/statistics";
-import { regionTypeLabels, type MapData, type Observation, type Region, type Source, type Units } from "@/lib/types";
+import { regionTypeLabels, type Flag, type MapData, type Observation, type Region, type Source, type Units } from "@/lib/types";
 
 type Settings = { metric: string; year: number; scope: string; order: "asc" | "desc"; units: Units; view: "table" | "bars" | "map" };
 
-export function Rankings({ initial, regions, data, observations, sources }: {
-  initial: Settings; regions: Region[]; data: MapData; observations: Observation[]; sources: Record<string, Source>;
+export function Rankings({ initial, regions, data, observations, sources, flags }: {
+  initial: Settings; regions: Region[]; data: MapData; observations: Observation[]; sources: Record<string, Source>; flags: Record<string, Flag>;
 }) {
   const [settings, setSettings] = useState(initial);
   const [query, setQuery] = useState("");
@@ -77,7 +78,7 @@ export function Rankings({ initial, regions, data, observations, sources }: {
       <caption className="sr-only">{definition.name}, {scopes[scope].label}, {year}</caption>
       <thead><tr><th scope="col">Rank</th><th scope="col">Jurisdiction</th><th scope="col" aria-sort={order === "asc" ? "ascending" : "descending"}><button className="text-button" onClick={toggleOrder}>Value {order === "asc" ? <ArrowUp size={13}/> : <ArrowDown size={13}/>}</button></th><th scope="col">Compare</th></tr></thead>
       <tbody>{rows.map(({ region, observation, rank }) => <tr key={region.id}>
-        <td className="mono">{rank ?? "—"}</td><th scope="row"><Link href={`/regions/${region.slug}`} className="table-region"><Shape path={data.silhouettes[region.id]} /><span>{region.name}<small>{regionTypeLabels[region.type]}</small></span></Link></th>
+        <td className="mono">{rank ?? "—"}</td><th scope="row"><Link href={`/regions/${region.slug}`} className="table-region"><Shape path={data.silhouettes[region.id]} />{flags[region.id] && <RegionFlag flag={flags[region.id]} name={region.name} size={22}/>}<span>{region.name}<small>{regionTypeLabels[region.type]}</small></span></Link></th>
         <td className="mono value-cell">{observation ? formatValue(metric, observation.value, units) : <span className="muted">Data unavailable</span>}</td>
         <td><input aria-label={`Compare ${region.name}`} type="checkbox" checked={compare.includes(region.id)} disabled={compare.length >= 4 && !compare.includes(region.id)} onChange={() => toggle(region.id)}/></td>
       </tr>)}</tbody>
