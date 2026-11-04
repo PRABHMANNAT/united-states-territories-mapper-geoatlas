@@ -45,10 +45,10 @@ Choose **Compare states** in the top navbar to open the comparison tool. On phon
 
 ## Run locally
 
-Use **Node.js 24** and **pnpm 11**. Clone the repository and run the commands below. The full NorthAtlas workspace is currently on the feature branch while [PR #9](https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas/pull/9) is under review.
+Use **Node.js 24** and **pnpm 11**. Clone the repository and run the commands below.
 
 ```sh
-git clone --branch feat/refined-atlas-experience https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas.git
+git clone https://github.com/PRABHMANNAT/united-states-territories-mapper-geoatlas.git
 cd united-states-territories-mapper-geoatlas
 pnpm install --frozen-lockfile
 pnpm dev
