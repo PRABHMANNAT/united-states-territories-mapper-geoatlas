@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Download, LocateFixed, MapPin, Minus, Plus, RotateCcw, X } from "lucide-react";
+import { ArrowUpRight, Download, Expand, LocateFixed, MapPin, Minimize, Minus, Plus, RotateCcw, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { exportSvg } from "@/lib/downloads";
 import { atlasAdminLayers, atlasBounds, atlasById, atlasCountries, atlasLink, atlasPlaces, divisionLayerKey, type AdminLevel, type AtlasOutlines } from "@/lib/north-america";
@@ -24,6 +24,7 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [zoom, setZoom] = useState(1);
+  const [fullscreen, setFullscreen] = useState(false);
   const [color, setColor] = useState(paintPalette[8]);
   const [fills, setFills] = useState<Record<string, string>>({});
   const [title, setTitle] = useState("North America");
@@ -31,6 +32,8 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
   const [labels, setLabels] = useState(true);
   const [status, setStatus] = useState("");
   const svg = useRef<SVGSVGElement>(null);
+  const board = useRef<HTMLElement>(null);
+  const fullscreenButton = useRef<HTMLButtonElement>(null);
   const currentKey = `${country}-adm${level}`;
   const currentLayer = atlasAdminLayers[currentKey];
   const requested = [...new Set([
@@ -88,6 +91,39 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
     });
     return () => controller.abort();
   }, [attempt]);
+
+  useEffect(() => {
+    if (!fullscreen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    fullscreenButton.current?.focus();
+
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setFullscreen(false);
+        fullscreenButton.current?.focus();
+      }
+      if (event.key !== "Tab") return;
+      const controls = [...(board.current?.querySelectorAll<HTMLElement | SVGElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), summary, [tabindex="0"]',
+      ) ?? [])].filter((item) => item.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    }
+
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [fullscreen]);
 
   function include(id: string) {
     if (!placeFor(id)) return;
@@ -171,7 +207,9 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
 
   const BoardHeading = editing ? "h2" : "h1";
   return <div className="continent-studio">
-    <section className="continent-board panel" aria-label={editing ? "Custom map preview" : "North America map"}>
+    <section ref={board} className={`continent-board panel${fullscreen ? " continent-fullscreen" : ""}`}
+      role={fullscreen ? "dialog" : undefined} aria-modal={fullscreen || undefined}
+      aria-label={fullscreen ? "Fullscreen map preview" : editing ? "Custom map preview" : "North America map"}>
       <div className="continent-bar">
         <div><p className="eyebrow"><span/> {editing ? "MAP PREVIEW" : "CONTINENTAL ATLAS"}</p><BoardHeading>{editing ? title || "Untitled map" : scope.length === 1 ? placeFor(scope[0])?.name : scope.length ? `${scope.length} places` : "North America"}</BoardHeading></div>
         <div className="button-row">
@@ -213,10 +251,16 @@ export function NorthAmericaStudio({ initialScope, editing = false }: { initialS
           <p>Could not load the boundaries.</p>
           <button className="quiet-button" onClick={() => { setFailed(false); setAttempt(attempt + 1); }}>Try again</button>
         </> : "Loading North American boundaries…"}</div>}
-        <div className="continent-zoom" role="group" aria-label="Atlas zoom">
+        <div className="continent-zoom" role="group" aria-label="Atlas view controls">
           <button className="icon-button" aria-label="Zoom in" disabled={!outlines || zoom >= 8} onClick={() => setZoom(Math.min(8, zoom * 1.4))}><Plus size={17}/></button>
           <button className="icon-button" aria-label="Zoom out" disabled={!outlines || zoom <= 1} onClick={() => setZoom(Math.max(1, zoom / 1.4))}><Minus size={17}/></button>
           <button className="icon-button" aria-label="Reset zoom" disabled={!outlines} onClick={() => setZoom(1)}><RotateCcw size={15}/></button>
+          <button ref={fullscreenButton} className="icon-button continent-fullscreen-button"
+            aria-label={fullscreen ? "Exit fullscreen preview" : "Enter fullscreen preview"}
+            title={fullscreen ? "Exit fullscreen preview (Esc)" : "Fullscreen preview"}
+            onClick={() => setFullscreen(!fullscreen)}>
+            {fullscreen ? <Minimize size={17}/> : <Expand size={17}/>}
+          </button>
         </div>
       </div>
       <div className="continent-foot">

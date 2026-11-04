@@ -4,6 +4,8 @@ NorthAtlas maps North America’s 23 sovereign countries, 22 additional territor
 
 Open the homepage to explore the continent, or use the map creator to combine any countries and subdivisions, choose preset or custom colors, and export PNG or SVG. The detailed U.S. atlas lives at `/us` and `/map`. Existing U.S. creator links and saved project files still work at `/creator?scope=us`.
 
+Select **Fullscreen preview** beside the zoom controls on the North America map or in Map Creator to fill the browser window. Your current zoom, selected places, and colors stay in place. Use the same control or press **Esc** to return to the normal layout.
+
 The Boundary level selector also loads available second- and third-level outlines from geoBoundaries. These local divisions can be selected, painted, and exported. Information pages are provided for first-level subdivisions and territories. Country pages list their subdivisions. Each local boundary layer includes its source, license, and vintage. Run `node scripts/north-america-admin.mjs` to refresh local outlines.
 
 Refresh continental boundaries with `node scripts/north-america.mjs` and encyclopedia introductions with `node scripts/north-america-articles.mjs`. Sources and attribution are included on each profile.

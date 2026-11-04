@@ -35,6 +35,8 @@ test("combines North American countries and subdivisions, then paints and export
   await expect(page.getByRole("button", { name: "Yukon", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Alaska", exact: true })).toBeVisible();
   await page.getByLabel("Map title").fill("My cross-border map");
+  await page.getByRole("button", { name: "Enter fullscreen preview" }).click();
+  await expect(alberta.locator("path")).toHaveAttribute("fill", "#b41b73");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "SVG", exact: true }).click();
   const file = await readFile(await (await download).path(), "utf8");
@@ -43,6 +45,8 @@ test("combines North American countries and subdivisions, then paints and export
   const image = page.waitForEvent("download");
   await page.getByRole("button", { name: "PNG", exact: true }).click();
   expect((await image).suggestedFilename()).toBe("north-america-atlas.png");
+  await page.getByRole("button", { name: "Exit fullscreen preview" }).click();
+  await expect(alberta.locator("path")).toHaveAttribute("fill", "#b41b73");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: testInfo.outputPath("north-america-creator.png") });
   await page.getByRole("link", { name: "Open profile" }).click();
@@ -50,6 +54,32 @@ test("combines North American countries and subdivisions, then paints and export
   await expect(page.getByRole("heading", { name: "Alberta", exact: true, level: 1 })).toBeVisible();
   await expect(page.getByRole("img", { name: "Outline of Alberta" })).toBeVisible();
   await expect(page.locator("#overview")).toContainText("Province");
+});
+
+test("expands the North America preview without resetting its zoom", async ({ page }) => {
+  await page.goto("/");
+  const map = page.getByRole("group", { name: "North America boundary map" });
+  const initialView = await map.getAttribute("viewBox");
+  await page.getByRole("button", { name: "Zoom in", exact: true }).click();
+  await expect(map).not.toHaveAttribute("viewBox", initialView!);
+  const zoomedView = await map.getAttribute("viewBox");
+
+  await page.getByRole("button", { name: "Enter fullscreen preview" }).click();
+  const preview = page.getByRole("dialog", { name: "Fullscreen map preview" });
+  await expect(preview).toBeVisible();
+  const frame = (await preview.boundingBox())!;
+  const viewport = page.viewportSize()!;
+  expect(frame.width).toBeCloseTo(viewport.width);
+  expect(frame.height).toBeCloseTo(viewport.height);
+  const canvas = (await map.boundingBox())!;
+  expect(canvas.width).toBeCloseTo(viewport.width);
+  expect(canvas.height).toBeGreaterThan(viewport.height * 0.7);
+  await expect(map).toHaveAttribute("viewBox", zoomedView!);
+
+  await page.getByRole("button", { name: "Exit fullscreen preview" }).press("Escape");
+  await expect(preview).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Enter fullscreen preview" })).toBeFocused();
+  await expect(map).toHaveAttribute("viewBox", zoomedView!);
 });
 
 test("shows local boundary levels without creating local information pages", async ({ page }) => {
