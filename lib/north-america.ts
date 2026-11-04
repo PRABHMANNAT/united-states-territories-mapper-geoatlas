@@ -1,3 +1,4 @@
+import adminLayers from "@/data/north-america/admin-layers.json";
 import catalog from "@/data/north-america/catalog.json";
 
 export type AtlasPlace = {
@@ -27,9 +28,29 @@ export const atlasPlaces = catalog as AtlasPlace[];
 export const atlasById = new Map(atlasPlaces.map((place) => [place.id, place]));
 export const atlasCountries = atlasPlaces.filter((place) => place.kind !== "subdivision");
 
+export type AdminLevel = 1 | 2 | 3;
+export type LocalDivision = AtlasOutline & { id: string; name: string; firstLevel?: string };
+export type AdminLayer = {
+  country: string;
+  level: 2 | 3;
+  count: number;
+  name: string;
+  year: string;
+  source: string;
+  license: string;
+  licenseUrl: string;
+  url: string;
+};
+export const atlasAdminLayers = adminLayers as Record<string, AdminLayer>;
+
+export function divisionLayerKey(id: string) {
+  const key = /^([a-z]{3}-adm[23])-[a-z0-9-]{1,40}$/.exec(id)?.[1];
+  return key && Object.hasOwn(atlasAdminLayers, key) ? key : undefined;
+}
+
 export function parseAtlasScope(value?: string | string[]) {
   if (typeof value !== "string") return [];
-  return [...new Set(value.split(",").filter((id) => atlasById.has(id)))];
+  return [...new Set(value.split(",").filter((id) => atlasById.has(id) || divisionLayerKey(id)))];
 }
 
 export function atlasLink(path: "/" | "/creator", ids: string[]) {

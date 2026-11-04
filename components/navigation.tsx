@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, BookOpen, Database, Github, GraduationCap, History, House, Layers3, Linkedin, Map, Menu, Search, Star, Columns2, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BarChart3, BookOpen, Database, Github, GraduationCap, Heart, History, House, Layers3, Linkedin, Map, Menu, Search, Star, Columns2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { atlasById, atlasPlaces } from "@/lib/north-america";
 import { metrics } from "@/lib/metrics";
@@ -10,7 +10,7 @@ import type { Region } from "@/lib/types";
 
 export const nav = [
   { href: "/", title: "Atlas", icon: House },
-  { href: "/places", title: "Places", icon: BookOpen },
+  { href: "/places", title: "Place directory", icon: BookOpen },
   { href: "/us", title: "U.S. atlas", icon: Map },
   { href: "/rankings", title: "Rankings", icon: BarChart3 },
   { href: "/compare", title: "Compare", icon: Columns2 },
@@ -123,6 +123,10 @@ export function Navigation({ regions }: { regions: Region[] }) {
       <nav id="primary-navigation" aria-label="Main navigation" onKeyDown={(event) => { if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); } }}>
         {nav.map(({ href, title, icon: Icon }) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={() => setMenuOpen(false)}><Icon size={18} strokeWidth={1.7}/><span>{title}</span></Link>)}
       </nav>
+      <div className="header-destinations" role="navigation" aria-label="Atlas destinations">
+        <Link href="/places" aria-current={pathname === "/places" ? "page" : undefined} onClick={() => setMenuOpen(false)}><BookOpen size={14} aria-hidden="true"/> Place directory</Link>
+        <Link href="/us" aria-current={pathname === "/us" ? "page" : undefined} onClick={() => setMenuOpen(false)}><Map size={14} aria-hidden="true"/> U.S. atlas</Link>
+      </div>
       <div className="header-tools">
         <div className="header-social" role="group" aria-label="Project and creator links">
           {socialLinks.map(({ href, label, text, icon: Icon }) =>
@@ -153,5 +157,18 @@ export function Navigation({ regions }: { regions: Region[] }) {
 }
 
 export function Footer() {
-  return <footer className="site-footer"><div className="shell footer-inner"><Brand /><p>An open atlas of North America.</p><nav aria-label="More atlas tools"><Link href="/quiz">Quiz</Link><Link href="/data">Data &amp; API</Link><a href={github}>GitHub</a></nav></div></footer>;
+  return <footer className="site-footer">
+    <div className="shell footer-inner">
+      <div className="footer-identity">
+        <Brand />
+        <p>An open atlas of North America.</p>
+      </div>
+      <nav aria-label="More atlas tools">
+        <Link href="/quiz">Quiz</Link>
+        <Link href="/data">Data &amp; API</Link>
+        <a href={github}>GitHub <ArrowUpRight size={13} aria-hidden="true"/></a>
+      </nav>
+      <p className="footer-credit"><Heart size={14} aria-hidden="true"/> <span>Made with love by <a href="https://github.com/PRABHMANNAT">Prabhmannat Singh</a></span></p>
+    </div>
+  </footer>;
 }

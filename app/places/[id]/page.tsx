@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { ArrowUpRight, BookOpen, Layers3, Map } from "lucide-react";
 import articles from "@/data/north-america/articles.json";
 import { findRegion } from "@/lib/data";
-import { atlasBounds, atlasById, atlasLink, atlasPlaces, encyclopediaLink, type AtlasOutlines } from "@/lib/north-america";
+import { atlasAdminLayers, atlasBounds, atlasById, atlasLink, atlasPlaces, encyclopediaLink, type AtlasOutlines } from "@/lib/north-america";
 
 type Props = { params: Promise<{ id: string }> };
 const excerpts: Record<string, { title: string; revision: number; extract: string }> = articles;
@@ -21,6 +21,22 @@ export default async function PlacePage({ params }: Props) {
   if (!place) notFound();
   const parent = place.parent ? atlasById.get(place.parent) : undefined;
   const siblings = atlasPlaces.filter((item) => item.parent === (parent?.id ?? place.id) && item.id !== place.id);
+  const divisionList = <ul>{siblings.map((item) => <li key={item.id}><Link href={`/places/${item.id}`}><strong>{item.name}</strong><span>{item.type}</span></Link></li>)}</ul>;
+  if (place.kind === "country") {
+    const levels = [1, 2, 3].filter((level) => level === 1 ? siblings.length > 0 : Boolean(atlasAdminLayers[`${place.id}-adm${level}`]));
+    return <div className="shell inner-page">
+      <header className="continent-intro">
+        <div><p className="eyebrow"><span/> SUBDIVISION DIRECTORY</p><h1>{place.name}</h1>
+          <p>{levels.length ? `Map boundary levels available: ${levels.join(", ")}.` : "No internal boundaries in the current map dataset."}</p></div>
+        <div className="button-row">
+          <Link href={atlasLink("/", [place.id])} className="quiet-button"><Map size={16}/> View on map</Link>
+          <Link href={atlasLink("/creator", [place.id])} className="primary-button"><Layers3 size={16}/> Customize map</Link>
+        </div>
+      </header>
+      {siblings.length > 0 && <section className="panel tool-panel continent-directory"><h2>First-level subdivisions</h2>{divisionList}</section>}
+    </div>;
+  }
+
   const article = excerpts[place.id];
   const detailed = parent?.id === "usa" && place.code ? findRegion(place.code.slice(3)) : undefined;
   const label = place.kind === "subdivision" ? "Other subdivisions" : "Subdivisions";
@@ -61,7 +77,7 @@ export default async function PlacePage({ params }: Props) {
           <div className="chapter-reading"><p>{place.area > 0 ? `The mapped boundary covers approximately ${number.format(place.area)} km². ` : ""}This outline is drawn from Natural Earth at a continental map scale.</p></div>
         </section>
         {siblings.length > 0 && <section id="divisions" className="panel tool-panel continent-directory"><h2>{label}</h2>
-          <ul>{siblings.map((item) => <li key={item.id}><Link href={`/places/${item.id}`}><strong>{item.name}</strong><span>{item.type}</span></Link></li>)}</ul>
+          {divisionList}
         </section>}
         <details className="panel tool-panel profile-references" id="references"><summary><h2>References</h2></summary>
           <div className="reference-groups">

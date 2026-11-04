@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 test("combines North American countries and subdivisions, then paints and exports the map", async ({ page }, testInfo) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "North America, explored." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "North America", exact: true, level: 1 })).toBeVisible();
   const country = page.getByLabel("Country or territory");
   const subdivision = page.getByRole("combobox", { name: "Subdivision", exact: true });
   await country.selectOption("can");
@@ -48,6 +48,40 @@ test("combines North American countries and subdivisions, then paints and export
   await expect(page.getByRole("heading", { name: "Alberta", exact: true, level: 1 })).toBeVisible();
   await expect(page.getByRole("img", { name: "Outline of Alberta" })).toBeVisible();
   await expect(page.locator("#overview")).toContainText("Province");
+});
+
+test("shows local boundary levels without creating local information pages", async ({ page }) => {
+  await page.goto("/");
+  const country = page.getByRole("combobox", { name: "Country or territory" });
+  const level = page.getByRole("combobox", { name: "Boundary level" });
+  const subdivision = page.getByRole("combobox", { name: "Subdivision", exact: true });
+  await country.selectOption("usa");
+  await level.selectOption("2");
+  await page.getByRole("textbox", { name: "Find a local division" }).fill("Alpine");
+  await subdivision.selectOption({ label: "Alpine" });
+  await page.getByRole("button", { name: "Add subdivision" }).click();
+  await expect(page.getByRole("button", { name: "Remove Alpine", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Alpine", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open profile" })).toHaveCount(0);
+
+  await page.getByRole("link", { name: "Customize map" }).click();
+  await expect(page.getByRole("button", { name: "Remove Alpine", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Alpine", exact: true })).toBeVisible();
+
+  await country.selectOption("can");
+  await page.getByRole("button", { name: "View only" }).click();
+  await level.selectOption("3");
+  await page.getByRole("textbox", { name: "Find a local division" }).fill("Admirals Beach");
+  await subdivision.selectOption({ label: "Admirals Beach" });
+  await page.getByRole("button", { name: "Add subdivision" }).click();
+  await expect(page.getByRole("heading", { name: "Admirals Beach", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open profile" })).toHaveCount(0);
+
+  await page.goto("/places/can");
+  await expect(page.getByRole("heading", { name: "First-level subdivisions" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Overview" })).toHaveCount(0);
+  await page.getByRole("link", { name: /^Alberta/ }).click();
+  await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
 });
 
 test("opens the atlas, chooses an island and navigates to its profile", async ({ page }) => {
