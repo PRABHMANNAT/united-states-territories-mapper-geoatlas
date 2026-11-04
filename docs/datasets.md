@@ -19,3 +19,9 @@ The first command reuses files in `.cache/sources` and downloads missing inputs.
 - Country matches use World Bank SP.POP.TOTL, NY.GDP.MKTP.CD, and AG.LND.TOTL.K2, with regional aggregates removed. The closest observation year is preferred and mismatches remain visible.
 
 The 2025 education table reordered its categories. The bachelor’s-and-higher metric uses B15003 lines 20 through 23 in this vintage.
+
+## Encyclopedia and flags
+
+`pnpm data:encyclopedia` records article excerpts and section headings at a specific English Wikipedia revision. Use `--region CA` to update one profile and `--refresh` to bypass its cache. Preserve the article permalink and license for any copied material.
+
+`pnpm data:flags` looks up Wikidata flag image claims, resolves Wikimedia Commons file metadata, and downloads an image only when its reuse terms pass the project's policy. Each thumbnail stays paired with its attribution record. The application uses a silhouette when a flag is unavailable.

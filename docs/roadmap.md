@@ -2,15 +2,14 @@
 
 ## Geography
 
-- Add an optional licensed satellite provider with attribution and deployment configuration.
-- Add an elevation layer from USGS products and expand hydrography using 3DHP coverage where useful.
+- Add a bundled elevation layer from USGS products and expand hydrography using 3DHP coverage where useful. Provider-backed topographic and satellite layers are available when configured.
 - Add county density from a separate, same-vintage population and boundaries snapshot.
 - Improve inset zoom and outlying-island map navigation.
 
 ## Profiles and history
 
-- Add reviewed and attributed history, geography, government, and culture sections.
-- Add licensed flag artwork and a reusable asset attribution catalog.
+- Expand revision-linked chapter indexes into reviewed history, geography, government, and culture summaries.
+- Review alternative flag artwork for jurisdictions without a reusable asset in the current catalogue.
 - Add verified statehood dates and historical boundary datasets for timeline layers.
 
 ## Statistics
