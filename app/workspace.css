@@ -719,6 +719,10 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 .atlas-expanded .atlas-sidebar:not([hidden]) { pointer-events: auto; }
 
 .size-comparison { display: flex; flex-direction: column; min-height: 0; }
+.size-page-board { padding: 0; overflow: hidden; }
+.size-page-board .size-comparison-options { border-top: 0; padding: 18px 22px; }
+.size-page-board .size-canvas { height: clamp(320px, 55dvh, 720px); }
+.size-page-board .size-comparison-caption { padding: 14px 22px; }
 .atlas-expanded .size-comparison { flex: 1; overflow: auto; }
 .size-comparison-options {
   display: grid;
@@ -813,6 +817,9 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
   .header-social a { padding-inline: 7px; }
   .header-social a span { display: none; }
 }
+@media (min-width: 1101px) and (max-width: 1199px) {
+  .header-inner nav a { padding-inline: 6px; }
+}
 @media (max-width: 800px) {
   .continent-studio { grid-template-columns: minmax(0, 1fr); }
   .continent-board { position: static; }
@@ -834,7 +841,7 @@ button:active:not(:disabled), .primary-button:active, .quiet-button:active { tra
 /* Map-first homepage */
 .continental-home { padding-top: 16px; }
 .header-destinations { display: none; }
-@media (min-width: 900px) and (max-width: 979px) {
+@media (min-width: 900px) and (max-width: 1100px) {
   .header-social a { padding-inline: 7px; }
   .header-social a span { display: none; }
 }

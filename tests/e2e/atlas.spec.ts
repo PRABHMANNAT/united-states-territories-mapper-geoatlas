@@ -326,6 +326,18 @@ test("changes map palettes and opens a fullscreen map with keyboard exit", async
 });
 
 test("compares Alaska and Texas at one scale and moves the overlay in fullscreen", async ({ page }, testInfo) => {
+  await page.goto("/");
+  const menu = page.getByRole("button", { name: "Open navigation", exact: true });
+  if (await menu.isVisible()) await menu.click();
+  await page.getByRole("navigation", { name: "Main navigation", exact: true }).getByRole("link", { name: "Compare sizes", exact: true }).click();
+  await expect(page).toHaveURL(/\/compare-size$/);
+  await expect(page.getByRole("heading", { name: "How big is your state?" })).toBeVisible();
+  const directOverlay = page.getByRole("group", { name: /^Move Alaska/ });
+  await expect(directOverlay).toBeVisible();
+  const directOrigin = await directOverlay.getAttribute("transform");
+  await directOverlay.press("ArrowRight");
+  await expect(directOverlay).not.toHaveAttribute("transform", directOrigin!);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.goto("/us");
   await page.getByRole("combobox", { name: "Jump to a jurisdiction" }).selectOption("AK");
   await page.getByRole("button", { name: "Compare size", exact: true }).click();
